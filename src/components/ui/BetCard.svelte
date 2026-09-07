@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Rectangle, Text } from 'pixi-svelte';
+	import { Container, Sprite, Text } from 'pixi-svelte';
 	import { stateBetDerived, stateModal } from 'state-shared';
 	import { numberToCurrencyString } from 'utils-shared/amount';
 
@@ -21,12 +21,9 @@
 
 	const label = $derived(stateBetDerived.activeBetMode()?.text.betAmountLabel || 'BET');
 	const value = $derived(numberToCurrencyString(stateBetDerived.betCost()));
-	const valueFontSize = $derived(value.length > 13 ? 16 : value.length > 10 ? 18 : 20);
+	const valueFontSize = $derived(value.length > 13 ? 15 : value.length > 10 ? 17 : 19);
 	const disabled = $derived(!context.stateXstateDerived.isIdle());
 	const menuOpen = $derived(stateModal.modal?.name === 'betAmountMenu');
-	const paperColor = $derived(
-		disabled ? 0xcbddea : pressed ? 0xb4d9ef : hovered || menuOpen ? C.BLUE_HOVER : C.BLUE,
-	);
 
 	const onPress = () => {
 		if (disabled) return;
@@ -38,7 +35,7 @@
 <Container
 	x={props.x}
 	y={props.y + (pressed ? 2 : 0)}
-	rotation={pressed ? 0 : 0.006}
+	rotation={pressed ? 0 : 0.004}
 	eventMode="static"
 	cursor={disabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = true)}
@@ -52,37 +49,28 @@
 		onPress();
 	}}
 	onpointerupoutside={() => (pressed = false)}
-	alpha={disabled ? 0.72 : 1}
+	alpha={disabled ? 0.62 : hovered || menuOpen ? 1 : 0.96}
 >
-	<Rectangle
-		x={pressed ? 2 : 5}
-		y={pressed ? 2 : 5}
+	<Sprite
+		key="reportCardUiBetBg"
 		width={UI_LAYOUT.leftStats.width}
 		height={UI_LAYOUT.leftStats.height}
-		backgroundColor={C.SHADOW}
-		backgroundAlpha={pressed ? 0.08 : 0.16}
 	/>
-	<Rectangle
-		width={UI_LAYOUT.leftStats.width}
-		height={UI_LAYOUT.leftStats.height}
-		backgroundColor={paperColor}
-		borderColor={menuOpen ? C.GOLD : C.INK}
-		borderWidth={menuOpen ? 4 : 3}
-	/>
+
 	<Text
-		x={14}
-		y={6}
+		x={68}
+		y={7}
 		text={label}
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 11,
+			fontSize: 10,
 			fontWeight: '700',
-			fill: 0x315f89,
+			fill: menuOpen ? C.GOLD : 0x315f89,
 		}}
 	/>
 	<Text
-		x={14}
-		y={25}
+		x={68}
+		y={24}
 		text={value}
 		style={{
 			fontFamily: 'Comic Sans MS',
@@ -92,13 +80,13 @@
 		}}
 	/>
 	<Text
-		x={UI_LAYOUT.leftStats.width - 16}
+		x={UI_LAYOUT.leftStats.width - 22}
 		y={UI_LAYOUT.leftStats.height / 2}
 		anchor={0.5}
 		text={menuOpen ? '⌄' : '›'}
 		style={{
 			fontFamily: 'Arial',
-			fontSize: 24,
+			fontSize: 21,
 			fontWeight: '700',
 			fill: disabled ? 0x8c969e : 0x315f89,
 		}}

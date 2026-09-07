@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Rectangle, Text } from 'pixi-svelte';
+	import { Container, Rectangle, Sprite, Text } from 'pixi-svelte';
 	import { OnHotkey } from 'components-shared';
 	import { stateBet, stateBetDerived, stateConfig } from 'state-shared';
 
@@ -40,24 +40,8 @@
 	const spinDisabled = $derived(['spin_disabled', 'stop_disabled'].includes(spinKey));
 	const isStop = $derived(spinKey.startsWith('stop'));
 	const spinLabel = $derived(isStop ? 'STOP' : 'SPIN');
-
-	const spinColor = $derived(
-		spinDisabled
-			? C.DISABLED
-			: isStop
-				? pressed === 'spin'
-					? C.STOP_PRESSED
-					: hovered === 'spin'
-						? C.STOP_HOVER
-						: C.STOP
-				: pressed === 'spin'
-					? C.GREEN_PRESSED
-					: hovered === 'spin'
-						? C.GREEN_HOVER
-						: C.GREEN,
-	);
-	const spinDarkColor = $derived(
-		spinDisabled ? C.DISABLED_DARK : isStop ? C.STOP_DARK : C.GREEN_DARK,
+	const spinSpriteKey = $derived(
+		pressed === 'spin' ? 'reportCardUiSpinPressed' : 'reportCardUiSpinIdle',
 	);
 
 	// -------------------------------------------------------------------------
@@ -71,16 +55,8 @@
 
 	const fastActive = $derived(stateBet.isTurbo);
 	const fastDisabled = $derived(stateBet.isSpaceHold);
-	const fastPaper = $derived(
-		fastDisabled
-			? C.DISABLED
-			: pressed === 'fast'
-				? C.YELLOW_PRESSED
-				: fastActive || hovered === 'fast'
-					? C.YELLOW_HOVER
-					: C.PAPER,
-	);
 	const fastLabel = $derived(fastActive ? 'FAST ON' : 'FAST');
+	const fastSpriteKey = $derived(fastActive ? 'reportCardUiFastOn' : 'reportCardUiFastOff');
 
 	const betOptions = $derived([...stateConfig.betAmountOptions].sort((a, b) => a - b));
 	const smallestBet = $derived(betOptions[0]);
@@ -177,65 +153,57 @@
 		onSpinPress();
 	}}
 	onpointerupoutside={() => (pressed = null)}
+	alpha={spinDisabled ? 0.55 : 1}
 >
-	<Rectangle
-		x={-6}
-		y={-6}
-		width={UI_LAYOUT.rightPanel.spinWidth + 12}
-		height={UI_LAYOUT.rightPanel.spinHeight + 12}
-		backgroundColor={hovered === 'spin' && !spinDisabled ? C.YELLOW_HOVER : C.PAPER_LIGHT}
-		borderColor={C.INK}
-		borderWidth={3}
-	/>
-	<Rectangle
-		x={pressed === 'spin' ? 2 : 5}
-		y={pressed === 'spin' ? 3 : 7}
-		width={UI_LAYOUT.rightPanel.spinWidth}
-		height={UI_LAYOUT.rightPanel.spinHeight}
-		backgroundColor={C.SHADOW}
-		backgroundAlpha={spinDisabled ? 0.12 : pressed === 'spin' ? 0.08 : 0.22}
-	/>
-	<Rectangle
-		width={UI_LAYOUT.rightPanel.spinWidth}
-		height={UI_LAYOUT.rightPanel.spinHeight}
-		backgroundColor={spinColor}
-		borderColor={C.INK}
-		borderWidth={5}
-	/>
-	<Rectangle
-		x={7}
-		y={7}
-		width={UI_LAYOUT.rightPanel.spinWidth - 14}
-		height={UI_LAYOUT.rightPanel.spinHeight - 14}
-		backgroundColor={spinColor}
-		backgroundAlpha={0}
-		borderColor={spinDarkColor}
-		borderWidth={2}
-		alpha={0.72}
-	/>
+	{#if isStop}
+		<!-- We do not have a dedicated STOP asset yet, so keep a readable fallback. -->
+		<Rectangle
+			x={-6}
+			y={-6}
+			width={UI_LAYOUT.rightPanel.spinWidth + 12}
+			height={UI_LAYOUT.rightPanel.spinHeight + 12}
+			backgroundColor={C.PAPER_LIGHT}
+			borderColor={C.INK}
+			borderWidth={3}
+		/>
+		<Rectangle
+			width={UI_LAYOUT.rightPanel.spinWidth}
+			height={UI_LAYOUT.rightPanel.spinHeight}
+			backgroundColor={spinDisabled ? C.DISABLED : C.STOP}
+			borderColor={C.INK}
+			borderWidth={5}
+		/>
+		<Text
+			x={UI_LAYOUT.rightPanel.spinWidth / 2}
+			y={UI_LAYOUT.rightPanel.spinHeight / 2 - 5}
+			anchor={0.5}
+			text="■"
+			style={{
+				fontFamily: 'Arial',
+				fontSize: 66,
+				fontWeight: '700',
+				fill: 0xffffff,
+			}}
+		/>
+	{:else}
+		<Sprite
+			key={spinSpriteKey}
+			width={UI_LAYOUT.rightPanel.spinWidth}
+			height={UI_LAYOUT.rightPanel.spinHeight}
+			alpha={hovered === 'spin' ? 1 : 0.98}
+		/>
+	{/if}
+
 	<Text
 		x={UI_LAYOUT.rightPanel.spinWidth / 2}
-		y={UI_LAYOUT.rightPanel.spinHeight / 2 - 4}
-		anchor={0.5}
-		text={isStop ? '■' : '↻'}
-		style={{
-			fontFamily: 'Arial',
-			fontSize: isStop ? 70 : hovered === 'spin' ? 100 : 96,
-			fontWeight: '700',
-			fill: 0xffffff,
-			stroke: { color: spinDarkColor, width: 4 },
-		}}
-	/>
-	<Text
-		x={UI_LAYOUT.rightPanel.spinWidth / 2}
-		y={UI_LAYOUT.rightPanel.spinHeight - 23}
+		y={UI_LAYOUT.rightPanel.spinHeight - 20}
 		anchor={0.5}
 		text={spinLabel}
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 13,
+			fontSize: 12,
 			fontWeight: '700',
-			fill: 0xf7f0d5,
+			fill: isStop ? 0xffffff : C.INK,
 		}}
 	/>
 </Container>
@@ -300,32 +268,23 @@
 		onFastPress();
 	}}
 	onpointerupoutside={() => (pressed = null)}
+	alpha={fastDisabled ? 0.58 : hovered === 'fast' ? 1 : 0.97}
 >
-	<Rectangle
-		x={pressed === 'fast' ? 2 : 4}
-		y={pressed === 'fast' ? 2 : 5}
+	<Sprite
+		key={fastSpriteKey}
 		width={turboWidth}
 		height={UI_LAYOUT.rightPanel.fastHeight}
-		backgroundColor={C.SHADOW}
-		backgroundAlpha={pressed === 'fast' ? 0.07 : 0.16}
-	/>
-	<Rectangle
-		width={turboWidth}
-		height={UI_LAYOUT.rightPanel.fastHeight}
-		backgroundColor={fastPaper}
-		borderColor={fastActive ? C.GREEN_DARK : hovered === 'fast' ? C.GOLD : C.INK}
-		borderWidth={fastActive || hovered === 'fast' ? 4 : 3}
 	/>
 	<Text
-		x={turboWidth / 2}
+		x={fastActive ? turboWidth / 2 : turboWidth * 0.65}
 		y={UI_LAYOUT.rightPanel.fastHeight / 2}
 		anchor={0.5}
-		text={`⚡ ${fastLabel}`}
+		text={fastLabel}
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: fastActive ? 11 : 13,
+			fontSize: fastActive ? 9 : 11,
 			fontWeight: '700',
-			fill: fastActive ? C.GREEN_DARK : fastDisabled ? C.DISABLED_DARK : C.INK,
+			fill: fastDisabled ? C.DISABLED_DARK : C.INK,
 		}}
 	/>
 </Container>
