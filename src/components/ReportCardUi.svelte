@@ -20,6 +20,7 @@
 	import BetCard from './ui/BetCard.svelte';
 	import WinBar from './ui/WinBar.svelte';
 	import SpinPanel from './ui/SpinPanel.svelte';
+	import HudMenuOverlay from './ui/HudMenuOverlay.svelte';
 
 	const context = getContext();
 
@@ -92,6 +93,7 @@
 
 		<WinBar x={winX} y={winY} width={winWidth} />
 		<SpinPanel x={rightX} {spinY} {fastY} />
+		<HudMenuOverlay />
 
 		{#if bottomClearance < UI_LAYOUT.safeGap.bottom}
 			<!-- Intentional no-op guard. No debug overlay in production HUD. -->

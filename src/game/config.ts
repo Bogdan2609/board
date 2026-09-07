@@ -14,6 +14,14 @@ export default {
 			max_win: 5000.0,
 			description: 'default game entry type',
 		},
+		ante: {
+			cost: 1.2,
+			feature: true,
+			buyBonus: false,
+			rtp: 0.97,
+			max_win: 5000.0,
+			description: '1.2x ante bet mode',
+		},
 		bonus: {
 			cost: 200,
 			feature: false,

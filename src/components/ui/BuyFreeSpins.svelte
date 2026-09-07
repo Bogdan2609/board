@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Container, Rectangle, Text } from 'pixi-svelte';
+	import { stateBet, stateModal } from 'state-shared';
 
+	import { getContext } from '../../game/context';
 	import { UI_LAYOUT } from '../../game/uiLayout';
 	import { HUD_COLORS } from './hudPalette';
 
@@ -10,22 +12,57 @@
 	};
 
 	const props: Props = $props();
+	const context = getContext();
 	const C = HUD_COLORS;
+
+	let hovered = $state(false);
+	let pressed = $state(false);
+
+	const disabled = $derived(!context.stateXstateDerived.isIdle());
+
+	const onPress = () => {
+		if (disabled) return;
+		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
+
+		// Our HUD has a dedicated BASE/ANTE selector, so BUY FREE SPINS
+		// always does what its label says. Reset an activation mode first
+		// so the buy flow cannot inherit ANTE's cost multiplier.
+		stateBet.activeBetModeKey = 'BASE';
+		stateModal.modal = { name: 'buyBonus' };
+	};
 </script>
 
-<Container x={props.x} y={props.y} rotation={-0.012}>
+<Container
+	x={props.x}
+	y={props.y + (pressed ? 3 : 0)}
+	rotation={pressed ? -0.006 : -0.012}
+	eventMode="static"
+	cursor={disabled ? 'not-allowed' : 'pointer'}
+	onpointerover={() => (hovered = true)}
+	onpointerout={() => {
+		hovered = false;
+		pressed = false;
+	}}
+	onpointerdown={() => !disabled && (pressed = true)}
+	onpointerup={() => {
+		pressed = false;
+		onPress();
+	}}
+	onpointerupoutside={() => (pressed = false)}
+	alpha={disabled ? 0.68 : 1}
+>
 	<Rectangle
 		x={7}
 		y={8}
 		width={UI_LAYOUT.leftPanel.width}
 		height={UI_LAYOUT.leftPanel.buyHeight}
 		backgroundColor={C.SHADOW}
-		backgroundAlpha={0.2}
+		backgroundAlpha={pressed ? 0.1 : 0.2}
 	/>
 	<Rectangle
 		width={UI_LAYOUT.leftPanel.width}
 		height={UI_LAYOUT.leftPanel.buyHeight}
-		backgroundColor={C.YELLOW}
+		backgroundColor={disabled ? 0xd9d4c7 : hovered ? 0xffe99f : C.YELLOW}
 		borderColor={C.INK}
 		borderWidth={3}
 	/>
@@ -82,19 +119,19 @@
 			fontFamily: 'Comic Sans MS',
 			fontSize: 24,
 			fontWeight: '700',
-			fill: C.RED,
+			fill: disabled ? C.DISABLED_DARK : C.RED,
 		}}
 	/>
 	<Text
 		x={UI_LAYOUT.leftPanel.width / 2}
 		y={96}
 		anchor={{ x: 0.5, y: 0 }}
-		text="★  ★  ★"
+		text={disabled ? 'WAIT…' : '★  ★  ★'}
 		style={{
 			fontFamily: 'Arial',
 			fontSize: 16,
 			fontWeight: '700',
-			fill: C.GOLD,
+			fill: disabled ? C.DISABLED_DARK : C.GOLD,
 		}}
 	/>
 </Container>
