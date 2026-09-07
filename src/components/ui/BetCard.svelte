@@ -16,10 +16,17 @@
 	const context = getContext();
 	const C = HUD_COLORS;
 
+	let hovered = $state(false);
+	let pressed = $state(false);
+
 	const label = $derived(stateBetDerived.activeBetMode()?.text.betAmountLabel || 'BET');
 	const value = $derived(numberToCurrencyString(stateBetDerived.betCost()));
 	const valueFontSize = $derived(value.length > 13 ? 16 : value.length > 10 ? 18 : 20);
 	const disabled = $derived(!context.stateXstateDerived.isIdle());
+	const menuOpen = $derived(stateModal.modal?.name === 'betAmountMenu');
+	const paperColor = $derived(
+		disabled ? 0xcbddea : pressed ? 0xb4d9ef : hovered || menuOpen ? C.BLUE_HOVER : C.BLUE,
+	);
 
 	const onPress = () => {
 		if (disabled) return;
@@ -30,27 +37,37 @@
 
 <Container
 	x={props.x}
-	y={props.y}
-	rotation={0.006}
+	y={props.y + (pressed ? 2 : 0)}
+	rotation={pressed ? 0 : 0.006}
 	eventMode="static"
 	cursor={disabled ? 'not-allowed' : 'pointer'}
-	onpointerup={onPress}
+	onpointerover={() => (hovered = true)}
+	onpointerout={() => {
+		hovered = false;
+		pressed = false;
+	}}
+	onpointerdown={() => !disabled && (pressed = true)}
+	onpointerup={() => {
+		pressed = false;
+		onPress();
+	}}
+	onpointerupoutside={() => (pressed = false)}
 	alpha={disabled ? 0.72 : 1}
 >
 	<Rectangle
-		x={5}
-		y={5}
+		x={pressed ? 2 : 5}
+		y={pressed ? 2 : 5}
 		width={UI_LAYOUT.leftStats.width}
 		height={UI_LAYOUT.leftStats.height}
 		backgroundColor={C.SHADOW}
-		backgroundAlpha={0.16}
+		backgroundAlpha={pressed ? 0.08 : 0.16}
 	/>
 	<Rectangle
 		width={UI_LAYOUT.leftStats.width}
 		height={UI_LAYOUT.leftStats.height}
-		backgroundColor={disabled ? 0xcbddea : C.BLUE}
-		borderColor={C.INK}
-		borderWidth={3}
+		backgroundColor={paperColor}
+		borderColor={menuOpen ? C.GOLD : C.INK}
+		borderWidth={menuOpen ? 4 : 3}
 	/>
 	<Text
 		x={14}
@@ -78,7 +95,7 @@
 		x={UI_LAYOUT.leftStats.width - 16}
 		y={UI_LAYOUT.leftStats.height / 2}
 		anchor={0.5}
-		text="›"
+		text={menuOpen ? '⌄' : '›'}
 		style={{
 			fontFamily: 'Arial',
 			fontSize: 24,

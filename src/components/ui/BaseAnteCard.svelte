@@ -29,17 +29,13 @@
 		stateBet.activeBetModeKey = mode;
 	};
 
+	const topY = 6;
 	const topHeight = 42;
-	const bottomY = 60;
-	const bottomHeight = UI_LAYOUT.leftPanel.modeHeight - bottomY;
+	const bottomY = 58;
+	const bottomHeight = UI_LAYOUT.leftPanel.modeHeight - bottomY - 5;
 </script>
 
-<Container
-	x={props.x}
-	y={props.y}
-	rotation={0.008}
-	alpha={disabled ? 0.72 : 1}
->
+<Container x={props.x} y={props.y} rotation={0.008} alpha={disabled ? 0.72 : 1}>
 	<Rectangle
 		x={6}
 		y={7}
@@ -67,7 +63,7 @@
 		alpha={0.34}
 	/>
 
-	<!-- BASE hit area / selected paper strip -->
+	<!-- BASE -->
 	<Container
 		y={pressed === 'BASE' ? 2 : 0}
 		eventMode="static"
@@ -86,20 +82,20 @@
 	>
 		<Rectangle
 			x={8}
-			y={7}
+			y={topY}
 			width={UI_LAYOUT.leftPanel.width - 16}
 			height={topHeight}
-			backgroundColor={baseActive ? C.PAPER_LIGHT : C.BLUE}
-			backgroundAlpha={baseActive ? 0.9 : hovered === 'BASE' ? 0.34 : 0.001}
-			borderColor={baseActive ? C.GOLD : C.BLUE}
-			borderWidth={baseActive ? 2 : 0}
+			backgroundColor={baseActive ? C.PAPER_LIGHT : hovered === 'BASE' ? C.BLUE_HOVER : C.BLUE}
+			backgroundAlpha={baseActive || hovered === 'BASE' ? 0.96 : 0.001}
+			borderColor={baseActive ? C.GOLD : hovered === 'BASE' ? 0x83bad9 : C.BLUE}
+			borderWidth={baseActive ? 3 : hovered === 'BASE' ? 1 : 0}
 		/>
 		<Text
-			x={24}
-			y={27}
+			x={22}
+			y={topY + topHeight / 2}
 			anchor={0.5}
-			text={baseActive ? '★' : ''}
-			style={{ fontFamily: 'Arial', fontSize: 15, fill: C.GOLD }}
+			text={baseActive ? '✓' : ''}
+			style={{ fontFamily: 'Arial', fontSize: 16, fontWeight: '700', fill: C.GREEN_DARK }}
 		/>
 		<Text
 			x={UI_LAYOUT.leftPanel.width / 2}
@@ -113,6 +109,13 @@
 				fill: C.INK,
 			}}
 		/>
+		<Text
+			x={UI_LAYOUT.leftPanel.width - 24}
+			y={topY + topHeight / 2}
+			anchor={0.5}
+			text={baseActive ? 'ON' : ''}
+			style={{ fontFamily: 'Comic Sans MS', fontSize: 10, fontWeight: '700', fill: C.GREEN_DARK }}
+		/>
 	</Container>
 
 	<Text
@@ -122,13 +125,13 @@
 		text="↕"
 		style={{
 			fontFamily: 'Arial',
-			fontSize: 22,
+			fontSize: 21,
 			fontWeight: '700',
 			fill: 0x315f89,
 		}}
 	/>
 
-	<!-- ANTE hit area / selected paper strip -->
+	<!-- ANTE -->
 	<Container
 		y={pressed === 'ANTE' ? 2 : 0}
 		eventMode="static"
@@ -149,22 +152,22 @@
 			x={8}
 			y={bottomY}
 			width={UI_LAYOUT.leftPanel.width - 16}
-			height={bottomHeight - 5}
-			backgroundColor={anteActive ? C.YELLOW : C.BLUE}
-			backgroundAlpha={anteActive ? 0.88 : hovered === 'ANTE' ? 0.34 : 0.001}
-			borderColor={anteActive ? C.GOLD : C.BLUE}
-			borderWidth={anteActive ? 2 : 0}
+			height={bottomHeight}
+			backgroundColor={anteActive ? C.YELLOW : hovered === 'ANTE' ? C.YELLOW_HOVER : C.BLUE}
+			backgroundAlpha={anteActive || hovered === 'ANTE' ? 0.96 : 0.001}
+			borderColor={anteActive ? C.GOLD : hovered === 'ANTE' ? C.GOLD_LIGHT : C.BLUE}
+			borderWidth={anteActive ? 3 : hovered === 'ANTE' ? 1 : 0}
 		/>
 		<Text
-			x={24}
-			y={79}
+			x={22}
+			y={bottomY + bottomHeight / 2}
 			anchor={0.5}
-			text={anteActive ? '★' : ''}
-			style={{ fontFamily: 'Arial', fontSize: 15, fill: C.GOLD }}
+			text={anteActive ? '✓' : ''}
+			style={{ fontFamily: 'Arial', fontSize: 16, fontWeight: '700', fill: C.GREEN_DARK }}
 		/>
 		<Text
 			x={UI_LAYOUT.leftPanel.width / 2}
-			y={69}
+			y={68}
 			anchor={{ x: 0.5, y: 0 }}
 			text="ANTE  1.2×"
 			style={{
@@ -173,6 +176,13 @@
 				fontWeight: '700',
 				fill: C.INK,
 			}}
+		/>
+		<Text
+			x={UI_LAYOUT.leftPanel.width - 24}
+			y={bottomY + bottomHeight / 2}
+			anchor={0.5}
+			text={anteActive ? 'ON' : ''}
+			style={{ fontFamily: 'Comic Sans MS', fontSize: 10, fontWeight: '700', fill: C.GREEN_DARK }}
 		/>
 	</Container>
 </Container>

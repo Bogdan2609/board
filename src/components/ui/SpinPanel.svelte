@@ -8,6 +8,7 @@
 	import { HUD_COLORS } from './hudPalette';
 
 	type SpinKey = 'spin_default' | 'spin_disabled' | 'stop_default' | 'stop_disabled';
+	type ControlKey = 'spin' | 'increase' | 'fast' | 'decrease';
 
 	type Props = {
 		x: number;
@@ -20,6 +21,8 @@
 	const C = HUD_COLORS;
 
 	let stopDisabled = $state(false);
+	let hovered = $state<ControlKey | null>(null);
+	let pressed = $state<ControlKey | null>(null);
 
 	const getSpinKey = (): SpinKey => {
 		if (context.stateXstateDerived.isIdle()) {
@@ -35,23 +38,48 @@
 
 	const spinKey = $derived.by(getSpinKey);
 	const spinDisabled = $derived(['spin_disabled', 'stop_disabled'].includes(spinKey));
-	const spinLabel = $derived(spinKey.startsWith('stop') ? 'STOP' : 'SPIN');
-	const spinColor = $derived(spinDisabled ? C.DISABLED : C.GREEN);
-	const spinDarkColor = $derived(spinDisabled ? C.DISABLED_DARK : C.GREEN_DARK);
+	const isStop = $derived(spinKey.startsWith('stop'));
+	const spinLabel = $derived(isStop ? 'STOP' : 'SPIN');
+
+	const spinColor = $derived(
+		spinDisabled
+			? C.DISABLED
+			: isStop
+				? pressed === 'spin'
+					? C.STOP_PRESSED
+					: hovered === 'spin'
+						? C.STOP_HOVER
+						: C.STOP
+				: pressed === 'spin'
+					? C.GREEN_PRESSED
+					: hovered === 'spin'
+						? C.GREEN_HOVER
+						: C.GREEN,
+	);
+	const spinDarkColor = $derived(
+		spinDisabled ? C.DISABLED_DARK : isStop ? C.STOP_DARK : C.GREEN_DARK,
+	);
 
 	// -------------------------------------------------------------------------
 	// Separate lower controls: [+] [FAST] [-]
 	// -------------------------------------------------------------------------
 	const controlGap = 5;
 	const stepWidth = 42;
-	const turboWidth =
-		UI_LAYOUT.rightPanel.spinWidth - stepWidth * 2 - controlGap * 2;
+	const turboWidth = UI_LAYOUT.rightPanel.spinWidth - stepWidth * 2 - controlGap * 2;
 	const turboX = stepWidth + controlGap;
 	const decreaseX = turboX + turboWidth + controlGap;
 
 	const fastActive = $derived(stateBet.isTurbo);
 	const fastDisabled = $derived(stateBet.isSpaceHold);
-	const fastPaper = $derived(fastActive ? C.YELLOW : C.PAPER);
+	const fastPaper = $derived(
+		fastDisabled
+			? C.DISABLED
+			: pressed === 'fast'
+				? C.YELLOW_PRESSED
+				: fastActive || hovered === 'fast'
+					? C.YELLOW_HOVER
+					: C.PAPER,
+	);
 	const fastLabel = $derived(fastActive ? 'FAST ON' : 'FAST');
 
 	const betOptions = $derived([...stateConfig.betAmountOptions].sort((a, b) => a - b));
@@ -68,6 +96,13 @@
 		betOptions.length === 0 ||
 		stateBet.betAmount <= smallestBet,
 	);
+
+	const stepPaper = (key: 'increase' | 'decrease', disabled: boolean) => {
+		if (disabled) return C.DISABLED;
+		if (pressed === key) return C.YELLOW_PRESSED;
+		if (hovered === key) return C.YELLOW_HOVER;
+		return C.PAPER;
+	};
 
 	const onSpinPress = () => {
 		if (spinDisabled) return;
@@ -104,10 +139,13 @@
 		if (decreaseDisabled) return;
 		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
 
-		const nextSmaller = [...betOptions]
-			.reverse()
-			.find((option) => option < stateBet.betAmount);
+		const nextSmaller = [...betOptions].reverse().find((option) => option < stateBet.betAmount);
 		stateBetDerived.setBetAmount(nextSmaller ?? smallestBet ?? stateBet.betAmount);
+	};
+
+	const clearPointer = () => {
+		hovered = null;
+		pressed = null;
 	};
 
 	context.eventEmitter.subscribeOnMount({
@@ -127,28 +165,35 @@
 <!-- Main spin/stop button. -->
 <Container
 	x={props.x}
-	y={props.spinY}
-	rotation={0.004}
+	y={props.spinY + (pressed === 'spin' ? 4 : 0)}
+	rotation={pressed === 'spin' ? 0 : hovered === 'spin' ? 0.002 : 0.004}
 	eventMode="static"
 	cursor={spinDisabled ? 'not-allowed' : 'pointer'}
-	onpointerup={onSpinPress}
+	onpointerover={() => (hovered = 'spin')}
+	onpointerout={clearPointer}
+	onpointerdown={() => !spinDisabled && (pressed = 'spin')}
+	onpointerup={() => {
+		pressed = null;
+		onSpinPress();
+	}}
+	onpointerupoutside={() => (pressed = null)}
 >
 	<Rectangle
 		x={-6}
 		y={-6}
 		width={UI_LAYOUT.rightPanel.spinWidth + 12}
 		height={UI_LAYOUT.rightPanel.spinHeight + 12}
-		backgroundColor={C.PAPER_LIGHT}
+		backgroundColor={hovered === 'spin' && !spinDisabled ? C.YELLOW_HOVER : C.PAPER_LIGHT}
 		borderColor={C.INK}
 		borderWidth={3}
 	/>
 	<Rectangle
-		x={5}
-		y={7}
+		x={pressed === 'spin' ? 2 : 5}
+		y={pressed === 'spin' ? 3 : 7}
 		width={UI_LAYOUT.rightPanel.spinWidth}
 		height={UI_LAYOUT.rightPanel.spinHeight}
 		backgroundColor={C.SHADOW}
-		backgroundAlpha={spinDisabled ? 0.12 : 0.22}
+		backgroundAlpha={spinDisabled ? 0.12 : pressed === 'spin' ? 0.08 : 0.22}
 	/>
 	<Rectangle
 		width={UI_LAYOUT.rightPanel.spinWidth}
@@ -172,10 +217,10 @@
 		x={UI_LAYOUT.rightPanel.spinWidth / 2}
 		y={UI_LAYOUT.rightPanel.spinHeight / 2 - 4}
 		anchor={0.5}
-		text={spinKey.startsWith('stop') ? '■' : '↻'}
+		text={isStop ? '■' : '↻'}
 		style={{
 			fontFamily: 'Arial',
-			fontSize: spinKey.startsWith('stop') ? 70 : 96,
+			fontSize: isStop ? 70 : hovered === 'spin' ? 100 : 96,
 			fontWeight: '700',
 			fill: 0xffffff,
 			stroke: { color: spinDarkColor, width: 4 },
@@ -195,29 +240,36 @@
 	/>
 </Container>
 
-<!-- BET INCREASE: separate button -->
+<!-- BET INCREASE -->
 <Container
 	x={props.x}
-	y={props.fastY}
-	rotation={-0.012}
+	y={props.fastY + (pressed === 'increase' ? 3 : 0)}
+	rotation={pressed === 'increase' ? 0 : -0.012}
 	eventMode="static"
 	cursor={increaseDisabled ? 'not-allowed' : 'pointer'}
-	onpointerup={onIncreasePress}
+	onpointerover={() => (hovered = 'increase')}
+	onpointerout={clearPointer}
+	onpointerdown={() => !increaseDisabled && (pressed = 'increase')}
+	onpointerup={() => {
+		pressed = null;
+		onIncreasePress();
+	}}
+	onpointerupoutside={() => (pressed = null)}
 >
 	<Rectangle
-		x={4}
-		y={5}
+		x={pressed === 'increase' ? 2 : 4}
+		y={pressed === 'increase' ? 2 : 5}
 		width={stepWidth}
 		height={UI_LAYOUT.rightPanel.fastHeight}
 		backgroundColor={C.SHADOW}
-		backgroundAlpha={0.16}
+		backgroundAlpha={pressed === 'increase' ? 0.07 : 0.16}
 	/>
 	<Rectangle
 		width={stepWidth}
 		height={UI_LAYOUT.rightPanel.fastHeight}
-		backgroundColor={increaseDisabled ? C.DISABLED : C.PAPER}
-		borderColor={C.INK}
-		borderWidth={3}
+		backgroundColor={stepPaper('increase', increaseDisabled)}
+		borderColor={hovered === 'increase' && !increaseDisabled ? C.GOLD : C.INK}
+		borderWidth={hovered === 'increase' && !increaseDisabled ? 4 : 3}
 	/>
 	<Text
 		x={stepWidth / 2}
@@ -233,29 +285,36 @@
 	/>
 </Container>
 
-<!-- FAST / TURBO: separate button -->
+<!-- FAST / TURBO -->
 <Container
 	x={props.x + turboX}
-	y={props.fastY}
-	rotation={0.006}
+	y={props.fastY + (pressed === 'fast' ? 3 : 0)}
+	rotation={pressed === 'fast' ? 0 : 0.006}
 	eventMode="static"
 	cursor={fastDisabled ? 'not-allowed' : 'pointer'}
-	onpointerup={onFastPress}
+	onpointerover={() => (hovered = 'fast')}
+	onpointerout={clearPointer}
+	onpointerdown={() => !fastDisabled && (pressed = 'fast')}
+	onpointerup={() => {
+		pressed = null;
+		onFastPress();
+	}}
+	onpointerupoutside={() => (pressed = null)}
 >
 	<Rectangle
-		x={4}
-		y={5}
+		x={pressed === 'fast' ? 2 : 4}
+		y={pressed === 'fast' ? 2 : 5}
 		width={turboWidth}
 		height={UI_LAYOUT.rightPanel.fastHeight}
 		backgroundColor={C.SHADOW}
-		backgroundAlpha={0.16}
+		backgroundAlpha={pressed === 'fast' ? 0.07 : 0.16}
 	/>
 	<Rectangle
 		width={turboWidth}
 		height={UI_LAYOUT.rightPanel.fastHeight}
-		backgroundColor={fastDisabled ? C.DISABLED : fastPaper}
-		borderColor={C.INK}
-		borderWidth={3}
+		backgroundColor={fastPaper}
+		borderColor={fastActive ? C.GREEN_DARK : hovered === 'fast' ? C.GOLD : C.INK}
+		borderWidth={fastActive || hovered === 'fast' ? 4 : 3}
 	/>
 	<Text
 		x={turboWidth / 2}
@@ -266,34 +325,41 @@
 			fontFamily: 'Comic Sans MS',
 			fontSize: fastActive ? 11 : 13,
 			fontWeight: '700',
-			fill: fastActive ? C.GREEN_DARK : C.INK,
+			fill: fastActive ? C.GREEN_DARK : fastDisabled ? C.DISABLED_DARK : C.INK,
 		}}
 	/>
 </Container>
 
-<!-- BET DECREASE: separate button -->
+<!-- BET DECREASE -->
 <Container
 	x={props.x + decreaseX}
-	y={props.fastY}
-	rotation={-0.006}
+	y={props.fastY + (pressed === 'decrease' ? 3 : 0)}
+	rotation={pressed === 'decrease' ? 0 : -0.006}
 	eventMode="static"
 	cursor={decreaseDisabled ? 'not-allowed' : 'pointer'}
-	onpointerup={onDecreasePress}
+	onpointerover={() => (hovered = 'decrease')}
+	onpointerout={clearPointer}
+	onpointerdown={() => !decreaseDisabled && (pressed = 'decrease')}
+	onpointerup={() => {
+		pressed = null;
+		onDecreasePress();
+	}}
+	onpointerupoutside={() => (pressed = null)}
 >
 	<Rectangle
-		x={4}
-		y={5}
+		x={pressed === 'decrease' ? 2 : 4}
+		y={pressed === 'decrease' ? 2 : 5}
 		width={stepWidth}
 		height={UI_LAYOUT.rightPanel.fastHeight}
 		backgroundColor={C.SHADOW}
-		backgroundAlpha={0.16}
+		backgroundAlpha={pressed === 'decrease' ? 0.07 : 0.16}
 	/>
 	<Rectangle
 		width={stepWidth}
 		height={UI_LAYOUT.rightPanel.fastHeight}
-		backgroundColor={decreaseDisabled ? C.DISABLED : C.PAPER}
-		borderColor={C.INK}
-		borderWidth={3}
+		backgroundColor={stepPaper('decrease', decreaseDisabled)}
+		borderColor={hovered === 'decrease' && !decreaseDisabled ? C.GOLD : C.INK}
+		borderWidth={hovered === 'decrease' && !decreaseDisabled ? 4 : 3}
 	/>
 	<Text
 		x={stepWidth / 2}

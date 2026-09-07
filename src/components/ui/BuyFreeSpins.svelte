@@ -19,14 +19,23 @@
 	let pressed = $state(false);
 
 	const disabled = $derived(!context.stateXstateDerived.isIdle());
+	const modalOpen = $derived(stateModal.modal?.name === 'buyBonus');
+	const paperColor = $derived(
+		disabled
+			? 0xd9d4c7
+			: pressed
+				? C.YELLOW_PRESSED
+				: hovered || modalOpen
+					? C.YELLOW_HOVER
+					: C.YELLOW,
+	);
 
 	const onPress = () => {
 		if (disabled) return;
 		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
 
-		// Our HUD has a dedicated BASE/ANTE selector, so BUY FREE SPINS
-		// always does what its label says. Reset an activation mode first
-		// so the buy flow cannot inherit ANTE's cost multiplier.
+		// BUY FREE SPINS is independent from the BASE/ANTE activation switch.
+		// Reset ANTE first so the buy flow cannot inherit its 1.2x multiplier.
 		stateBet.activeBetModeKey = 'BASE';
 		stateModal.modal = { name: 'buyBonus' };
 	};
@@ -34,8 +43,8 @@
 
 <Container
 	x={props.x}
-	y={props.y + (pressed ? 3 : 0)}
-	rotation={pressed ? -0.006 : -0.012}
+	y={props.y + (pressed ? 4 : 0)}
+	rotation={pressed ? -0.004 : hovered ? -0.008 : -0.012}
 	eventMode="static"
 	cursor={disabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = true)}
@@ -52,26 +61,26 @@
 	alpha={disabled ? 0.68 : 1}
 >
 	<Rectangle
-		x={7}
-		y={8}
+		x={pressed ? 3 : 7}
+		y={pressed ? 4 : 8}
 		width={UI_LAYOUT.leftPanel.width}
 		height={UI_LAYOUT.leftPanel.buyHeight}
 		backgroundColor={C.SHADOW}
-		backgroundAlpha={pressed ? 0.1 : 0.2}
+		backgroundAlpha={pressed ? 0.08 : hovered ? 0.15 : 0.2}
 	/>
 	<Rectangle
 		width={UI_LAYOUT.leftPanel.width}
 		height={UI_LAYOUT.leftPanel.buyHeight}
-		backgroundColor={disabled ? 0xd9d4c7 : hovered ? 0xffe99f : C.YELLOW}
-		borderColor={C.INK}
-		borderWidth={3}
+		backgroundColor={paperColor}
+		borderColor={modalOpen ? C.GOLD : C.INK}
+		borderWidth={modalOpen ? 4 : 3}
 	/>
 	<Rectangle
 		x={4}
 		y={4}
 		width={UI_LAYOUT.leftPanel.width - 8}
 		height={UI_LAYOUT.leftPanel.buyHeight - 8}
-		backgroundColor={C.YELLOW}
+		backgroundColor={paperColor}
 		backgroundAlpha={0}
 		borderColor={C.INK_SOFT}
 		borderWidth={1}
@@ -84,7 +93,7 @@
 		y={-9}
 		width={55}
 		height={18}
-		rotation={-0.08}
+		rotation={hovered ? -0.05 : -0.08}
 		backgroundColor={C.BLUE_TAPE}
 		backgroundAlpha={0.86}
 	/>
@@ -93,14 +102,14 @@
 		y={-7}
 		width={54}
 		height={18}
-		rotation={0.07}
+		rotation={hovered ? 0.04 : 0.07}
 		backgroundColor={C.BLUE_TAPE}
 		backgroundAlpha={0.86}
 	/>
 
 	<Text
 		x={UI_LAYOUT.leftPanel.width / 2}
-		y={29}
+		y={28}
 		anchor={{ x: 0.5, y: 0 }}
 		text="BUY"
 		style={{
@@ -112,24 +121,24 @@
 	/>
 	<Text
 		x={UI_LAYOUT.leftPanel.width / 2}
-		y={55}
+		y={54}
 		anchor={{ x: 0.5, y: 0 }}
 		text="FREE SPINS"
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 24,
+			fontSize: hovered ? 25 : 24,
 			fontWeight: '700',
 			fill: disabled ? C.DISABLED_DARK : C.RED,
 		}}
 	/>
 	<Text
 		x={UI_LAYOUT.leftPanel.width / 2}
-		y={96}
+		y={95}
 		anchor={{ x: 0.5, y: 0 }}
-		text={disabled ? 'WAIT…' : '★  ★  ★'}
+		text={disabled ? 'WAIT…' : modalOpen ? '★  CHOOSE  ★' : '★  ★  ★'}
 		style={{
-			fontFamily: 'Arial',
-			fontSize: 16,
+			fontFamily: 'Comic Sans MS',
+			fontSize: modalOpen ? 12 : 16,
 			fontWeight: '700',
 			fill: disabled ? C.DISABLED_DARK : C.GOLD,
 		}}
