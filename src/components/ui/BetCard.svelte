@@ -21,7 +21,7 @@
 
 	const label = $derived(stateBetDerived.activeBetMode()?.text.betAmountLabel || 'BET');
 	const value = $derived(numberToCurrencyString(stateBetDerived.betCost()));
-	const valueFontSize = $derived(value.length > 13 ? 15 : value.length > 10 ? 17 : 19);
+	const valueFontSize = $derived(value.length > 13 ? 16 : value.length > 10 ? 18 : 21);
 	const disabled = $derived(!context.stateXstateDerived.isIdle());
 	const menuOpen = $derived(stateModal.modal?.name === 'betAmountMenu');
 
@@ -58,19 +58,19 @@
 	/>
 
 	<Text
-		x={68}
-		y={7}
+		x={82}
+		y={9}
 		text={label}
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 10,
+			fontSize: 11,
 			fontWeight: '700',
 			fill: menuOpen ? C.GOLD : 0x315f89,
 		}}
 	/>
 	<Text
-		x={68}
-		y={24}
+		x={82}
+		y={31}
 		text={value}
 		style={{
 			fontFamily: 'Comic Sans MS',
@@ -80,13 +80,13 @@
 		}}
 	/>
 	<Text
-		x={UI_LAYOUT.leftStats.width - 22}
+		x={UI_LAYOUT.leftStats.width - 24}
 		y={UI_LAYOUT.leftStats.height / 2}
 		anchor={0.5}
 		text={menuOpen ? '⌄' : '›'}
 		style={{
 			fontFamily: 'Arial',
-			fontSize: 21,
+			fontSize: 22,
 			fontWeight: '700',
 			fill: disabled ? 0x8c969e : 0x315f89,
 		}}

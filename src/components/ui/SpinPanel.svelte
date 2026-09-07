@@ -47,8 +47,8 @@
 	// -------------------------------------------------------------------------
 	// Separate lower controls: [+] [FAST] [-]
 	// -------------------------------------------------------------------------
-	const controlGap = 5;
-	const stepWidth = 42;
+	const controlGap = 6;
+	const stepWidth = 48;
 	const turboWidth = UI_LAYOUT.rightPanel.spinWidth - stepWidth * 2 - controlGap * 2;
 	const turboX = stepWidth + controlGap;
 	const decreaseX = turboX + turboWidth + controlGap;

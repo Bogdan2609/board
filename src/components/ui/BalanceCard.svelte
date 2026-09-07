@@ -17,7 +17,7 @@
 
 	const balanceTween = new Tween(stateBet.balanceAmount);
 	const value = $derived(numberToCurrencyString(balanceTween.current));
-	const valueFontSize = $derived(value.length > 13 ? 15 : value.length > 10 ? 17 : 19);
+	const valueFontSize = $derived(value.length > 13 ? 16 : value.length > 10 ? 18 : 21);
 
 	$effect(() => {
 		balanceTween.set(stateBet.balanceAmount);
@@ -32,19 +32,19 @@
 	/>
 
 	<Text
-		x={72}
-		y={7}
+		x={84}
+		y={9}
 		text="BALANCE"
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 10,
+			fontSize: 11,
 			fontWeight: '700',
 			fill: 0x315f89,
 		}}
 	/>
 	<Text
-		x={72}
-		y={24}
+		x={84}
+		y={31}
 		text={value}
 		style={{
 			fontFamily: 'Comic Sans MS',

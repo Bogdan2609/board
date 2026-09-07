@@ -19,20 +19,25 @@ export const UI_LAYOUT = {
 		statsGap: 12,
 	},
 
+	// The production art has more visual detail than the old code rectangles,
+	// so give BALANCE/BET enough room to read at desktop scale.
 	leftStats: {
-		width: 205,
-		height: 54,
-		gap: 7,
+		width: 235,
+		height: 68,
+		gap: 8,
 	},
 
 	winPanel: {
-		height: 58,
+		height: 76,
+		widthRatio: 0.92,
+		holdMs: 1800,
+		fadeMs: 180,
 	},
 
 	rightPanel: {
-		spinWidth: 168,
-		spinHeight: 168,
-		fastHeight: 50,
+		spinWidth: 220,
+		spinHeight: 220,
+		fastHeight: 56,
 		gap: 12,
 	},
 

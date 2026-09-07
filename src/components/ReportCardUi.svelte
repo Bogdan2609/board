@@ -40,8 +40,6 @@
 	const notebookRight = $derived(notebookX + NOTEBOOK_WIDTH / 2);
 	const notebookBottom = $derived(notebookTop + NOTEBOOK_RENDER_HEIGHT);
 
-	// Reel bounds are used only for WIN, which intentionally matches the 6x6 width.
-	const boardLeft = $derived(board.x - board.width / 2);
 	const boardWidth = $derived(board.width);
 
 	// -------------------------------------------------------------------------
@@ -66,9 +64,11 @@
 		balanceY - UI_LAYOUT.leftButtons.statsGap - UI_LAYOUT.leftButtons.buttonSize,
 	);
 
-	const winX = $derived(boardLeft);
+	// WIN is centered under the 6x6 field but slightly narrower than the board.
+	// This avoids the old ultra-stretched look while keeping it visually tied to reels.
+	const winWidth = $derived(boardWidth * UI_LAYOUT.winPanel.widthRatio);
+	const winX = $derived(board.x - winWidth / 2);
 	const winY = $derived(hudBottomY - UI_LAYOUT.winPanel.height);
-	const winWidth = $derived(boardWidth);
 
 	const rightX = $derived(
 		Math.min(
@@ -79,7 +79,6 @@
 	const fastY = $derived(hudBottomY - UI_LAYOUT.rightPanel.fastHeight);
 	const spinY = $derived(fastY - UI_LAYOUT.rightPanel.gap - UI_LAYOUT.rightPanel.spinHeight);
 
-	// Keep this reactive guardrail while the HUD geometry is being tuned.
 	const bottomClearance = $derived(winY - notebookBottom);
 </script>
 
