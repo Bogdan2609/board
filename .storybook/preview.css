@@ -1,0 +1,38 @@
+html,
+body,
+#storybook-root,
+.sb-show-main {
+	margin: 0 !important;
+	padding: 0 !important;
+
+	width: 100% !important;
+	height: 100% !important;
+
+	overflow: hidden !important;
+	overscroll-behavior: none;
+}
+
+html,
+body {
+	position: fixed;
+	inset: 0;
+}
+
+#storybook-root {
+	position: fixed;
+	inset: 0;
+	overflow: hidden !important;
+}
+
+.sb-show-main.sb-main-padded {
+	padding: 0 !important;
+}
+
+.sb-show-main.sb-main-fullscreen {
+	overflow: hidden !important;
+}
+
+canvas {
+	display: block !important;
+	margin: 0 !important;
+}
