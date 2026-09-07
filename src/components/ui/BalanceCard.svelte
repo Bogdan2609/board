@@ -24,16 +24,16 @@
 	});
 </script>
 
-<Container x={props.x} y={props.y} rotation={-0.004}>
+<Container x={props.x - 6} y={props.y} rotation={-0.004}>
 	<Sprite
 		key="reportCardUiBalanceBg"
-		width={UI_LAYOUT.leftStats.width * 1.35}
-		height={UI_LAYOUT.leftStats.height * 1.35}
+		width={UI_LAYOUT.leftStats.width * 1.4}
+		height={UI_LAYOUT.leftStats.height * 1.4}
 	/>
 
 	<Text
-		x={100}
-		y={24}
+		x={104}
+		y={25}
 		text="BALANCE"
 		style={{
 			fontFamily: 'Comic Sans MS',
@@ -43,7 +43,7 @@
 		}}
 	/>
 	<Text
-		x={100}
+		x={104}
 		y={45}
 		text={value}
 		style={{
