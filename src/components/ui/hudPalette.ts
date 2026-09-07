@@ -1,0 +1,17 @@
+export const HUD_COLORS = {
+	INK: 0x28231f,
+	INK_SOFT: 0x51473f,
+	PAPER: 0xfff4d8,
+	PAPER_LIGHT: 0xfff9e8,
+	YELLOW: 0xffe487,
+	BLUE: 0xd8efff,
+	BLUE_TAPE: 0x6ea8ca,
+	GREEN: 0x50a64c,
+	GREEN_DARK: 0x347b36,
+	PURPLE: 0xe6d7f2,
+	RED: 0xd94a40,
+	GOLD: 0xd89f20,
+	SHADOW: 0x291d13,
+	DISABLED: 0x8e9588,
+	DISABLED_DARK: 0x62675e,
+} as const;
