@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Tween } from 'svelte/motion';
 	import { Container, Rectangle, Text } from 'pixi-svelte';
 	import { stateBet } from 'state-shared';
 	import { bookEventAmountToCurrencyString } from 'utils-shared/amount';
@@ -14,7 +15,16 @@
 
 	const props: Props = $props();
 	const C = HUD_COLORS;
-	const value = $derived(bookEventAmountToCurrencyString(stateBet.winBookEventAmount));
+
+	// Match the stock Stake win label: animate book-event win updates so tumble
+	// totals count smoothly instead of jumping between amounts.
+	const winTween = new Tween(stateBet.winBookEventAmount);
+	const value = $derived(bookEventAmountToCurrencyString(winTween.current));
+	const valueFontSize = $derived(value.length > 16 ? 18 : value.length > 12 ? 20 : 22);
+
+	$effect(() => {
+		winTween.set(stateBet.winBookEventAmount);
+	});
 </script>
 
 <Container x={props.x} y={props.y} rotation={-0.003}>
@@ -63,7 +73,7 @@
 		text={value}
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 22,
+			fontSize: valueFontSize,
 			fontWeight: '700',
 			fill: C.INK,
 		}}
