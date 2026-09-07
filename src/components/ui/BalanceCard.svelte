@@ -27,13 +27,13 @@
 <Container x={props.x} y={props.y} rotation={-0.004}>
 	<Sprite
 		key="reportCardUiBalanceBg"
-		width={UI_LAYOUT.leftStats.width}
-		height={UI_LAYOUT.leftStats.height}
+		width={UI_LAYOUT.leftStats.width * 1.35}
+		height={UI_LAYOUT.leftStats.height * 1.35}
 	/>
 
 	<Text
-		x={84}
-		y={9}
+		x={100}
+		y={24}
 		text="BALANCE"
 		style={{
 			fontFamily: 'Comic Sans MS',
@@ -43,8 +43,8 @@
 		}}
 	/>
 	<Text
-		x={84}
-		y={31}
+		x={100}
+		y={45}
 		text={value}
 		style={{
 			fontFamily: 'Comic Sans MS',

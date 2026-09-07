@@ -53,13 +53,13 @@
 >
 	<Sprite
 		key="reportCardUiBetBg"
-		width={UI_LAYOUT.leftStats.width}
-		height={UI_LAYOUT.leftStats.height}
+		width={UI_LAYOUT.leftStats.width * 1.35}
+		height={UI_LAYOUT.leftStats.height * 1.35}
 	/>
 
 	<Text
-		x={82}
-		y={9}
+		x={80}
+		y={25}
 		text={label}
 		style={{
 			fontFamily: 'Comic Sans MS',
@@ -69,8 +69,8 @@
 		}}
 	/>
 	<Text
-		x={82}
-		y={31}
+		x={80}
+		y={37}
 		text={value}
 		style={{
 			fontFamily: 'Comic Sans MS',
@@ -80,8 +80,8 @@
 		}}
 	/>
 	<Text
-		x={UI_LAYOUT.leftStats.width - 24}
-		y={UI_LAYOUT.leftStats.height / 2}
+		x={UI_LAYOUT.leftStats.width}
+		y={UI_LAYOUT.leftStats.height / 1.6}
 		anchor={0.5}
 		text={menuOpen ? '⌄' : '›'}
 		style={{
