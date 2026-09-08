@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Container, Rectangle, Text } from 'pixi-svelte';
-	import { stateBet } from 'state-shared';
+	import { stateBet, stateModal, stateUi } from 'state-shared';
 
 	import { getContext } from '../../game/context';
 	import { UI_LAYOUT } from '../../game/uiLayout';
@@ -18,7 +18,8 @@
 	let hovered = $state<'BASE' | 'ANTE' | null>(null);
 	let pressed = $state<'BASE' | 'ANTE' | null>(null);
 
-	const disabled = $derived(!context.stateXstateDerived.isIdle());
+	const uiBlocked = $derived(Boolean(stateModal.modal) || stateUi.menuOpen);
+	const disabled = $derived(!context.stateXstateDerived.isIdle() || uiBlocked);
 	const activeMode = $derived(stateBet.activeBetModeKey.toUpperCase());
 	const baseActive = $derived(activeMode === 'BASE');
 	const anteActive = $derived(activeMode === 'ANTE');
@@ -77,7 +78,7 @@
 		y={pressed === 'BASE' ? 2 : 0}
 		eventMode="static"
 		cursor={disabled ? 'not-allowed' : 'pointer'}
-		onpointerover={() => (hovered = 'BASE')}
+		onpointerover={() => !disabled && (hovered = 'BASE')}
 		onpointerout={() => {
 			hovered = null;
 			pressed = null;
@@ -145,7 +146,7 @@
 		y={pressed === 'ANTE' ? 2 : 0}
 		eventMode="static"
 		cursor={disabled ? 'not-allowed' : 'pointer'}
-		onpointerover={() => (hovered = 'ANTE')}
+		onpointerover={() => !disabled && (hovered = 'ANTE')}
 		onpointerout={() => {
 			hovered = null;
 			pressed = null;

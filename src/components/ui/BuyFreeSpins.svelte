@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Container, Sprite, Text } from 'pixi-svelte';
-	import { stateBet, stateModal } from 'state-shared';
+	import { stateBet, stateModal, stateUi } from 'state-shared';
 
 	import { getContext } from '../../game/context';
 	import { UI_LAYOUT } from '../../game/uiLayout';
@@ -18,8 +18,12 @@
 	let hovered = $state(false);
 	let pressed = $state(false);
 
-	const disabled = $derived(!context.stateXstateDerived.isIdle());
 	const modalOpen = $derived(stateModal.modal?.name === 'buyBonus');
+	const disabled = $derived(
+		!context.stateXstateDerived.isIdle() ||
+			stateUi.menuOpen ||
+			(Boolean(stateModal.modal) && !modalOpen),
+	);
 
 	const onPress = () => {
 		if (disabled) return;
@@ -36,7 +40,7 @@
 	rotation={pressed ? -0.002 : hovered ? -0.005 : -0.008}
 	eventMode="static"
 	cursor={disabled ? 'not-allowed' : 'pointer'}
-	onpointerover={() => (hovered = true)}
+	onpointerover={() => !disabled && (hovered = true)}
 	onpointerout={() => {
 		hovered = false;
 		pressed = false;

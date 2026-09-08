@@ -6,7 +6,9 @@
 		stateBetDerived,
 		stateConfig,
 		stateModal,
+		stateUi,
 	} from 'state-shared';
+	import { numberToCurrencyString } from 'utils-shared/amount';
 
 	import { getContext } from '../../game/context';
 	import { UI_LAYOUT } from '../../game/uiLayout';
@@ -40,6 +42,8 @@
 	let hovered = $state<ControlKey | null>(null);
 	let pressed = $state<ControlKey | null>(null);
 
+	const uiBlocked = $derived(Boolean(stateModal.modal) || stateUi.menuOpen);
+
 	// ---------------------------------------------------------------------
 	// SPIN / STOP
 	// ---------------------------------------------------------------------
@@ -69,7 +73,7 @@
 	const spinKey = $derived.by(getSpinKey);
 
 	const spinDisabled = $derived(
-		spinKey === 'spin_disabled' || spinKey === 'stop_disabled',
+		uiBlocked || spinKey === 'spin_disabled' || spinKey === 'stop_disabled',
 	);
 
 	const isStop = $derived(
@@ -118,7 +122,7 @@
 	// ---------------------------------------------------------------------
 
 	const turboActive = $derived(stateBet.isTurbo);
-	const turboDisabled = $derived(stateBet.isSpaceHold);
+	const turboDisabled = $derived(stateBet.isSpaceHold || uiBlocked);
 	const turboSpriteKey = $derived(
 		turboActive ? 'reportCardUiTurboOn' : 'reportCardUiTurboOff',
 	);
@@ -145,6 +149,7 @@
 	);
 
 	const autoDisabled = $derived.by(() => {
+		if (uiBlocked) return true;
 		if (stateBet.isSpaceHold) return true;
 
 		if (
@@ -190,13 +195,15 @@
 	const biggestBet = $derived(betOptions[betOptions.length - 1]);
 
 	const increaseDisabled = $derived(
-		!context.stateXstateDerived.isIdle() ||
+		uiBlocked ||
+			!context.stateXstateDerived.isIdle() ||
 			betOptions.length === 0 ||
 			stateBet.betAmount >= biggestBet,
 	);
 
 	const decreaseDisabled = $derived(
-		!context.stateXstateDerived.isIdle() ||
+		uiBlocked ||
+			!context.stateXstateDerived.isIdle() ||
 			betOptions.length === 0 ||
 			stateBet.betAmount <= smallestBet,
 	);
@@ -231,7 +238,7 @@
 		);
 	};
 
-	const formattedBet = $derived(`$${stateBet.betAmount.toFixed(2)}`);
+	const formattedBet = $derived(numberToCurrencyString(stateBet.betAmount));
 
 	// ---------------------------------------------------------------------
 	// GEOMETRY
@@ -299,7 +306,7 @@
 	rotation={hovered === 'turbo' ? -0.008 : 0}
 	eventMode="static"
 	cursor={turboDisabled ? 'not-allowed' : 'pointer'}
-	onpointerover={() => (hovered = 'turbo')}
+	onpointerover={() => !turboDisabled && (hovered = 'turbo')}
 	onpointerout={clearPointer}
 	onpointerdown={() => !turboDisabled && (pressed = 'turbo')}
 	onpointerup={() => {
@@ -327,7 +334,7 @@
 	}
 	eventMode="static"
 	cursor={autoDisabled ? 'not-allowed' : 'pointer'}
-	onpointerover={() => (hovered = 'auto')}
+	onpointerover={() => !autoDisabled && (hovered = 'auto')}
 	onpointerout={clearPointer}
 	onpointerdown={() => !autoDisabled && (pressed = 'auto')}
 	onpointerup={() => {
@@ -357,7 +364,7 @@
 	}
 	eventMode="static"
 	cursor={spinDisabled ? 'not-allowed' : 'pointer'}
-	onpointerover={() => (hovered = 'spin')}
+	onpointerover={() => !spinDisabled && (hovered = 'spin')}
 	onpointerout={clearPointer}
 	onpointerdown={() => !spinDisabled && (pressed = 'spin')}
 	onpointerup={() => {
@@ -402,7 +409,7 @@
 		rotation={hovered === 'decrease' ? -0.012 : -0.02}
 		eventMode="static"
 		cursor={decreaseDisabled ? 'not-allowed' : 'pointer'}
-		onpointerover={() => (hovered = 'decrease')}
+		onpointerover={() => !decreaseDisabled && (hovered = 'decrease')}
 		onpointerout={clearPointer}
 		onpointerdown={() => !decreaseDisabled && (pressed = 'decrease')}
 		onpointerup={() => {
@@ -465,7 +472,7 @@
 		rotation={hovered === 'increase' ? 0.012 : 0.02}
 		eventMode="static"
 		cursor={increaseDisabled ? 'not-allowed' : 'pointer'}
-		onpointerover={() => (hovered = 'increase')}
+		onpointerover={() => !increaseDisabled && (hovered = 'increase')}
 		onpointerout={clearPointer}
 		onpointerdown={() => !increaseDisabled && (pressed = 'increase')}
 		onpointerup={() => {

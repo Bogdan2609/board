@@ -20,7 +20,11 @@
 	const panelX = 28;
 	const panelY = $derived(Math.max(94, main.height / 2 - panelHeight / 2));
 
-	const close = () => (stateUi.menuOpen = false);
+	const close = () => {
+		hovered = null;
+		pressed = null;
+		stateUi.menuOpen = false;
+	};
 
 	const click = (key: 'paytable' | 'rules' | 'settings' | 'sound' | 'close') => {
 		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
@@ -59,7 +63,13 @@
 		onpointerup={close}
 	/>
 
-	<Container x={panelX} y={panelY} rotation={-0.008}>
+	<Container
+		x={panelX}
+		y={panelY}
+		rotation={-0.008}
+		eventMode="static"
+		onpointerup={(event) => event.stopPropagation()}
+	>
 		<Rectangle
 			x={9}
 			y={10}

@@ -30,12 +30,14 @@
 
 	const openInfo = () => {
 		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
+		stateUi.menuOpen = false;
 		stateModal.modal = { name: 'gameRules' };
 	};
 
 	const openMenu = () => {
+		if (stateModal.modal) return;
 		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
-		stateUi.menuOpen = true;
+		stateUi.menuOpen = !stateUi.menuOpen;
 	};
 
 	const activate = (key: ButtonKey) => {
@@ -155,18 +157,19 @@
 		y={pressed === 'menu' ? 3 : 0}
 		rotation={pressed === 'menu' ? 0 : -0.008}
 		eventMode="static"
-		cursor="pointer"
-		onpointerover={() => (hovered = 'menu')}
+		cursor={stateModal.modal ? 'not-allowed' : 'pointer'}
+		onpointerover={() => !stateModal.modal && (hovered = 'menu')}
 		onpointerout={() => {
 			hovered = null;
 			pressed = null;
 		}}
-		onpointerdown={() => (pressed = 'menu')}
+		onpointerdown={() => !stateModal.modal && (pressed = 'menu')}
 		onpointerup={() => {
 			pressed = null;
 			activate('menu');
 		}}
 		onpointerupoutside={() => (pressed = null)}
+		alpha={stateModal.modal ? 0.5 : 1}
 	>
 		<Rectangle
 			x={pressed === 'menu' ? 2 : 4}
