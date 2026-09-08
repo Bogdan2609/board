@@ -389,89 +389,97 @@
 	{/if}
 </Container>
 
-<!-- BET MINUS -->
-<Container
-	x={props.x - 25}
-	y={props.betControlsY + (pressed === 'decrease' ? 3 : 0)}
-	rotation={hovered === 'decrease' ? -0.012 : -0.02}
-	eventMode="static"
-	cursor={decreaseDisabled ? 'not-allowed' : 'pointer'}
-	onpointerover={() => (hovered = 'decrease')}
-	onpointerout={clearPointer}
-	onpointerdown={() => !decreaseDisabled && (pressed = 'decrease')}
-	onpointerup={() => {
-		pressed = null;
-		onDecreasePress();
-	}}
-	onpointerupoutside={() => (pressed = null)}
-	alpha={decreaseDisabled ? 0.4 : hovered === 'decrease' ? 1 : 0.96}
->
-	<Sprite
-		key="reportCardUiBetMinus"
-		width={stepWidth}
-		height={betHeight}
-	/>
-</Container>
+<!-- ================================================================ -->
+<!-- BOTTOM BET CLUSTER                                               -->
+<!-- ================================================================ -->
 
-<!-- RIGHT BET VALUE -->
-<Container
-	x={props.x + betCenterX - 25}
-	y={props.betControlsY - 25}
-	rotation={0.006}
->
-	<Sprite
-		key="reportCardUiRightBetBg"
-		width={betCenterWidth * 1.7}
-		height={betHeight * 1.7}
-	/>
+<Container x={-20}>
 
-	<Text
-		x={betTextX + 25}
-		y={42}
-		anchor={{ x: 0.5, y: 0 }}
-		text="BET"
-		style={{
-			fontFamily: 'Comic Sans MS',
-			fontSize: 10,
-			fontWeight: '700',
-			fill: 0x245f9b,
+	<!-- BET MINUS -->
+	<Container
+		x={props.x - 25}
+		y={props.betControlsY + (pressed === 'decrease' ? 3 : 0)}
+		rotation={hovered === 'decrease' ? -0.012 : -0.02}
+		eventMode="static"
+		cursor={decreaseDisabled ? 'not-allowed' : 'pointer'}
+		onpointerover={() => (hovered = 'decrease')}
+		onpointerout={clearPointer}
+		onpointerdown={() => !decreaseDisabled && (pressed = 'decrease')}
+		onpointerup={() => {
+			pressed = null;
+			onDecreasePress();
 		}}
-	/>
+		onpointerupoutside={() => (pressed = null)}
+		alpha={decreaseDisabled ? 0.4 : hovered === 'decrease' ? 1 : 0.96}
+	>
+		<Sprite
+			key="reportCardUiBetMinus"
+			width={stepWidth}
+			height={betHeight}
+		/>
+	</Container>
 
-	<Text
-		x={betTextX + 25}
-		y={50}
-		anchor={{ x: 0.5, y: 0 }}
-		text={formattedBet}
-		style={{
-			fontFamily: 'Comic Sans MS',
-			fontSize: 22,
-			fontWeight: '700',
-			fill: C.INK,
+	<!-- RIGHT BET VALUE -->
+	<Container
+		x={props.x + betCenterX - 25}
+		y={props.betControlsY - 25}
+		rotation={0.006}
+	>
+		<Sprite
+			key="reportCardUiRightBetBg"
+			width={betCenterWidth * 1.7}
+			height={betHeight * 1.7}
+		/>
+
+		<Text
+			x={betTextX + 25}
+			y={42}
+			anchor={{ x: 0.5, y: 0 }}
+			text="BET"
+			style={{
+				fontFamily: 'Comic Sans MS',
+				fontSize: 10,
+				fontWeight: '700',
+				fill: 0x245f9b,
+			}}
+		/>
+
+		<Text
+			x={betTextX + 25}
+			y={50}
+			anchor={{ x: 0.5, y: 0 }}
+			text={formattedBet}
+			style={{
+				fontFamily: 'Comic Sans MS',
+				fontSize: 22,
+				fontWeight: '700',
+				fill: C.INK,
+			}}
+		/>
+	</Container>
+
+	<!-- BET PLUS -->
+	<Container
+		x={props.x + plusX + 50}
+		y={props.betControlsY + (pressed === 'increase' ? 3 : 0) - 15}
+		rotation={hovered === 'increase' ? 0.012 : 0.02}
+		eventMode="static"
+		cursor={increaseDisabled ? 'not-allowed' : 'pointer'}
+		onpointerover={() => (hovered = 'increase')}
+		onpointerout={clearPointer}
+		onpointerdown={() => !increaseDisabled && (pressed = 'increase')}
+		onpointerup={() => {
+			pressed = null;
+			onIncreasePress();
 		}}
-	/>
-</Container>
+		onpointerupoutside={() => (pressed = null)}
+		alpha={increaseDisabled ? 0.4 : hovered === 'increase' ? 1 : 0.96}
+	>
+		<Sprite
+			key="reportCardUiBetPlus"
+			width={stepWidth + 15}
+			height={betHeight + 15}
+		/>
+	</Container>
 
-<!-- BET PLUS -->
-<Container
-	x={props.x + plusX + 50}
-	y={props.betControlsY + (pressed === 'increase' ? 3 : 0) - 15}
-	rotation={hovered === 'increase' ? 0.012 : 0.02}
-	eventMode="static"
-	cursor={increaseDisabled ? 'not-allowed' : 'pointer'}
-	onpointerover={() => (hovered = 'increase')}
-	onpointerout={clearPointer}
-	onpointerdown={() => !increaseDisabled && (pressed = 'increase')}
-	onpointerup={() => {
-		pressed = null;
-		onIncreasePress();
-	}}
-	onpointerupoutside={() => (pressed = null)}
-	alpha={increaseDisabled ? 0.4 : hovered === 'increase' ? 1 : 0.96}
->
-	<Sprite
-		key="reportCardUiBetPlus"
-		width={stepWidth + 15}
-		height={betHeight + 15}
-	/>
 </Container>
