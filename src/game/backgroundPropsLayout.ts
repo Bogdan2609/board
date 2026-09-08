@@ -45,11 +45,26 @@ const motion = (
 // - pencil_top_right (big pencil)
 // - a_plus_spins_sticky
 // - ruler_corner
+// - paper_clip
+// - sharpener
+// - shavings_01
 //
 // Everything else is intentionally removed for now.
 // -----------------------------------------------------------------------------
 
-export const IDLE_SUPPORT_PROPS: BackgroundProp[] = [];
+export const IDLE_SUPPORT_PROPS: BackgroundProp[] = [
+	{
+		id: 'shavings-top-right',
+		key: 'reportCardBgPropShavings01',
+		x: 1470,
+		y: 200,
+		width: 115,
+		height: 86,
+		rotationDeg: 8,
+		alpha: 0.72,
+		motion: motion(1.6, 1.5, 0.7, 0.003, 9.4, 2.8),
+	},
+];
 
 export const IDLE_PAPER_PROPS: BackgroundProp[] = [
 	{
@@ -67,7 +82,7 @@ export const IDLE_PAPER_PROPS: BackgroundProp[] = [
 		id: 'a-plus-spins-right',
 		key: 'reportCardBgPropAPlusSpinsSticky',
 		x: 1498,
-		y: 300,
+		y: 400,
 		width: 354,
 		height: 265.5,
 		rotationDeg: -3,
@@ -89,6 +104,17 @@ export const IDLE_PHYSICAL_PROPS: BackgroundProp[] = [
 		motion: motion(2.0, 1.5, 0.45, 0.0025, 10.6, 0.4),
 	},
 	{
+		id: 'sharpener-top-right',
+		key: 'reportCardBgPropSharpener',
+		x: 1570,
+		y: 210,
+		width: 108,
+		height: 108,
+		rotationDeg: 9,
+		alpha: 0.95,
+		motion: motion(1.7, 1.6, 0.45, 0.0025, 10.0, 2.2),
+	},
+	{
 		id: 'eraser-bottom-left',
 		key: 'reportCardBgPropEraserPink',
 		x: 1,
@@ -98,6 +124,17 @@ export const IDLE_PHYSICAL_PROPS: BackgroundProp[] = [
 		rotationDeg: -16,
 		alpha: 0.95,
 		motion: motion(1.8, 1.6, 0.45, 0.0025, 10.2, 3.4),
+	},
+	{
+		id: 'paperclip-left',
+		key: 'reportCardBgPropPaperClip',
+		x: 335,
+		y: 75,
+		width: 82,
+		height: 82,
+		rotationDeg: 25,
+		alpha: 0.9,
+		motion: motion(1.6, 1.6, 0.45, 0.0025, 9.6, 1.1),
 	},
 	{
 		id: 'pencil-bottom-left',
