@@ -21,7 +21,7 @@
 	const visibilityTween = new Tween(0, { duration: UI_LAYOUT.winPanel.fadeMs });
 
 	const value = $derived(bookEventAmountToCurrencyString(winTween.current));
-	const valueFontSize = $derived(value.length > 16 ? 18 : value.length > 12 ? 21 : 24);
+	const valueFontSize = $derived(value.length > 16 ? 20 : value.length > 12 ? 24 : 28);
 
 	let hideTimer: ReturnType<typeof setTimeout> | undefined;
 
@@ -47,13 +47,12 @@
 </script>
 
 <!--
-	WIN is intentionally always mounted: only alpha/Y are animated.
-	Every positive win update refreshes the hold timer, so tumble wins keep the
-	banner visible and the final total fades out after the last update.
+	WIN is always mounted and fades in only when a positive win exists.
+	Each tumble update refreshes the hold timer; after the final update it fades away.
 -->
 <Container
 	x={props.x}
-	y={props.y + (1 - visibilityTween.current) * 10}
+	y={props.y + (1 - visibilityTween.current) * 12}
 	rotation={-0.002}
 	alpha={visibilityTween.current}
 >
@@ -64,20 +63,20 @@
 	/>
 
 	<Text
-		x={props.width * 0.56}
-		y={12}
+		x={props.width * 0.58}
+		y={13}
 		anchor={{ x: 0.5, y: 0 }}
 		text="WIN"
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 12,
+			fontSize: 13,
 			fontWeight: '700',
 			fill: 0x315f89,
 		}}
 	/>
 	<Text
-		x={props.width * 0.56}
-		y={34}
+		x={props.width * 0.58}
+		y={38}
 		anchor={{ x: 0.5, y: 0 }}
 		text={value}
 		style={{

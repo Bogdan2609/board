@@ -33,7 +33,7 @@
 <Container
 	x={props.x}
 	y={props.y + (pressed ? 4 : 0)}
-	rotation={pressed ? -0.002 : hovered ? -0.006 : -0.01}
+	rotation={pressed ? -0.002 : hovered ? -0.005 : -0.008}
 	eventMode="static"
 	cursor={disabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = true)}
@@ -47,12 +47,15 @@
 		onPress();
 	}}
 	onpointerupoutside={() => (pressed = false)}
-	alpha={disabled ? 0.62 : hovered || modalOpen ? 1 : 0.96}
+	alpha={disabled ? 0.62 : hovered || modalOpen ? 1 : 0.97}
 >
+	<!-- Slightly oversize the art around the fixed left-column anchor. -->
 	<Sprite
 		key="reportCardUiBuyFreeSpinsBg"
-		width={UI_LAYOUT.leftPanel.width}
-		height={UI_LAYOUT.leftPanel.buyHeight}
+		x={-4}
+		y={-2}
+		width={UI_LAYOUT.leftPanel.width + 8}
+		height={UI_LAYOUT.leftPanel.buyHeight + 4}
 	/>
 
 	<Text
@@ -62,26 +65,26 @@
 		text="BUY"
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 19,
+			fontSize: 20,
 			fontWeight: '700',
 			fill: C.INK,
 		}}
 	/>
 	<Text
 		x={UI_LAYOUT.leftPanel.width / 2}
-		y={56}
+		y={57}
 		anchor={{ x: 0.5, y: 0 }}
 		text="FREE SPINS"
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: hovered ? 24 : 23,
+			fontSize: hovered ? 25 : 24,
 			fontWeight: '700',
 			fill: disabled ? C.DISABLED_DARK : C.RED,
 		}}
 	/>
 	<Text
 		x={UI_LAYOUT.leftPanel.width / 2}
-		y={96}
+		y={100}
 		anchor={{ x: 0.5, y: 0 }}
 		text={disabled ? 'WAIT…' : modalOpen ? '★  CHOOSE  ★' : '★  ★  ★'}
 		style={{

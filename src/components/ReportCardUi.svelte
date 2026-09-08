@@ -72,12 +72,29 @@
 
 	const rightX = $derived(
 		Math.min(
-			main.width - UI_LAYOUT.safeGap.edge - UI_LAYOUT.rightPanel.spinWidth,
+			main.width - UI_LAYOUT.safeGap.edge - UI_LAYOUT.rightPanel.width,
 			notebookRight + UI_LAYOUT.safeGap.side,
 		),
 	);
-	const fastY = $derived(hudBottomY - UI_LAYOUT.rightPanel.fastHeight);
-	const spinY = $derived(fastY - UI_LAYOUT.rightPanel.gap - UI_LAYOUT.rightPanel.spinHeight);
+
+	// Bottom row: [-] BET [+]
+	const betControlsY = $derived(
+		hudBottomY - UI_LAYOUT.rightPanel.betHeight,
+	);
+
+	// Main SPIN sits immediately above bet controls.
+	const spinY = $derived(
+		betControlsY -
+			UI_LAYOUT.rightPanel.sectionGap -
+			UI_LAYOUT.rightPanel.spinHeight,
+	);
+
+	// Turbo / Auto sit immediately above SPIN.
+	const topControlsY = $derived(
+		spinY -
+			UI_LAYOUT.rightPanel.sectionGap -
+			UI_LAYOUT.rightPanel.topButtonSize,
+	);
 
 	const bottomClearance = $derived(winY - notebookBottom);
 </script>
@@ -91,7 +108,12 @@
 		<BetCard x={leftX} y={betY} />
 
 		<WinBar x={winX} y={winY} width={winWidth} />
-		<SpinPanel x={rightX} {spinY} {fastY} />
+		<SpinPanel
+			x={rightX}
+			{topControlsY}
+			{spinY}
+			{betControlsY}
+		/>
 		<HudMenuOverlay />
 
 		{#if bottomClearance < UI_LAYOUT.safeGap.bottom}

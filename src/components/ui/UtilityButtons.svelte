@@ -62,7 +62,7 @@
 	<Container
 		x={buttonX(0)}
 		y={pressed === 'sound' ? 3 : 0}
-		rotation={pressed === 'sound' ? -0.01 : -0.025}
+		rotation={pressed === 'sound' ? -0.006 : -0.018}
 		eventMode="static"
 		cursor="pointer"
 		onpointerover={() => (hovered = 'sound')}
@@ -90,14 +90,14 @@
 			height={UI_LAYOUT.leftButtons.buttonSize}
 			backgroundColor={buttonPaper('sound')}
 			borderColor={soundMuted ? C.RED : C.INK}
-			borderWidth={soundMuted ? 3 : 3}
+			borderWidth={3}
 		/>
 		<Text
 			x={UI_LAYOUT.leftButtons.buttonSize / 2}
 			y={UI_LAYOUT.leftButtons.buttonSize / 2}
 			anchor={0.5}
 			text={soundMuted ? '🔇' : '🔊'}
-			style={{ fontFamily: 'Arial', fontSize: 21, fontWeight: '700', fill: C.INK }}
+			style={{ fontFamily: 'Arial', fontSize: 24, fontWeight: '700', fill: C.INK }}
 		/>
 	</Container>
 
@@ -105,7 +105,7 @@
 	<Container
 		x={buttonX(1)}
 		y={pressed === 'info' ? 3 : 0}
-		rotation={pressed === 'info' ? 0.006 : 0.018}
+		rotation={pressed === 'info' ? 0.004 : 0.014}
 		eventMode="static"
 		cursor="pointer"
 		onpointerover={() => (hovered = 'info')}
@@ -142,7 +142,7 @@
 			text="i"
 			style={{
 				fontFamily: 'Georgia',
-				fontSize: 27,
+				fontSize: 31,
 				fontWeight: '700',
 				fill: 0x245f9b,
 			}}
@@ -153,7 +153,7 @@
 	<Container
 		x={buttonX(2)}
 		y={pressed === 'menu' ? 3 : 0}
-		rotation={pressed === 'menu' ? 0 : -0.01}
+		rotation={pressed === 'menu' ? 0 : -0.008}
 		eventMode="static"
 		cursor="pointer"
 		onpointerover={() => (hovered = 'menu')}
@@ -188,7 +188,7 @@
 			y={UI_LAYOUT.leftButtons.buttonSize / 2}
 			anchor={0.5}
 			text={stateUi.menuOpen ? '×' : '≡'}
-			style={{ fontFamily: 'Arial', fontSize: 31, fontWeight: '700', fill: C.INK }}
+			style={{ fontFamily: 'Arial', fontSize: 35, fontWeight: '700', fill: C.INK }}
 		/>
 	</Container>
 </Container>

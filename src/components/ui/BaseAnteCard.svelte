@@ -29,38 +29,47 @@
 		stateBet.activeBetModeKey = mode;
 	};
 
-	const topY = 6;
-	const topHeight = 42;
-	const bottomY = 58;
-	const bottomHeight = UI_LAYOUT.leftPanel.modeHeight - bottomY - 5;
+	const topY = 7;
+	const topHeight = 46;
+	const dividerY = 56;
+	const bottomY = 62;
+	const bottomHeight = UI_LAYOUT.leftPanel.modeHeight - bottomY - 6;
 </script>
 
-<Container x={props.x} y={props.y} rotation={0.008} alpha={disabled ? 0.72 : 1}>
+<Container x={props.x} y={props.y} rotation={0.006} alpha={disabled ? 0.72 : 1}>
 	<Rectangle
-		x={6}
-		y={7}
+		x={5}
+		y={6}
 		width={UI_LAYOUT.leftPanel.width}
 		height={UI_LAYOUT.leftPanel.modeHeight}
 		backgroundColor={C.SHADOW}
-		backgroundAlpha={0.18}
+		backgroundAlpha={0.16}
 	/>
 	<Rectangle
 		width={UI_LAYOUT.leftPanel.width}
 		height={UI_LAYOUT.leftPanel.modeHeight}
-		backgroundColor={C.BLUE}
+		backgroundColor={C.PAPER_LIGHT}
 		borderColor={C.INK}
 		borderWidth={3}
 	/>
 	<Rectangle
-		x={4}
-		y={4}
-		width={UI_LAYOUT.leftPanel.width - 8}
-		height={UI_LAYOUT.leftPanel.modeHeight - 8}
-		backgroundColor={C.BLUE}
+		x={5}
+		y={5}
+		width={UI_LAYOUT.leftPanel.width - 10}
+		height={UI_LAYOUT.leftPanel.modeHeight - 10}
+		backgroundColor={C.PAPER_LIGHT}
 		backgroundAlpha={0}
-		borderColor={C.INK_SOFT}
+		borderColor={0x86b9d8}
 		borderWidth={1}
-		alpha={0.34}
+		alpha={0.52}
+	/>
+	<Rectangle
+		x={12}
+		y={dividerY}
+		width={UI_LAYOUT.leftPanel.width - 24}
+		height={2}
+		backgroundColor={0x86b9d8}
+		backgroundAlpha={0.72}
 	/>
 
 	<!-- BASE -->
@@ -85,9 +94,9 @@
 			y={topY}
 			width={UI_LAYOUT.leftPanel.width - 16}
 			height={topHeight}
-			backgroundColor={baseActive ? C.PAPER_LIGHT : hovered === 'BASE' ? C.BLUE_HOVER : C.BLUE}
-			backgroundAlpha={baseActive || hovered === 'BASE' ? 0.96 : 0.001}
-			borderColor={baseActive ? C.GOLD : hovered === 'BASE' ? 0x83bad9 : C.BLUE}
+			backgroundColor={baseActive ? 0xfff7db : hovered === 'BASE' ? C.BLUE_HOVER : C.PAPER_LIGHT}
+			backgroundAlpha={baseActive || hovered === 'BASE' ? 0.98 : 0.001}
+			borderColor={baseActive ? C.GOLD : hovered === 'BASE' ? 0x83bad9 : C.PAPER_LIGHT}
 			borderWidth={baseActive ? 3 : hovered === 'BASE' ? 1 : 0}
 		/>
 		<Text
@@ -95,16 +104,16 @@
 			y={topY + topHeight / 2}
 			anchor={0.5}
 			text={baseActive ? '✓' : ''}
-			style={{ fontFamily: 'Arial', fontSize: 16, fontWeight: '700', fill: C.GREEN_DARK }}
+			style={{ fontFamily: 'Arial', fontSize: 17, fontWeight: '700', fill: C.GREEN_DARK }}
 		/>
 		<Text
 			x={UI_LAYOUT.leftPanel.width / 2}
-			y={14}
+			y={16}
 			anchor={{ x: 0.5, y: 0 }}
 			text="BASE"
 			style={{
 				fontFamily: 'Comic Sans MS',
-				fontSize: 20,
+				fontSize: 21,
 				fontWeight: '700',
 				fill: C.INK,
 			}}
@@ -120,12 +129,12 @@
 
 	<Text
 		x={UI_LAYOUT.leftPanel.width / 2}
-		y={40}
+		y={45}
 		anchor={{ x: 0.5, y: 0 }}
 		text="↕"
 		style={{
 			fontFamily: 'Arial',
-			fontSize: 21,
+			fontSize: 20,
 			fontWeight: '700',
 			fill: 0x315f89,
 		}}
@@ -153,9 +162,9 @@
 			y={bottomY}
 			width={UI_LAYOUT.leftPanel.width - 16}
 			height={bottomHeight}
-			backgroundColor={anteActive ? C.YELLOW : hovered === 'ANTE' ? C.YELLOW_HOVER : C.BLUE}
-			backgroundAlpha={anteActive || hovered === 'ANTE' ? 0.96 : 0.001}
-			borderColor={anteActive ? C.GOLD : hovered === 'ANTE' ? C.GOLD_LIGHT : C.BLUE}
+			backgroundColor={anteActive ? C.YELLOW : hovered === 'ANTE' ? C.YELLOW_HOVER : C.PAPER_LIGHT}
+			backgroundAlpha={anteActive || hovered === 'ANTE' ? 0.98 : 0.001}
+			borderColor={anteActive ? C.GOLD : hovered === 'ANTE' ? C.GOLD_LIGHT : C.PAPER_LIGHT}
 			borderWidth={anteActive ? 3 : hovered === 'ANTE' ? 1 : 0}
 		/>
 		<Text
@@ -163,16 +172,16 @@
 			y={bottomY + bottomHeight / 2}
 			anchor={0.5}
 			text={anteActive ? '✓' : ''}
-			style={{ fontFamily: 'Arial', fontSize: 16, fontWeight: '700', fill: C.GREEN_DARK }}
+			style={{ fontFamily: 'Arial', fontSize: 17, fontWeight: '700', fill: C.GREEN_DARK }}
 		/>
 		<Text
 			x={UI_LAYOUT.leftPanel.width / 2}
-			y={68}
+			y={74}
 			anchor={{ x: 0.5, y: 0 }}
 			text="ANTE  1.2×"
 			style={{
 				fontFamily: 'Comic Sans MS',
-				fontSize: 19,
+				fontSize: 20,
 				fontWeight: '700',
 				fill: C.INK,
 			}}
