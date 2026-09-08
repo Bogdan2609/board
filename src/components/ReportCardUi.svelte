@@ -17,7 +17,6 @@
 	import BaseAnteCard from './ui/BaseAnteCard.svelte';
 	import UtilityButtons from './ui/UtilityButtons.svelte';
 	import BalanceCard from './ui/BalanceCard.svelte';
-	import BetCard from './ui/BetCard.svelte';
 	import WinBar from './ui/WinBar.svelte';
 	import SpinPanel from './ui/SpinPanel.svelte';
 	import HudMenuOverlay from './ui/HudMenuOverlay.svelte';
@@ -43,8 +42,8 @@
 	const boardWidth = $derived(board.width);
 
 	// -------------------------------------------------------------------------
-	// Shared HUD baseline.
-	// BET, WIN and FAST all end on the same lower edge.
+	// Shared bottom baseline for Balance + Win.
+	// The old left BetCard has been removed completely from the HUD layout.
 	// -------------------------------------------------------------------------
 	const hudBottomY = $derived(main.height - UI_LAYOUT.bottom.bottomOffset);
 
@@ -58,14 +57,14 @@
 	const leftTopY = $derived(Math.max(UI_LAYOUT.safeGap.edge + 22, notebookTop + 92));
 	const modeY = $derived(leftTopY + UI_LAYOUT.leftPanel.buyHeight + UI_LAYOUT.leftPanel.gap);
 
-	const betY = $derived(hudBottomY - UI_LAYOUT.leftStats.height);
-	const balanceY = $derived(betY - UI_LAYOUT.leftStats.gap - UI_LAYOUT.leftStats.height);
+	// Balance now occupies the former bottom stats slot and shares the same
+	// bottom edge as the WIN banner. Utility buttons follow it downward.
+	const balanceY = $derived(hudBottomY - UI_LAYOUT.leftStats.height);
 	const utilityY = $derived(
 		balanceY - UI_LAYOUT.leftButtons.statsGap - UI_LAYOUT.leftButtons.buttonSize,
 	);
 
-	// WIN is centered under the 6x6 field but slightly narrower than the board.
-	// This avoids the old ultra-stretched look while keeping it visually tied to reels.
+	// WIN remains centered under the 6x6 field.
 	const winWidth = $derived(boardWidth * UI_LAYOUT.winPanel.widthRatio);
 	const winX = $derived(board.x - winWidth / 2);
 	const winY = $derived(hudBottomY - UI_LAYOUT.winPanel.height);
@@ -77,23 +76,26 @@
 		),
 	);
 
-	// Bottom row: [-] BET [+]
+	// Right rail uses its own bottom edge so SPIN/Turbo/Auto can sit lower
+	// without moving Balance or WIN.
+	const rightBottomY = $derived(main.height - UI_LAYOUT.rightPanel.bottomOffset);
+
 	const betControlsY = $derived(
-		hudBottomY - UI_LAYOUT.rightPanel.betHeight,
+		rightBottomY - UI_LAYOUT.rightPanel.betHeight,
 	);
 
-	// Main SPIN sits immediately above bet controls.
 	const spinY = $derived(
 		betControlsY -
 			UI_LAYOUT.rightPanel.sectionGap -
 			UI_LAYOUT.rightPanel.spinHeight,
 	);
 
-	// Turbo / Auto sit immediately above SPIN.
+	// The top controls intentionally overlap the SPIN silhouette slightly.
+	// Turbo is centered over SPIN; Auto is offset/rotated to curl to the right.
 	const topControlsY = $derived(
 		spinY -
-			UI_LAYOUT.rightPanel.sectionGap -
-			UI_LAYOUT.rightPanel.topButtonSize,
+			UI_LAYOUT.rightPanel.topButtonSize +
+			UI_LAYOUT.rightPanel.topButtonOverlap,
 	);
 
 	const bottomClearance = $derived(winY - notebookBottom);
@@ -105,7 +107,6 @@
 		<BaseAnteCard x={leftX} y={modeY} />
 		<UtilityButtons x={leftX} y={utilityY} />
 		<BalanceCard x={leftX} y={balanceY} />
-		<BetCard x={leftX} y={betY} />
 
 		<WinBar x={winX} y={winY} width={winWidth} />
 		<SpinPanel

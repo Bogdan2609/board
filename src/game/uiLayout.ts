@@ -18,7 +18,6 @@ export const UI_LAYOUT = {
 		statsGap: 12,
 	},
 
-	// НЕ ТРОГАЕМ.
 	leftStats: {
 		width: 235,
 		height: 68,
@@ -33,19 +32,27 @@ export const UI_LAYOUT = {
 	},
 
 	rightPanel: {
-		width: 220,
+		// Wider only for the bottom BET strip. The 220px SPIN remains centered.
+		width: 250,
 
-		topButtonSize: 78,
-		topButtonGap: 14,
+		// Smaller top controls. Turbo is centered over SPIN; Auto curls to the right.
+		topButtonSize: 66,
+		topButtonOverlap: 10,
+		autoOffsetX: 90,
+		autoOffsetY: 0,
+		autoRotation: 0.5,
 
-		sectionGap: 12,
+		// Keep SPIN close to the right BET row so the whole rail sits lower.
+		sectionGap: 4,
+		bottomOffset: 0,
 
 		spinWidth: 220,
 		spinHeight: 220,
 
-		betHeight: 66,
-		betStepWidth: 54,
-		betGap: 6,
+		// Slightly larger right-side BET asset while keeping +/- compact.
+		betHeight: 70,
+		betStepWidth: 60,
+		betGap: 10,
 	},
 
 	bottom: {

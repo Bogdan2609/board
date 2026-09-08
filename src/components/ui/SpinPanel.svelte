@@ -239,15 +239,17 @@
 
 	const panelWidth = UI_LAYOUT.rightPanel.width;
 	const topSize = UI_LAYOUT.rightPanel.topButtonSize;
-	const topGap = UI_LAYOUT.rightPanel.topButtonGap;
-	const topTotalWidth = topSize * 2 + topGap;
-	const topStartX = (panelWidth - topTotalWidth) / 2;
-	const turboX = topStartX;
-	const autoX = topStartX + topSize + topGap;
 
 	const spinWidth = UI_LAYOUT.rightPanel.spinWidth;
 	const spinHeight = UI_LAYOUT.rightPanel.spinHeight;
 	const spinX = (panelWidth - spinWidth) / 2;
+
+	// Turbo is centered exactly on the SPIN axis.
+	const turboX = spinX + (spinWidth - topSize) / 2;
+
+	// Auto peels/curls to the right of Turbo instead of forming a rigid row.
+	const autoX = turboX + UI_LAYOUT.rightPanel.autoOffsetX;
+	const autoY = UI_LAYOUT.rightPanel.autoOffsetY;
 
 	const stepWidth = UI_LAYOUT.rightPanel.betStepWidth;
 	const betHeight = UI_LAYOUT.rightPanel.betHeight;
@@ -257,8 +259,8 @@
 	const plusX = betCenterX + betCenterWidth + betGap;
 
 	// right_bet_bg has a calculator on the left, so the dynamic text belongs
-	// in the clean right-hand portion of the paper strip.
-	const betTextX = betCenterWidth * 0.67;
+	// in the clean right-hand portion of the enlarged paper strip.
+	const betTextX = betCenterWidth * 0.68;
 
 	const clearPointer = () => {
 		hovered = null;
@@ -294,7 +296,7 @@
 <Container
 	x={props.x + turboX}
 	y={props.topControlsY + (pressed === 'turbo' ? 3 : 0)}
-	rotation={hovered === 'turbo' ? -0.018 : -0.03}
+	rotation={hovered === 'turbo' ? -0.008 : 0}
 	eventMode="static"
 	cursor={turboDisabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = 'turbo')}
@@ -317,8 +319,12 @@
 <!-- AUTO SPIN -->
 <Container
 	x={props.x + autoX}
-	y={props.topControlsY + (pressed === 'auto' ? 3 : 0)}
-	rotation={hovered === 'auto' ? 0.014 : 0.028}
+	y={props.topControlsY + autoY + (pressed === 'auto' ? 3 : 0)}
+	rotation={
+		hovered === 'auto'
+			? UI_LAYOUT.rightPanel.autoRotation + 0.02
+			: UI_LAYOUT.rightPanel.autoRotation
+	}
 	eventMode="static"
 	cursor={autoDisabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = 'auto')}
@@ -385,7 +391,7 @@
 
 <!-- BET MINUS -->
 <Container
-	x={props.x}
+	x={props.x - 25}
 	y={props.betControlsY + (pressed === 'decrease' ? 3 : 0)}
 	rotation={hovered === 'decrease' ? -0.012 : -0.02}
 	eventMode="static"
@@ -409,19 +415,19 @@
 
 <!-- RIGHT BET VALUE -->
 <Container
-	x={props.x + betCenterX}
-	y={props.betControlsY}
+	x={props.x + betCenterX - 25}
+	y={props.betControlsY - 25}
 	rotation={0.006}
 >
 	<Sprite
 		key="reportCardUiRightBetBg"
-		width={betCenterWidth}
-		height={betHeight}
+		width={betCenterWidth * 1.7}
+		height={betHeight * 1.7}
 	/>
 
 	<Text
-		x={betTextX}
-		y={10}
+		x={betTextX + 25}
+		y={42}
 		anchor={{ x: 0.5, y: 0 }}
 		text="BET"
 		style={{
@@ -433,13 +439,13 @@
 	/>
 
 	<Text
-		x={betTextX}
-		y={27}
+		x={betTextX + 25}
+		y={50}
 		anchor={{ x: 0.5, y: 0 }}
 		text={formattedBet}
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 21,
+			fontSize: 22,
 			fontWeight: '700',
 			fill: C.INK,
 		}}
@@ -448,8 +454,8 @@
 
 <!-- BET PLUS -->
 <Container
-	x={props.x + plusX}
-	y={props.betControlsY + (pressed === 'increase' ? 3 : 0)}
+	x={props.x + plusX + 50}
+	y={props.betControlsY + (pressed === 'increase' ? 3 : 0) - 15}
 	rotation={hovered === 'increase' ? 0.012 : 0.02}
 	eventMode="static"
 	cursor={increaseDisabled ? 'not-allowed' : 'pointer'}
@@ -465,7 +471,7 @@
 >
 	<Sprite
 		key="reportCardUiBetPlus"
-		width={stepWidth}
-		height={betHeight}
+		width={stepWidth + 15}
+		height={betHeight + 15}
 	/>
 </Container>
