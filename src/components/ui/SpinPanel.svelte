@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Rectangle, Sprite, Text } from 'pixi-svelte';
+	import { Container, Sprite, Text } from 'pixi-svelte';
 	import { OnHotkey } from 'components-shared';
 	import {
 		stateBet,
@@ -33,7 +33,6 @@
 	};
 
 	const props: Props = $props();
-
 	const context = getContext();
 	const C = HUD_COLORS;
 
@@ -70,21 +69,21 @@
 	const spinKey = $derived.by(getSpinKey);
 
 	const spinDisabled = $derived(
-		spinKey === 'spin_disabled' ||
-			spinKey === 'stop_disabled',
+		spinKey === 'spin_disabled' || spinKey === 'stop_disabled',
 	);
 
 	const isStop = $derived(
-		spinKey === 'stop_default' ||
-			spinKey === 'stop_disabled',
+		spinKey === 'stop_default' || spinKey === 'stop_disabled',
 	);
 
-	const spinLabel = $derived(isStop ? 'STOP' : 'SPIN');
-
-	const spinSpriteKey = $derived(
-		pressed === 'spin'
-			? 'reportCardUiSpinPressed'
-			: 'reportCardUiSpinIdle',
+	const mainButtonSpriteKey = $derived(
+		isStop
+			? pressed === 'spin'
+				? 'reportCardUiStopPressed'
+				: 'reportCardUiStopIdle'
+			: pressed === 'spin'
+				? 'reportCardUiSpinPressed'
+				: 'reportCardUiSpinIdle',
 	);
 
 	const onSpinPress = () => {
@@ -94,7 +93,6 @@
 			type: 'soundPressBet',
 		});
 
-		// Normal spin.
 		if (context.stateXstateDerived.isIdle()) {
 			if (stateBetDerived.activeBetMode()?.type === 'buy') {
 				stateBet.activeBetModeKey = 'BASE';
@@ -103,11 +101,9 @@
 			context.eventEmitter.broadcast({
 				type: 'bet',
 			});
-
 			return;
 		}
 
-		// Stop autoplay first.
 		if (stateBetDerived.hasAutoBetCounter()) {
 			stateBet.autoSpinsCounter = 0;
 		}
@@ -123,6 +119,9 @@
 
 	const turboActive = $derived(stateBet.isTurbo);
 	const turboDisabled = $derived(stateBet.isSpaceHold);
+	const turboSpriteKey = $derived(
+		turboActive ? 'reportCardUiTurboOn' : 'reportCardUiTurboOff',
+	);
 
 	const onTurboPress = () => {
 		if (turboDisabled) return;
@@ -131,25 +130,23 @@
 			type: 'soundPressGeneral',
 		});
 
-		stateBetDerived.updateIsTurbo(
-			!stateBet.isTurbo,
-			{ persistent: true },
-		);
+		stateBetDerived.updateIsTurbo(!stateBet.isTurbo, {
+			persistent: true,
+		});
 	};
 
 	// ---------------------------------------------------------------------
 	// AUTO SPIN
 	// ---------------------------------------------------------------------
 
-	const autoActive = $derived(
-		stateBetDerived.hasAutoBetCounter(),
+	const autoActive = $derived(stateBetDerived.hasAutoBetCounter());
+	const autoSpriteKey = $derived(
+		autoActive ? 'reportCardUiAutoOn' : 'reportCardUiAutoOff',
 	);
 
 	const autoDisabled = $derived.by(() => {
 		if (stateBet.isSpaceHold) return true;
 
-		// While a normal spin is running, AUTO cannot be enabled.
-		// If auto is already running, button remains available so it can stop it.
 		if (
 			!context.stateXstateDerived.isIdle() &&
 			!stateBetDerived.hasAutoBetCounter()
@@ -172,12 +169,10 @@
 		});
 
 		if (stateBetDerived.hasAutoBetCounter()) {
-			// Second click stops Auto Spin.
 			stateBet.autoSpinsCounter = 0;
 			return;
 		}
 
-		// Open standard auto-spin amount modal.
 		stateModal.modal = {
 			name: 'autoSpin',
 		};
@@ -188,15 +183,11 @@
 	// ---------------------------------------------------------------------
 
 	const betOptions = $derived(
-		[...stateConfig.betAmountOptions].sort(
-			(a, b) => a - b,
-		),
+		[...stateConfig.betAmountOptions].sort((a, b) => a - b),
 	);
 
 	const smallestBet = $derived(betOptions[0]);
-	const biggestBet = $derived(
-		betOptions[betOptions.length - 1],
-	);
+	const biggestBet = $derived(betOptions[betOptions.length - 1]);
 
 	const increaseDisabled = $derived(
 		!context.stateXstateDerived.isIdle() ||
@@ -217,9 +208,7 @@
 			type: 'soundPressGeneral',
 		});
 
-		const next = betOptions.find(
-			(option) => option > stateBet.betAmount,
-		);
+		const next = betOptions.find((option) => option > stateBet.betAmount);
 
 		stateBetDerived.setBetAmount(
 			next ?? biggestBet ?? stateBet.betAmount,
@@ -235,105 +224,62 @@
 
 		const next = [...betOptions]
 			.reverse()
-			.find(
-				(option) => option < stateBet.betAmount,
-			);
+			.find((option) => option < stateBet.betAmount);
 
 		stateBetDerived.setBetAmount(
 			next ?? smallestBet ?? stateBet.betAmount,
 		);
 	};
 
-	const formattedBet = $derived(
-		`$${stateBet.betAmount.toFixed(2)}`,
-	);
+	const formattedBet = $derived(`$${stateBet.betAmount.toFixed(2)}`);
 
 	// ---------------------------------------------------------------------
 	// GEOMETRY
 	// ---------------------------------------------------------------------
 
 	const panelWidth = UI_LAYOUT.rightPanel.width;
-
-	const topSize =
-		UI_LAYOUT.rightPanel.topButtonSize;
-
-	const topGap =
-		UI_LAYOUT.rightPanel.topButtonGap;
-
+	const topSize = UI_LAYOUT.rightPanel.topButtonSize;
+	const topGap = UI_LAYOUT.rightPanel.topButtonGap;
 	const topTotalWidth = topSize * 2 + topGap;
-
-	const topStartX =
-		(panelWidth - topTotalWidth) / 2;
-
+	const topStartX = (panelWidth - topTotalWidth) / 2;
 	const turboX = topStartX;
+	const autoX = topStartX + topSize + topGap;
 
-	const autoX =
-		topStartX + topSize + topGap;
+	const spinWidth = UI_LAYOUT.rightPanel.spinWidth;
+	const spinHeight = UI_LAYOUT.rightPanel.spinHeight;
+	const spinX = (panelWidth - spinWidth) / 2;
 
-	const stepWidth =
-		UI_LAYOUT.rightPanel.betStepWidth;
+	const stepWidth = UI_LAYOUT.rightPanel.betStepWidth;
+	const betHeight = UI_LAYOUT.rightPanel.betHeight;
+	const betGap = UI_LAYOUT.rightPanel.betGap;
+	const betCenterWidth = panelWidth - stepWidth * 2 - betGap * 2;
+	const betCenterX = stepWidth + betGap;
+	const plusX = betCenterX + betCenterWidth + betGap;
 
-	const betGap =
-		UI_LAYOUT.rightPanel.betGap;
-
-	const betCenterWidth =
-		panelWidth -
-		stepWidth * 2 -
-		betGap * 2;
-
-	const betCenterX =
-		stepWidth + betGap;
-
-	const plusX =
-		betCenterX +
-		betCenterWidth +
-		betGap;
+	// right_bet_bg has a calculator on the left, so the dynamic text belongs
+	// in the clean right-hand portion of the paper strip.
+	const betTextX = betCenterWidth * 0.67;
 
 	const clearPointer = () => {
 		hovered = null;
 		pressed = null;
 	};
 
-	const temporaryButtonFill = (
-		key: 'turbo' | 'auto',
-		active: boolean,
-		disabled: boolean,
-	) => {
-		if (disabled) return C.DISABLED;
-
-		if (pressed === key) {
-			return C.YELLOW_PRESSED;
-		}
-
-		if (active) {
-			return C.GREEN;
-		}
-
-		if (hovered === key) {
-			return C.YELLOW_HOVER;
-		}
-
-		return 0x183733;
-	};
-
-	// Preserve temporary non-persistent turbo behaviour used by STOP.
 	context.eventEmitter.subscribeOnMount({
 		stopButtonClick: () => {
 			stopDisabled = true;
 
-			stateBetDerived.updateIsTurbo(
-				true,
-				{ persistent: false },
-			);
+			stateBetDerived.updateIsTurbo(true, {
+				persistent: false,
+			});
 		},
 
 		stopButtonEnable: () => {
 			stopDisabled = false;
 
-			stateBetDerived.updateIsTurbo(
-				false,
-				{ persistent: false },
-			);
+			stateBetDerived.updateIsTurbo(false, {
+				persistent: false,
+			});
 		},
 	});
 </script>
@@ -344,128 +290,57 @@
 	onpress={onSpinPress}
 />
 
-<!-- ================================================================ -->
-<!-- TOP CONTROLS: TURBO / AUTO                                       -->
-<!-- ================================================================ -->
-
 <!-- TURBO -->
 <Container
 	x={props.x + turboX}
 	y={props.topControlsY + (pressed === 'turbo' ? 3 : 0)}
-	rotation={hovered === 'turbo' ? -0.02 : -0.035}
+	rotation={hovered === 'turbo' ? -0.018 : -0.03}
 	eventMode="static"
 	cursor={turboDisabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = 'turbo')}
 	onpointerout={clearPointer}
-	onpointerdown={() =>
-		!turboDisabled && (pressed = 'turbo')}
+	onpointerdown={() => !turboDisabled && (pressed = 'turbo')}
 	onpointerup={() => {
 		pressed = null;
 		onTurboPress();
 	}}
 	onpointerupoutside={() => (pressed = null)}
-	alpha={turboDisabled ? 0.55 : 1}
+	alpha={turboDisabled ? 0.42 : hovered === 'turbo' ? 1 : 0.96}
 >
-	<!-- Temporary shape.
-	     Later this becomes turbo_off.png / turbo_on.png -->
-	<Rectangle
-		x={4}
-		y={5}
+	<Sprite
+		key={turboSpriteKey}
 		width={topSize}
 		height={topSize}
-		backgroundColor={C.SHADOW}
-		backgroundAlpha={0.18}
-	/>
-
-	<Rectangle
-		width={topSize}
-		height={topSize}
-		backgroundColor={temporaryButtonFill(
-			'turbo',
-			turboActive,
-			turboDisabled,
-		)}
-		borderColor={turboActive ? C.GOLD : C.PAPER_LIGHT}
-		borderWidth={5}
-	/>
-
-	<!-- ICON ONLY. NO "TURBO" LABEL. -->
-	<Text
-		x={topSize / 2}
-		y={topSize / 2}
-		anchor={0.5}
-		text="⚡"
-		style={{
-			fontFamily: 'Arial',
-			fontSize: 38,
-			fontWeight: '700',
-			fill: turboActive ? 0xffe36a : 0xffffff,
-		}}
 	/>
 </Container>
 
-<!-- AUTO -->
+<!-- AUTO SPIN -->
 <Container
 	x={props.x + autoX}
 	y={props.topControlsY + (pressed === 'auto' ? 3 : 0)}
-	rotation={hovered === 'auto' ? 0.018 : 0.032}
+	rotation={hovered === 'auto' ? 0.014 : 0.028}
 	eventMode="static"
 	cursor={autoDisabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = 'auto')}
 	onpointerout={clearPointer}
-	onpointerdown={() =>
-		!autoDisabled && (pressed = 'auto')}
+	onpointerdown={() => !autoDisabled && (pressed = 'auto')}
 	onpointerup={() => {
 		pressed = null;
 		onAutoPress();
 	}}
 	onpointerupoutside={() => (pressed = null)}
-	alpha={autoDisabled ? 0.55 : 1}
+	alpha={autoDisabled ? 0.42 : hovered === 'auto' ? 1 : 0.96}
 >
-	<!-- Temporary shape.
-	     Later this becomes auto_off.png / auto_on.png -->
-	<Rectangle
-		x={4}
-		y={5}
+	<Sprite
+		key={autoSpriteKey}
 		width={topSize}
 		height={topSize}
-		backgroundColor={C.SHADOW}
-		backgroundAlpha={0.18}
-	/>
-
-	<Rectangle
-		width={topSize}
-		height={topSize}
-		backgroundColor={temporaryButtonFill(
-			'auto',
-			autoActive,
-			autoDisabled,
-		)}
-		borderColor={autoActive ? C.GOLD : C.PAPER_LIGHT}
-		borderWidth={5}
-	/>
-
-	<!-- ICON ONLY. NO "AUTO" LABEL. -->
-	<Text
-		x={topSize / 2}
-		y={topSize / 2}
-		anchor={0.5}
-		text="↻"
-		style={{
-			fontFamily: 'Arial',
-			fontSize: 43,
-			fontWeight: '700',
-			fill: 0xffffff,
-		}}
 	/>
 </Container>
 
-<!-- ================================================================ -->
-<!-- MAIN SPIN / STOP                                                 -->
-<!-- ================================================================ -->
-
+<!-- MAIN SPIN / STOP -->
 <Container
-	x={props.x}
+	x={props.x + spinX}
 	y={props.spinY + (pressed === 'spin' ? 4 : 0)}
 	rotation={
 		pressed === 'spin'
@@ -478,64 +353,26 @@
 	cursor={spinDisabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = 'spin')}
 	onpointerout={clearPointer}
-	onpointerdown={() =>
-		!spinDisabled && (pressed = 'spin')}
+	onpointerdown={() => !spinDisabled && (pressed = 'spin')}
 	onpointerup={() => {
 		pressed = null;
 		onSpinPress();
 	}}
 	onpointerupoutside={() => (pressed = null)}
-	alpha={spinDisabled ? 0.55 : 1}
+	alpha={spinDisabled ? 0.5 : hovered === 'spin' ? 1 : 0.98}
 >
-	{#if isStop}
-		<!-- Temporary STOP fallback until stop assets are added. -->
-		<Rectangle
-			x={-6}
-			y={-6}
-			width={UI_LAYOUT.rightPanel.spinWidth + 12}
-			height={UI_LAYOUT.rightPanel.spinHeight + 12}
-			backgroundColor={C.PAPER_LIGHT}
-			borderColor={C.INK}
-			borderWidth={3}
-		/>
+	<Sprite
+		key={mainButtonSpriteKey}
+		width={spinWidth}
+		height={spinHeight}
+	/>
 
-		<Rectangle
-			width={UI_LAYOUT.rightPanel.spinWidth}
-			height={UI_LAYOUT.rightPanel.spinHeight}
-			backgroundColor={
-				spinDisabled
-					? C.DISABLED
-					: C.STOP
-			}
-			borderColor={C.INK}
-			borderWidth={5}
-		/>
-
+	{#if !isStop}
 		<Text
-			x={UI_LAYOUT.rightPanel.spinWidth / 2}
-			y={UI_LAYOUT.rightPanel.spinHeight / 2}
-			anchor={0.5}
-			text="■"
-			style={{
-				fontFamily: 'Arial',
-				fontSize: 72,
-				fontWeight: '700',
-				fill: 0xffffff,
-			}}
-		/>
-	{:else}
-		<Sprite
-			key={spinSpriteKey}
-			width={UI_LAYOUT.rightPanel.spinWidth}
-			height={UI_LAYOUT.rightPanel.spinHeight}
-			alpha={hovered === 'spin' ? 1 : 0.98}
-		/>
-
-		<Text
-			x={UI_LAYOUT.rightPanel.spinWidth / 2}
+			x={spinWidth / 2}
 			y={42}
 			anchor={0.5}
-			text={spinLabel}
+			text="SPIN"
 			style={{
 				fontFamily: 'Comic Sans MS',
 				fontSize: 17,
@@ -546,137 +383,89 @@
 	{/if}
 </Container>
 
-<!-- ================================================================ -->
-<!-- BOTTOM BET ROW: [-] [BET $] [+]                                 -->
-<!-- ================================================================ -->
-
-<!-- MINUS -->
+<!-- BET MINUS -->
 <Container
 	x={props.x}
 	y={props.betControlsY + (pressed === 'decrease' ? 3 : 0)}
-	rotation={-0.02}
+	rotation={hovered === 'decrease' ? -0.012 : -0.02}
 	eventMode="static"
 	cursor={decreaseDisabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = 'decrease')}
 	onpointerout={clearPointer}
-	onpointerdown={() =>
-		!decreaseDisabled && (pressed = 'decrease')}
+	onpointerdown={() => !decreaseDisabled && (pressed = 'decrease')}
 	onpointerup={() => {
 		pressed = null;
 		onDecreasePress();
 	}}
 	onpointerupoutside={() => (pressed = null)}
+	alpha={decreaseDisabled ? 0.4 : hovered === 'decrease' ? 1 : 0.96}
 >
-	<Rectangle
+	<Sprite
+		key="reportCardUiBetMinus"
 		width={stepWidth}
-		height={UI_LAYOUT.rightPanel.betHeight}
-		backgroundColor={
-			decreaseDisabled
-				? C.DISABLED
-				: hovered === 'decrease'
-					? C.YELLOW_HOVER
-					: 0x183733
-		}
-		borderColor={C.PAPER_LIGHT}
-		borderWidth={4}
-	/>
-
-	<Text
-		x={stepWidth / 2}
-		y={UI_LAYOUT.rightPanel.betHeight / 2}
-		anchor={0.5}
-		text="−"
-		style={{
-			fontFamily: 'Arial',
-			fontSize: 34,
-			fontWeight: '700',
-			fill: 0xffffff,
-		}}
+		height={betHeight}
 	/>
 </Container>
 
-<!-- BET VALUE -->
+<!-- RIGHT BET VALUE -->
 <Container
 	x={props.x + betCenterX}
 	y={props.betControlsY}
-	rotation={0.008}
+	rotation={0.006}
 >
-	<Rectangle
+	<Sprite
+		key="reportCardUiRightBetBg"
 		width={betCenterWidth}
-		height={UI_LAYOUT.rightPanel.betHeight}
-		backgroundColor={C.PAPER_LIGHT}
-		borderColor={C.INK}
-		borderWidth={3}
+		height={betHeight}
 	/>
 
 	<Text
-		x={betCenterWidth / 2}
-		y={8}
+		x={betTextX}
+		y={10}
 		anchor={{ x: 0.5, y: 0 }}
 		text="BET"
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 11,
+			fontSize: 10,
 			fontWeight: '700',
 			fill: 0x245f9b,
 		}}
 	/>
 
 	<Text
-		x={betCenterWidth / 2}
+		x={betTextX}
 		y={27}
 		anchor={{ x: 0.5, y: 0 }}
 		text={formattedBet}
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 23,
+			fontSize: 21,
 			fontWeight: '700',
 			fill: C.INK,
 		}}
 	/>
 </Container>
 
-<!-- PLUS -->
+<!-- BET PLUS -->
 <Container
 	x={props.x + plusX}
 	y={props.betControlsY + (pressed === 'increase' ? 3 : 0)}
-	rotation={0.018}
+	rotation={hovered === 'increase' ? 0.012 : 0.02}
 	eventMode="static"
 	cursor={increaseDisabled ? 'not-allowed' : 'pointer'}
 	onpointerover={() => (hovered = 'increase')}
 	onpointerout={clearPointer}
-	onpointerdown={() =>
-		!increaseDisabled && (pressed = 'increase')}
+	onpointerdown={() => !increaseDisabled && (pressed = 'increase')}
 	onpointerup={() => {
 		pressed = null;
 		onIncreasePress();
 	}}
 	onpointerupoutside={() => (pressed = null)}
+	alpha={increaseDisabled ? 0.4 : hovered === 'increase' ? 1 : 0.96}
 >
-	<Rectangle
+	<Sprite
+		key="reportCardUiBetPlus"
 		width={stepWidth}
-		height={UI_LAYOUT.rightPanel.betHeight}
-		backgroundColor={
-			increaseDisabled
-				? C.DISABLED
-				: hovered === 'increase'
-					? C.YELLOW_HOVER
-					: 0x183733
-		}
-		borderColor={C.PAPER_LIGHT}
-		borderWidth={4}
-	/>
-
-	<Text
-		x={stepWidth / 2}
-		y={UI_LAYOUT.rightPanel.betHeight / 2}
-		anchor={0.5}
-		text="+"
-		style={{
-			fontFamily: 'Arial',
-			fontSize: 32,
-			fontWeight: '700',
-			fill: 0xffffff,
-		}}
+		height={betHeight}
 	/>
 </Container>
