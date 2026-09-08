@@ -8,7 +8,8 @@ export const UI_LAYOUT = {
 	leftPanel: {
 		width: 220,
 		buyHeight: 132,
-		modeHeight: 102,
+		// Taller because base_ante_bg is a vertical paper card.
+		modeHeight: 240,
 		gap: 16,
 	},
 

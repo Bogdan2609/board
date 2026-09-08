@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Rectangle, Text } from 'pixi-svelte';
+	import { Container, Rectangle, Sprite, Text } from 'pixi-svelte';
 	import { stateBet, stateModal, stateUi } from 'state-shared';
 
 	import { getContext } from '../../game/context';
@@ -30,52 +30,34 @@
 		stateBet.activeBetModeKey = mode;
 	};
 
-	const topY = 7;
-	const topHeight = 46;
-	const dividerY = 56;
-	const bottomY = 62;
-	const bottomHeight = UI_LAYOUT.leftPanel.modeHeight - bottomY - 6;
+	const cardWidth = UI_LAYOUT.leftPanel.width;
+	const cardHeight = UI_LAYOUT.leftPanel.modeHeight;
+
+	const topY = 42;
+	const topHeight = 74;
+	const topCenterY = 78;
+
+	const dividerY = 120;
+
+	const bottomY = 128;
+	const bottomHeight = 76;
+	const bottomCenterY = 166;
 </script>
 
-<Container x={props.x} y={props.y} rotation={0.006} alpha={disabled ? 0.72 : 1}>
-	<Rectangle
-		x={5}
-		y={6}
-		width={UI_LAYOUT.leftPanel.width}
-		height={UI_LAYOUT.leftPanel.modeHeight}
-		backgroundColor={C.SHADOW}
-		backgroundAlpha={0.16}
-	/>
-	<Rectangle
-		width={UI_LAYOUT.leftPanel.width}
-		height={UI_LAYOUT.leftPanel.modeHeight}
-		backgroundColor={C.PAPER_LIGHT}
-		borderColor={C.INK}
-		borderWidth={3}
-	/>
-	<Rectangle
-		x={5}
-		y={5}
-		width={UI_LAYOUT.leftPanel.width - 10}
-		height={UI_LAYOUT.leftPanel.modeHeight - 10}
-		backgroundColor={C.PAPER_LIGHT}
-		backgroundAlpha={0}
-		borderColor={0x86b9d8}
-		borderWidth={1}
-		alpha={0.52}
-	/>
-	<Rectangle
-		x={12}
-		y={dividerY}
-		width={UI_LAYOUT.leftPanel.width - 24}
-		height={2}
-		backgroundColor={0x86b9d8}
-		backgroundAlpha={0.72}
+<Container
+	x={props.x}
+	y={props.y + (pressed ? 2 : 0)}
+	rotation={pressed ? 0 : 0.004}
+	alpha={disabled ? 0.68 : 1}
+>
+	<Sprite
+		key="reportCardUiBaseAnteBg"
+		width={cardWidth}
+		height={cardHeight}
 	/>
 
-	<!-- BASE -->
+	<!-- BASE hit/highlight layer -->
 	<Container
-		y={pressed === 'BASE' ? 2 : 0}
 		eventMode="static"
 		cursor={disabled ? 'not-allowed' : 'pointer'}
 		onpointerover={() => !disabled && (hovered = 'BASE')}
@@ -91,37 +73,37 @@
 		onpointerupoutside={() => (pressed = null)}
 	>
 		<Rectangle
-			x={8}
+			x={16}
 			y={topY}
-			width={UI_LAYOUT.leftPanel.width - 16}
+			width={cardWidth - 32}
 			height={topHeight}
-			backgroundColor={baseActive ? 0xfff7db : hovered === 'BASE' ? C.BLUE_HOVER : C.PAPER_LIGHT}
-			backgroundAlpha={baseActive || hovered === 'BASE' ? 0.98 : 0.001}
-			borderColor={baseActive ? C.GOLD : hovered === 'BASE' ? 0x83bad9 : C.PAPER_LIGHT}
-			borderWidth={baseActive ? 3 : hovered === 'BASE' ? 1 : 0}
+			backgroundColor={baseActive ? C.YELLOW : C.BLUE_HOVER}
+			backgroundAlpha={baseActive ? 0.18 : hovered === 'BASE' ? 0.12 : 0.001}
+			borderColor={baseActive ? C.GOLD : C.BLUE_HOVER}
+			borderWidth={baseActive ? 2 : hovered === 'BASE' ? 1 : 0}
 		/>
 		<Text
-			x={22}
-			y={topY + topHeight / 2}
+			x={36}
+			y={topCenterY}
 			anchor={0.5}
 			text={baseActive ? '✓' : ''}
-			style={{ fontFamily: 'Arial', fontSize: 17, fontWeight: '700', fill: C.GREEN_DARK }}
+			style={{ fontFamily: 'Arial', fontSize: 19, fontWeight: '700', fill: C.GREEN_DARK }}
 		/>
 		<Text
-			x={UI_LAYOUT.leftPanel.width / 2}
-			y={16}
-			anchor={{ x: 0.5, y: 0 }}
+			x={cardWidth / 2}
+			y={topCenterY}
+			anchor={0.5}
 			text="BASE"
 			style={{
 				fontFamily: 'Comic Sans MS',
-				fontSize: 21,
+				fontSize: 22,
 				fontWeight: '700',
 				fill: C.INK,
 			}}
 		/>
 		<Text
-			x={UI_LAYOUT.leftPanel.width - 24}
-			y={topY + topHeight / 2}
+			x={cardWidth - 30}
+			y={topCenterY}
 			anchor={0.5}
 			text={baseActive ? 'ON' : ''}
 			style={{ fontFamily: 'Comic Sans MS', fontSize: 10, fontWeight: '700', fill: C.GREEN_DARK }}
@@ -129,21 +111,20 @@
 	</Container>
 
 	<Text
-		x={UI_LAYOUT.leftPanel.width / 2}
-		y={45}
-		anchor={{ x: 0.5, y: 0 }}
+		x={cardWidth / 2}
+		y={dividerY}
+		anchor={0.5}
 		text="↕"
 		style={{
 			fontFamily: 'Arial',
-			fontSize: 20,
+			fontSize: 18,
 			fontWeight: '700',
 			fill: 0x315f89,
 		}}
 	/>
 
-	<!-- ANTE -->
+	<!-- ANTE hit/highlight layer -->
 	<Container
-		y={pressed === 'ANTE' ? 2 : 0}
 		eventMode="static"
 		cursor={disabled ? 'not-allowed' : 'pointer'}
 		onpointerover={() => !disabled && (hovered = 'ANTE')}
@@ -159,26 +140,26 @@
 		onpointerupoutside={() => (pressed = null)}
 	>
 		<Rectangle
-			x={8}
+			x={16}
 			y={bottomY}
-			width={UI_LAYOUT.leftPanel.width - 16}
+			width={cardWidth - 32}
 			height={bottomHeight}
-			backgroundColor={anteActive ? C.YELLOW : hovered === 'ANTE' ? C.YELLOW_HOVER : C.PAPER_LIGHT}
-			backgroundAlpha={anteActive || hovered === 'ANTE' ? 0.98 : 0.001}
-			borderColor={anteActive ? C.GOLD : hovered === 'ANTE' ? C.GOLD_LIGHT : C.PAPER_LIGHT}
-			borderWidth={anteActive ? 3 : hovered === 'ANTE' ? 1 : 0}
+			backgroundColor={anteActive ? C.YELLOW : C.YELLOW_HOVER}
+			backgroundAlpha={anteActive ? 0.2 : hovered === 'ANTE' ? 0.12 : 0.001}
+			borderColor={anteActive ? C.GOLD : C.YELLOW_HOVER}
+			borderWidth={anteActive ? 2 : hovered === 'ANTE' ? 1 : 0}
 		/>
 		<Text
-			x={22}
-			y={bottomY + bottomHeight / 2}
+			x={36}
+			y={bottomCenterY}
 			anchor={0.5}
 			text={anteActive ? '✓' : ''}
-			style={{ fontFamily: 'Arial', fontSize: 17, fontWeight: '700', fill: C.GREEN_DARK }}
+			style={{ fontFamily: 'Arial', fontSize: 19, fontWeight: '700', fill: C.GREEN_DARK }}
 		/>
 		<Text
-			x={UI_LAYOUT.leftPanel.width / 2}
-			y={74}
-			anchor={{ x: 0.5, y: 0 }}
+			x={cardWidth / 2}
+			y={bottomCenterY}
+			anchor={0.5}
 			text="ANTE  1.2×"
 			style={{
 				fontFamily: 'Comic Sans MS',
@@ -188,8 +169,8 @@
 			}}
 		/>
 		<Text
-			x={UI_LAYOUT.leftPanel.width - 24}
-			y={bottomY + bottomHeight / 2}
+			x={cardWidth - 30}
+			y={bottomCenterY}
 			anchor={0.5}
 			text={anteActive ? 'ON' : ''}
 			style={{ fontFamily: 'Comic Sans MS', fontSize: 10, fontWeight: '700', fill: C.GREEN_DARK }}

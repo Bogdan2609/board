@@ -24,6 +24,82 @@ export default {
 		preload: true,
 	},
 
+	// Left HUD art.
+	reportCardUiBaseAnteBg: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/base_ante_bg.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	reportCardUiSoundOn: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/sound_on.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	reportCardUiSoundOff: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/sound_off.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	reportCardUiInfo: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/info.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	reportCardUiMenu: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/menu.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	reportCardUiMenuClose: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/menu_close.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	reportCardUiMenuPanelBg: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/menu_panel_bg.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+
+	// Preloaded now; these are reserved for the HTML modal skin pass.
+	reportCardUiModalPaperBg: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/modal_paper_bg.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	reportCardUiModalClose: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/modal_close.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+
 	// Legacy FAST assets stay registered for compatibility with older HUD code.
 	reportCardUiFastOff: {
 		type: 'sprite',

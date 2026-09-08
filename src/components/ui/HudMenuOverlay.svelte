@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Container, Rectangle, Text } from 'pixi-svelte';
+	import { Container, Rectangle, Sprite, Text } from 'pixi-svelte';
 	import { stateModal, stateSound, stateUi } from 'state-shared';
 
 	import { getContext } from '../../game/context';
@@ -13,12 +13,16 @@
 	let hovered = $state<string | null>(null);
 	let pressed = $state<string | null>(null);
 
-	const panelWidth = 246;
-	const rowHeight = 52;
-	const gap = 8;
-	const panelHeight = 62 + rowHeight * 5 + gap * 4 + 22;
-	const panelX = 28;
-	const panelY = $derived(Math.max(94, main.height / 2 - panelHeight / 2));
+	const panelWidth = 300;
+	const panelHeight = 375;
+	const panelX = 24;
+	const panelY = $derived(Math.max(60, main.height / 2 - panelHeight / 2));
+
+	const rowHeight = 48;
+	const rowGap = 7;
+	const rowsStartY = 100;
+	const rowX = 22;
+	const rowWidth = panelWidth - 44;
 
 	const close = () => {
 		hovered = null;
@@ -41,11 +45,11 @@
 	};
 
 	const labels = $derived([
-		{ key: 'paytable', label: '★  PAYTABLE', paper: C.BLUE },
-		{ key: 'rules', label: 'i   GAME RULES', paper: C.PAPER_LIGHT },
-		{ key: 'settings', label: '⚙  SETTINGS', paper: C.BLUE },
-		{ key: 'sound', label: soundMuted ? '🔇  SOUND OFF' : '🔊  SOUND ON', paper: C.PAPER_LIGHT },
-		{ key: 'close', label: '×   CLOSE', paper: 0xf7d7cf },
+		{ key: 'paytable', label: 'PAYTABLE' },
+		{ key: 'rules', label: 'GAME RULES' },
+		{ key: 'settings', label: 'SETTINGS' },
+		{ key: 'sound', label: soundMuted ? 'SOUND OFF' : 'SOUND ON' },
+		{ key: 'close', label: 'CLOSE' },
 	] as const);
 </script>
 
@@ -66,83 +70,34 @@
 	<Container
 		x={panelX}
 		y={panelY}
-		rotation={-0.008}
+		rotation={-0.006}
 		eventMode="static"
 		onpointerup={(event) => event.stopPropagation()}
 	>
-		<Rectangle
-			x={9}
-			y={10}
+		<Sprite
+			key="reportCardUiMenuPanelBg"
 			width={panelWidth}
 			height={panelHeight}
-			backgroundColor={C.SHADOW}
-			backgroundAlpha={0.3}
-		/>
-		<Rectangle
-			width={panelWidth}
-			height={panelHeight}
-			backgroundColor={C.PAPER}
-			borderColor={C.INK}
-			borderWidth={4}
-		/>
-		<Rectangle
-			x={5}
-			y={5}
-			width={panelWidth - 10}
-			height={panelHeight - 10}
-			backgroundColor={C.PAPER}
-			backgroundAlpha={0}
-			borderColor={C.INK_SOFT}
-			borderWidth={1}
-			alpha={0.35}
-		/>
-
-		<!-- Tape and thumb-tack doodles make the menu feel like a pinned note. -->
-		<Rectangle
-			x={28}
-			y={-9}
-			width={58}
-			height={18}
-			rotation={-0.08}
-			backgroundColor={C.BLUE_TAPE}
-			backgroundAlpha={0.9}
-		/>
-		<Rectangle
-			x={panelWidth - 84}
-			y={-7}
-			width={56}
-			height={18}
-			rotation={0.07}
-			backgroundColor={C.BLUE_TAPE}
-			backgroundAlpha={0.9}
 		/>
 
 		<Text
 			x={panelWidth / 2}
-			y={15}
-			anchor={{ x: 0.5, y: 0 }}
+			y={40}
+			anchor={0.5}
 			text="REPORT CARD MENU"
 			style={{
 				fontFamily: 'Comic Sans MS',
-				fontSize: 20,
+				fontSize: 18,
 				fontWeight: '700',
 				fill: C.INK,
 			}}
 		/>
-		<Text
-			x={panelWidth / 2}
-			y={40}
-			anchor={{ x: 0.5, y: 0 }}
-			text="— pick a note —"
-			style={{ fontFamily: 'Comic Sans MS', fontSize: 11, fill: C.INK_SOFT }}
-		/>
 
 		{#each labels as item, index}
-			{@const y = 66 + index * (rowHeight + gap)}
+			{@const y = rowsStartY + index * (rowHeight + rowGap)}
 			<Container
-				x={12}
-				y={y + (pressed === item.key ? 3 : 0)}
-				rotation={pressed === item.key ? 0 : index % 2 === 0 ? -0.006 : 0.005}
+				x={rowX}
+				y={y + (pressed === item.key ? 2 : 0)}
 				eventMode="static"
 				cursor="pointer"
 				onpointerover={() => (hovered = item.key)}
@@ -159,30 +114,21 @@
 				onpointerupoutside={() => (pressed = null)}
 			>
 				<Rectangle
-					x={pressed === item.key ? 2 : 4}
-					y={pressed === item.key ? 2 : 4}
-					width={panelWidth - 24}
+					width={rowWidth}
 					height={rowHeight}
-					backgroundColor={C.SHADOW}
-					backgroundAlpha={pressed === item.key ? 0.07 : 0.13}
-				/>
-				<Rectangle
-					width={panelWidth - 24}
-					height={rowHeight}
-					backgroundColor={
+					backgroundColor={item.key === 'close' ? 0xe85a4f : C.YELLOW}
+					backgroundAlpha={
 						pressed === item.key
-							? C.YELLOW_PRESSED
+							? 0.2
 							: hovered === item.key
-								? item.key === 'close'
-									? 0xf5c4bd
-									: C.YELLOW_HOVER
-								: item.paper
+								? 0.12
+								: 0.001
 					}
-					borderColor={hovered === item.key ? C.GOLD : C.INK}
-					borderWidth={hovered === item.key ? 3 : 2}
+					borderColor={item.key === 'close' ? C.RED : C.GOLD}
+					borderWidth={hovered === item.key ? 2 : 0}
 				/>
 				<Text
-					x={14}
+					x={52}
 					y={rowHeight / 2}
 					anchor={{ x: 0, y: 0.5 }}
 					text={item.label}
@@ -190,7 +136,7 @@
 						fontFamily: 'Comic Sans MS',
 						fontSize: 15,
 						fontWeight: '700',
-						fill: C.INK,
+						fill: item.key === 'close' ? C.RED : C.INK,
 					}}
 				/>
 			</Container>
