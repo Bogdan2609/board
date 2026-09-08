@@ -18,6 +18,7 @@
 	import ResumeBet from './ResumeBet.svelte';
 	import Sound from './Sound.svelte';
 	import Background from './Background.svelte';
+	import BackgroundProps from './BackgroundProps.svelte';
 	import LoadingScreen from './LoadingScreen.svelte';
 	import BoardFrame from './BoardFrame.svelte';
 	import Board from './Board.svelte';
@@ -37,6 +38,12 @@
 
 	const context = getContext();
 	const SHOW_LEGACY_UI = false;
+
+	const showWideBackgroundProps = $derived(
+		['desktop', 'landscape'].includes(
+			context.stateLayoutDerived.layoutType(),
+		),
+	);
 
 	onMount(() => (context.stateLayout.showLoadingScreen = true));
 
@@ -65,6 +72,12 @@
 			Ref: https://developer.chrome.com/blog/autoplay
 		-->
 		<Sound />
+
+		{#if showWideBackgroundProps}
+			<MainContainer>
+				<BackgroundProps />
+			</MainContainer>
+		{/if}
 
 		<MainContainer>
 			<BoardFrame />

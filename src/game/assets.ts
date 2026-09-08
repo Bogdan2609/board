@@ -1,4 +1,10 @@
+import reportCardUiAssets from './reportCardUiAssets';
+import reportCardBackgroundPropsAssets from './reportCardBackgroundPropsAssets';
+
 export default {
+	...reportCardUiAssets,
+	...reportCardBackgroundPropsAssets,
+
 	notebookTop: {
 		type: 'sprite',
 		src: new URL(
