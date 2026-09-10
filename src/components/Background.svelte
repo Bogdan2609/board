@@ -9,10 +9,25 @@
 		context.stateLayoutDerived.canvasSizes(),
 	);
 
+	const layoutType = $derived(
+		context.stateLayoutDerived.layoutType(),
+	);
+
 	const SOURCE_WIDTH = 1672;
 	const SOURCE_HEIGHT = 941;
 
-	const scale = $derived(
+	const isWideLayout = $derived(
+		['desktop', 'landscape'].includes(layoutType),
+	);
+
+	// On desktop/landscape the complete classroom artwork must remain visible.
+	// Rendering it directly to the canvas prevents the previous "cover" mode
+	// from cropping the top/bottom when the browser aspect ratio is wider than
+	// the 16:9 source image.
+	//
+	// Portrait/tablet keep the old cover behaviour for now because they use a
+	// different composition strategy.
+	const coverScale = $derived(
 		Math.max(
 			canvas.width / SOURCE_WIDTH,
 			canvas.height / SOURCE_HEIGHT,
@@ -20,11 +35,15 @@
 	);
 
 	const backgroundWidth = $derived(
-		SOURCE_WIDTH * scale,
+		isWideLayout
+			? canvas.width
+			: SOURCE_WIDTH * coverScale,
 	);
 
 	const backgroundHeight = $derived(
-		SOURCE_HEIGHT * scale,
+		isWideLayout
+			? canvas.height
+			: SOURCE_HEIGHT * coverScale,
 	);
 </script>
 

@@ -28,12 +28,11 @@
 	const showWideHud = $derived(['desktop', 'landscape'].includes(layoutType));
 
 	// -------------------------------------------------------------------------
-	// New frame bounds. Side HUD rails are positioned against the OUTER artwork,
+	// Frame bounds. Side HUD rails are positioned against the OUTER artwork,
 	// not against the reel field, so controls never overlap the wooden frame.
 	// -------------------------------------------------------------------------
 	const frameX = $derived(main.width * FRAME_POSITION_X + FRAME_OFFSET_X);
 	const frameY = $derived(main.height * FRAME_POSITION_Y + FRAME_OFFSET_Y);
-	const frameTop = $derived(frameY - FRAME_EDGE_HEIGHT / 2);
 	const frameLeft = $derived(frameX - FRAME_EDGE_WIDTH / 2);
 	const frameRight = $derived(frameX + FRAME_EDGE_WIDTH / 2);
 	const frameBottom = $derived(frameY + FRAME_EDGE_HEIGHT / 2);
@@ -42,7 +41,6 @@
 
 	// -------------------------------------------------------------------------
 	// Shared bottom baseline for Balance + Win.
-	// The old left BetCard has been removed completely from the HUD layout.
 	// -------------------------------------------------------------------------
 	const hudBottomY = $derived(main.height - UI_LAYOUT.bottom.bottomOffset);
 
@@ -53,11 +51,15 @@
 		),
 	);
 
-	const leftTopY = $derived(Math.max(UI_LAYOUT.safeGap.edge + 22, frameTop + 92));
-	const modeY = $derived(leftTopY + UI_LAYOUT.leftPanel.buyHeight + UI_LAYOUT.leftPanel.gap);
+	// Important: moving the reel frame vertically must NOT drag BUY FREE SPINS
+	// and BASE/ANTE down with it. Their top rail remains stage-safe and stable.
+	const leftTopY = $derived(UI_LAYOUT.safeGap.edge + 22);
+	const modeY = $derived(
+		leftTopY + UI_LAYOUT.leftPanel.buyHeight + UI_LAYOUT.leftPanel.gap,
+	);
 
-	// Balance now occupies the former bottom stats slot and shares the same
-	// bottom edge as the WIN banner. Utility buttons follow it downward.
+	// Balance occupies the bottom stats slot and shares the same bottom edge as
+	// the WIN banner. Utility buttons follow it upward.
 	const balanceY = $derived(hudBottomY - UI_LAYOUT.leftStats.height);
 	const utilityY = $derived(
 		balanceY - UI_LAYOUT.leftButtons.statsGap - UI_LAYOUT.leftButtons.buttonSize,
@@ -83,7 +85,9 @@
 
 	// Right rail uses its own bottom edge so SPIN/Turbo/Auto can sit lower
 	// without moving Balance or WIN.
-	const rightBottomY = $derived(main.height - UI_LAYOUT.rightPanel.bottomOffset);
+	const rightBottomY = $derived(
+		main.height - UI_LAYOUT.rightPanel.bottomOffset,
+	);
 
 	const betControlsY = $derived(
 		rightBottomY - UI_LAYOUT.rightPanel.betHeight,
@@ -96,7 +100,6 @@
 	);
 
 	// The top controls intentionally overlap the SPIN silhouette slightly.
-	// Turbo is centered over SPIN; Auto is offset/rotated to curl to the right.
 	const topControlsY = $derived(
 		spinY -
 			UI_LAYOUT.rightPanel.topButtonSize +

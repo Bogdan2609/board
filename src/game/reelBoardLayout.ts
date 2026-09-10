@@ -2,11 +2,11 @@ export const REEL_COLS = 6;
 export const REEL_ROWS = 6;
 
 // Reel geometry. Width/height are intentionally independent.
-export const CELL_WIDTH = 132;
-export const CELL_HEIGHT = 110;
+export const CELL_WIDTH = 142; // 132
+export const CELL_HEIGHT = 115; // 110
 
 // Visual symbol size. Does not affect reel spacing/physics.
-export const SYMBOL_RENDER_SIZE = 86;
+export const SYMBOL_RENDER_SIZE = 100; // 86
 
 // -----------------------------------------------------------------------------
 // New reel frame artwork
@@ -27,7 +27,7 @@ export const FRAME_EDGE_WIDTH = 1040;
 export const FRAME_EDGE_HEIGHT =
 	FRAME_EDGE_WIDTH * (FRAME_EDGE_SOURCE_HEIGHT / FRAME_EDGE_SOURCE_WIDTH);
 
-export const FRAME_BG_WIDTH = 1110;
+export const FRAME_BG_WIDTH = 1110 + 15;
 export const FRAME_BG_HEIGHT =
 	FRAME_BG_WIDTH * (FRAME_BG_SOURCE_HEIGHT / FRAME_BG_SOURCE_WIDTH);
 
@@ -59,9 +59,18 @@ export const NOTEBOOK_MIDDLE_HEIGHT =
 export const NOTEBOOK_RENDER_HEIGHT =
 	NOTEBOOK_TOP_HEIGHT + NOTEBOOK_MIDDLE_HEIGHT + NOTEBOOK_BOTTOM_HEIGHT;
 
-// The new frame keeps the same stage placement as the previous reel shell.
+// -----------------------------------------------------------------------------
+// Frame placement
+// -----------------------------------------------------------------------------
+// Keep the horizontal placement unchanged.
+//
+// Y = 0.481 is intentional. With FRAME_EDGE_WIDTH=1040 the rendered frame is
+// ~873 px tall on the 1600x900 logical stage. This position puts its top edge
+// just inside the stage instead of clipping it above the viewport, while moving
+// the complete reel package (frame_bg + board + symbols + frame_edge) down by
+// roughly 50 logical pixels from the previous 0.425 position.
 export const FRAME_POSITION_X = 0.52;
-export const FRAME_POSITION_Y = 0.425;
+export const FRAME_POSITION_Y = 0.481;
 
 export const FRAME_OFFSET_X = 0;
 export const FRAME_OFFSET_Y = 4;
@@ -82,6 +91,6 @@ export const BOARD_POSITION_Y = FRAME_POSITION_Y;
 export const REEL_OFFSET_X = 0;
 export const REEL_OFFSET_Y = -14;
 
-// The new wooden/navy frame is frontal. Keep the playable area unskewed.
+// The wooden/navy frame is frontal. Keep the playable area unskewed.
 export const REEL_SKEW_X_DEG = 0;
 export const REEL_SKEW_X = (REEL_SKEW_X_DEG * Math.PI) / 180;
