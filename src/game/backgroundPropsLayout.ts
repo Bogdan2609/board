@@ -36,20 +36,17 @@ const motion = (
 });
 
 // -----------------------------------------------------------------------------
-// Composition pass #8 — selected assets only
+// Viewport-safe 16:9 composition
 // -----------------------------------------------------------------------------
-// Left in scene:
-// - today_goals_note
-// - eraser_pink
-// - pencil_bottom_left (small pencil)
-// - pencil_top_right (big pencil)
-// - a_plus_spins_sticky
-// - ruler_corner
-// - paper_clip
-// - sharpener
-// - shavings_01
+// Desktop/landscape logical stage = 1600 x 900.
 //
-// Everything else is intentionally removed for now.
+// Important:
+// - MainContainer already scales this complete design space to 1280x720,
+//   1200x675, etc.
+// - Props therefore must be composed against THIS stage, not against the
+//   physical browser size.
+// - Edge props may intentionally crop a little, but important visual content
+//   stays inside the stage.
 // -----------------------------------------------------------------------------
 
 export const IDLE_SUPPORT_PROPS: BackgroundProp[] = [
@@ -81,7 +78,9 @@ export const IDLE_PAPER_PROPS: BackgroundProp[] = [
 	{
 		id: 'a-plus-spins-right',
 		key: 'reportCardBgPropAPlusSpinsSticky',
-		x: 1498,
+		// Tucked behind the notebook/right rail instead of hanging outside
+		// the logical stage.
+		x: 1400,
 		y: 400,
 		width: 354,
 		height: 265.5,
@@ -95,10 +94,12 @@ export const IDLE_PHYSICAL_PROPS: BackgroundProp[] = [
 	{
 		id: 'hero-pencil-top-right',
 		key: 'reportCardBgPropPencilTopRight',
-		x: 1522,
-		y: 56,
-		width: 382,
-		height: 127,
+		// Still intentionally enters from the top/right edge, but no longer
+		// loses a large part of the pencil at smaller 16:9 embeds.
+		x: 1430,
+		y: 60,
+		width: 340,
+		height: 113,
 		rotationDeg: -19,
 		alpha: 0.99,
 		motion: motion(2.0, 1.5, 0.45, 0.0025, 10.6, 0.4),
@@ -106,7 +107,7 @@ export const IDLE_PHYSICAL_PROPS: BackgroundProp[] = [
 	{
 		id: 'sharpener-top-right',
 		key: 'reportCardBgPropSharpener',
-		x: 1570,
+		x: 1520,
 		y: 210,
 		width: 108,
 		height: 108,
@@ -117,7 +118,8 @@ export const IDLE_PHYSICAL_PROPS: BackgroundProp[] = [
 	{
 		id: 'eraser-bottom-left',
 		key: 'reportCardBgPropEraserPink',
-		x: 1,
+		// Controlled edge crop instead of losing half the eraser.
+		x: 70,
 		y: 250,
 		width: 148,
 		height: 111,
@@ -139,8 +141,10 @@ export const IDLE_PHYSICAL_PROPS: BackgroundProp[] = [
 	{
 		id: 'pencil-bottom-left',
 		key: 'reportCardBgPropPencilBottomLeft',
-		x: -15,
-		y: 862,
+		// Keep the strong diagonal reference look, but make its rotated bounds
+		// fit the 1600x900 scene much more predictably.
+		x: 100,
+		y: 700,
 		width: 400,
 		height: 134,
 		rotationDeg: -70,
@@ -150,8 +154,10 @@ export const IDLE_PHYSICAL_PROPS: BackgroundProp[] = [
 	{
 		id: 'ruler-bottom-right',
 		key: 'reportCardBgPropRulerCorner',
-		x: 1518,
-		y: 850,
+		// Long ruler remains a framing prop, but its rotated right/bottom bounds
+		// now stay almost completely inside the stage.
+		x: 1300,
+		y: 770,
 		width: 547.5,
 		height: 183,
 		rotationDeg: -7,

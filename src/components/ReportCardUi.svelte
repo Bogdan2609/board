@@ -69,9 +69,15 @@
 	const winX = $derived(board.x - winWidth / 2);
 	const winY = $derived(hudBottomY - UI_LAYOUT.winPanel.height);
 
+	// SpinPanel contains intentional hand-drawn overhang in the bottom BET
+	// cluster. Reserve that true visual width at the right edge so the + button
+	// does not leave the 1600x900 stage.
 	const rightX = $derived(
 		Math.min(
-			main.width - UI_LAYOUT.safeGap.edge - UI_LAYOUT.rightPanel.width,
+			main.width -
+				UI_LAYOUT.safeGap.edge -
+				UI_LAYOUT.rightPanel.width -
+				UI_LAYOUT.rightPanel.edgeReserve,
 			notebookRight + UI_LAYOUT.safeGap.side,
 		),
 	);

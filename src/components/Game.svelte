@@ -39,10 +39,15 @@
 	const context = getContext();
 	const SHOW_LEGACY_UI = false;
 
+	// Temporary switch for all movable decorative desk/background props.
+	// Set to true when we want to restore them.
+	const SHOW_BACKGROUND_PROPS = false;
+
 	const showWideBackgroundProps = $derived(
-		['desktop', 'landscape'].includes(
-			context.stateLayoutDerived.layoutType(),
-		),
+		SHOW_BACKGROUND_PROPS &&
+			['desktop', 'landscape'].includes(
+				context.stateLayoutDerived.layoutType(),
+			),
 	);
 
 	onMount(() => (context.stateLayout.showLoadingScreen = true));

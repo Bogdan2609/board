@@ -33,8 +33,11 @@ export const UI_LAYOUT = {
 	},
 
 	rightPanel: {
-		// Wider only for the bottom BET strip. The 220px SPIN remains centered.
+		// Logical layout width. SpinPanel currently contains some hand-tuned
+		// artwork offsets that extend past this width, so ReportCardUi reserves
+		// extra right-edge space with edgeReserve below.
 		width: 250,
+		edgeReserve: 50,
 
 		// Smaller top controls. Turbo is centered over SPIN; Auto curls to the right.
 		topButtonSize: 66,
@@ -43,7 +46,8 @@ export const UI_LAYOUT = {
 		autoOffsetY: 0,
 		autoRotation: 0.5,
 
-		// Keep SPIN close to the right BET row so the whole rail sits lower.
+		// The enlarged BET paper extends below betControlsY. Raising the whole
+		// right rail by 44px keeps its true visual bounds inside 1600x900.
 		sectionGap: 4,
 		bottomOffset: 0,
 

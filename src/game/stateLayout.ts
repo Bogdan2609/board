@@ -2,7 +2,7 @@ import { createLayout } from 'utils-layout';
 
 export const { stateLayout, stateLayoutDerived } = createLayout({
 	backgroundRatio: {
-		normal: 2039 / 1000,
+		normal: 1672 / 941,
 		portrait: 1242 / 2208,
 	},
 	mainSizesMap: {
