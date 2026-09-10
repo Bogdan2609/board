@@ -1,0 +1,48 @@
+h2.png
+size: 1520, 823
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+H2_paper_mesh
+  rotate: false
+  xy: 2, 2
+  size: 1232, 819
+  orig: 1232, 819
+  offset: 0, 0
+  index: -1
+H2_ribbon_L
+  rotate: true
+  xy: 1320, 4
+  size: 155, 163
+  orig: 155, 163
+  offset: 0, 0
+  index: -1
+H2_ribbon_R
+  rotate: false
+  xy: 1320, 161
+  size: 164, 174
+  orig: 164, 174
+  offset: 0, 0
+  index: -1
+H2_seal_center
+  rotate: true
+  xy: 1320, 337
+  size: 195, 191
+  orig: 199, 195
+  offset: 2, 2
+  index: -1
+H2_seal_outer
+  rotate: true
+  xy: 1236, 534
+  size: 287, 282
+  orig: 291, 286
+  offset: 2, 2
+  index: -1
+H2_signature
+  rotate: true
+  xy: 1236, 46
+  size: 486, 82
+  orig: 490, 86
+  offset: 2, 2
+  index: -1
+

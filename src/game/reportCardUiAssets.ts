@@ -24,7 +24,7 @@ export default {
 		preload: true,
 	},
 
-	// Left HUD art.
+	// Compact left HUD mode states from the approved reference sheet.
 	reportCardUiBaseAnteBg: {
 		type: 'sprite',
 		src: new URL(
@@ -33,6 +33,15 @@ export default {
 		).href,
 		preload: true,
 	},
+	reportCardUiModeAnteBg: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardUi/mode_ante_bg.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+
 	reportCardUiSoundOn: {
 		type: 'sprite',
 		src: new URL(

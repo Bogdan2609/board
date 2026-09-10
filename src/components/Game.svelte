@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import ReportCardUi from './ReportCardUi.svelte';
+	import ReportCardModeModal from './ReportCardModeModal.svelte';
 
 	import { EnablePixiExtension } from 'components-pixi';
 	import { EnableHotkey } from 'components-shared';
@@ -153,8 +154,12 @@
 	{/if}
 </App>
 
+<!-- Standard StakeEngine modals, including BUY FREE SPINS / buyBonus. -->
 <Modals>
 	{#snippet version()}
 		<GameVersion version="0.0.0" />
 	{/snippet}
 </Modals>
+
+<!-- Dedicated game-specific MODE modal. -->
+<ReportCardModeModal />

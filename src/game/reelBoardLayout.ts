@@ -6,7 +6,7 @@ export const CELL_WIDTH = 142; // 132
 export const CELL_HEIGHT = 115; // 110
 
 // Visual symbol size. Does not affect reel spacing/physics.
-export const SYMBOL_RENDER_SIZE = 100; // 86
+export const SYMBOL_RENDER_SIZE = 115; // 86
 
 // -----------------------------------------------------------------------------
 // New reel frame artwork

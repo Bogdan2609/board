@@ -6,10 +6,10 @@ export const UI_LAYOUT = {
 	},
 
 	leftPanel: {
-		width: 220,
-		buyHeight: 132,
-		// Taller because base_ante_bg is a vertical paper card.
-		modeHeight: 240,
+		// Compact approved left rail from the reference sheet.
+		width: 240,
+		buyHeight: 126,
+		modeHeight: 77,
 		gap: 16,
 	},
 
@@ -46,8 +46,7 @@ export const UI_LAYOUT = {
 		autoOffsetY: 0,
 		autoRotation: 0.5,
 
-		// The enlarged BET paper extends below betControlsY. Raising the whole
-		// right rail by 44px keeps its true visual bounds inside 1600x900.
+		// The enlarged BET paper extends below betControlsY.
 		sectionGap: 4,
 		bottomOffset: 0,
 

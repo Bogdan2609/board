@@ -1,0 +1,48 @@
+h3.png
+size: 2005, 636
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+H3_button
+  rotate: true
+  xy: 1894, 122
+  size: 139, 93
+  orig: 143, 97
+  offset: 2, 2
+  index: -1
+H3_crown
+  rotate: false
+  xy: 1214, 263
+  size: 789, 371
+  orig: 793, 375
+  offset: 2, 2
+  index: -1
+H3_tassel
+  rotate: false
+  xy: 1214, 33
+  size: 425, 228
+  orig: 425, 228
+  offset: 0, 0
+  index: -1
+H3_tassel_fringe
+  rotate: true
+  xy: 1641, 69
+  size: 192, 251
+  orig: 192, 251
+  offset: 0, 0
+  index: -1
+H3_tassel_knot
+  rotate: false
+  xy: 1894, 34
+  size: 100, 86
+  orig: 104, 90
+  offset: 2, 2
+  index: -1
+H3_top_board
+  rotate: false
+  xy: 2, 2
+  size: 1210, 632
+  orig: 1215, 637
+  offset: 2, 3
+  index: -1
+

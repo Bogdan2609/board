@@ -1,0 +1,13 @@
+l4.png
+size: 640, 640
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+L_D
+  rotate: false
+  xy: 0, 0
+  size: 640, 640
+  orig: 640, 640
+  offset: 0, 0
+  index: -1
+

@@ -1,0 +1,13 @@
+h5.png
+size: 1300, 1183
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+H5_star
+  rotate: false
+  xy: 2, 2
+  size: 1296, 1179
+  orig: 1300, 1183
+  offset: 2, 2
+  index: -1
+
