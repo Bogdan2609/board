@@ -21,6 +21,7 @@
 	import BackgroundProps from './BackgroundProps.svelte';
 	import LoadingScreen from './LoadingScreen.svelte';
 	import BoardFrame from './BoardFrame.svelte';
+	import BoardFrameEdge from './BoardFrameEdge.svelte';
 	import Board from './Board.svelte';
 	import Anticipations from './Anticipations.svelte';
 	import ClusterWinAmounts from './ClusterWinAmounts.svelte';
@@ -84,6 +85,7 @@
 			</MainContainer>
 		{/if}
 
+		<!-- frame_bg + procedural 6x6 grid -->
 		<MainContainer>
 			<BoardFrame />
 		</MainContainer>
@@ -104,6 +106,14 @@
 		<MainContainer>
 			<MultiplierBoard />
 			<MultiplierTotal />
+		</MainContainer>
+
+		<!--
+			frame_edge is deliberately mounted after every reel-content layer.
+			This keeps the wooden/navy rim physically in front of symbols/tumbles.
+		-->
+		<MainContainer>
+			<BoardFrameEdge />
 		</MainContainer>
 
 		<MainContainer>

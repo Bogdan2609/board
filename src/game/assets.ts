@@ -38,6 +38,22 @@ export default {
 		).href,
 		preload: true,
 	},
+	reportCardFrameBg: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardShell/frame_bg.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	reportCardFrameEdge: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/reportCardShell/frame_edge.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
 	loader: {
 		type: 'spine',
 		src: {

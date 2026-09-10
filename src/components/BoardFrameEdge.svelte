@@ -3,25 +3,36 @@
 
 	import { getContext } from '../game/context';
 	import {
-		NOTEBOOK_WIDTH,
-		NOTEBOOK_HEIGHT,
-		NOTEBOOK_OFFSET_X,
-		NOTEBOOK_OFFSET_Y,
+		FRAME_EDGE_WIDTH,
+		FRAME_EDGE_HEIGHT,
+		FRAME_POSITION_X,
+		FRAME_POSITION_Y,
+		FRAME_OFFSET_X,
+		FRAME_OFFSET_Y,
 	} from '../game/reelBoardLayout';
 
 	const context = getContext();
-	const board = $derived(context.stateGameDerived.boardLayout());
+	const main = $derived(context.stateLayoutDerived.mainLayout());
 
-	const notebookX = $derived(board.x + NOTEBOOK_OFFSET_X);
-	const notebookY = $derived(board.y + NOTEBOOK_OFFSET_Y);
+	const frameX = $derived(
+		main.width * FRAME_POSITION_X + FRAME_OFFSET_X,
+	);
+
+	const frameY = $derived(
+		main.height * FRAME_POSITION_Y + FRAME_OFFSET_Y,
+	);
 </script>
 
+<!--
+	Outer wooden/navy rim. This component is mounted after all reel-content
+	layers in Game.svelte so moving symbols cannot cover the physical frame.
+-->
 <Sprite
 	key="reportCardFrameEdge"
-	x={notebookX}
-	y={notebookY}
+	x={frameX}
+	y={frameY}
 	anchor={0.5}
-	width={NOTEBOOK_WIDTH}
-	height={NOTEBOOK_HEIGHT}
+	width={FRAME_EDGE_WIDTH}
+	height={FRAME_EDGE_HEIGHT}
 	zIndex={100}
 />

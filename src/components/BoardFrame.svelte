@@ -9,15 +9,12 @@
 
 	import { getContext } from '../game/context';
 	import {
-		NOTEBOOK_WIDTH,
-		NOTEBOOK_BASE_HEIGHT,
-		NOTEBOOK_TOP_HEIGHT,
-		NOTEBOOK_MIDDLE_HEIGHT,
-		NOTEBOOK_BOTTOM_HEIGHT,
-		NOTEBOOK_POSITION_X,
-		NOTEBOOK_POSITION_Y,
-		NOTEBOOK_OFFSET_X,
-		NOTEBOOK_OFFSET_Y,
+		FRAME_BG_WIDTH,
+		FRAME_BG_HEIGHT,
+		FRAME_POSITION_X,
+		FRAME_POSITION_Y,
+		FRAME_OFFSET_X,
+		FRAME_OFFSET_Y,
 		REEL_COLS,
 		REEL_ROWS,
 		REEL_SKEW_X,
@@ -28,27 +25,12 @@
 	const board = $derived(context.stateGameDerived.boardLayout());
 	const main = $derived(context.stateLayoutDerived.mainLayout());
 
-	// notebookY is the center of the original, undistorted notebook.
-	// We derive the top edge from NOTEBOOK_BASE_HEIGHT, so increasing only the
-	// middle slice never moves or stretches the spiral/top edge.
-	const notebookX = $derived(
-		main.width * NOTEBOOK_POSITION_X + NOTEBOOK_OFFSET_X,
+	const frameX = $derived(
+		main.width * FRAME_POSITION_X + FRAME_OFFSET_X,
 	);
 
-	const notebookY = $derived(
-		main.height * NOTEBOOK_POSITION_Y + NOTEBOOK_OFFSET_Y,
-	);
-
-	const notebookTopY = $derived(
-		notebookY - NOTEBOOK_BASE_HEIGHT / 2,
-	);
-
-	const notebookMiddleY = $derived(
-		notebookTopY + NOTEBOOK_TOP_HEIGHT,
-	);
-
-	const notebookBottomY = $derived(
-		notebookMiddleY + NOTEBOOK_MIDDLE_HEIGHT,
+	const frameY = $derived(
+		main.height * FRAME_POSITION_Y + FRAME_OFFSET_Y,
 	);
 
 	const cellWidth = $derived(board.width / REEL_COLS);
@@ -56,43 +38,22 @@
 </script>
 
 <!--
-	Three slices from the same notebook_master.png.
-	TOP and BOTTOM preserve their natural aspect/height.
-	Only MIDDLE receives the extra vertical stretch.
+	frame_bg is the teal chalkboard surface underneath the reels.
+	Its own transparent padding is preserved; only its runtime size is changed.
 -->
 <Sprite
-	key="notebookTop"
-	x={notebookX}
-	y={notebookTopY}
-	anchor={{ x: 0.5, y: 0 }}
-	width={NOTEBOOK_WIDTH}
-	height={NOTEBOOK_TOP_HEIGHT}
-	zIndex={-20}
-/>
-
-<Sprite
-	key="notebookMiddle"
-	x={notebookX}
-	y={notebookMiddleY}
-	anchor={{ x: 0.5, y: 0 }}
-	width={NOTEBOOK_WIDTH}
-	height={NOTEBOOK_MIDDLE_HEIGHT}
-	zIndex={-20}
-/>
-
-<Sprite
-	key="notebookBottom"
-	x={notebookX}
-	y={notebookBottomY}
-	anchor={{ x: 0.5, y: 0 }}
-	width={NOTEBOOK_WIDTH}
-	height={NOTEBOOK_BOTTOM_HEIGHT}
+	key="reportCardFrameBg"
+	x={frameX}
+	y={frameY}
+	anchor={0.5}
+	width={FRAME_BG_WIDTH}
+	height={FRAME_BG_HEIGHT}
 	zIndex={-20}
 />
 
 <!--
-	The precise 6x6 grid follows the reel board, not the notebook artwork.
-	That lets us move/skew the playable area independently from the paper.
+	The 6x6 grid is intentionally procedural. No separators are baked into the
+	artwork, so cell geometry stays tied to the actual reel board.
 -->
 <Container
 	x={board.x}
@@ -111,8 +72,8 @@
 			y={0}
 			width={2}
 			height={board.height}
-			backgroundColor={0x76a9c9}
-			alpha={0.16}
+			backgroundColor={0xf3e7c8}
+			alpha={0.22}
 			zIndex={-10}
 		/>
 	{/each}
@@ -125,8 +86,8 @@
 			y={y - 1}
 			width={board.width}
 			height={2}
-			backgroundColor={0x76a9c9}
-			alpha={0.08}
+			backgroundColor={0xf3e7c8}
+			alpha={0.16}
 			zIndex={-10}
 		/>
 	{/each}

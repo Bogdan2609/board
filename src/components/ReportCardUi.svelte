@@ -4,13 +4,12 @@
 	import { getContext } from '../game/context';
 	import { UI_LAYOUT } from '../game/uiLayout';
 	import {
-		NOTEBOOK_BASE_HEIGHT,
-		NOTEBOOK_OFFSET_X,
-		NOTEBOOK_OFFSET_Y,
-		NOTEBOOK_POSITION_X,
-		NOTEBOOK_POSITION_Y,
-		NOTEBOOK_RENDER_HEIGHT,
-		NOTEBOOK_WIDTH,
+		FRAME_EDGE_HEIGHT,
+		FRAME_EDGE_WIDTH,
+		FRAME_OFFSET_X,
+		FRAME_OFFSET_Y,
+		FRAME_POSITION_X,
+		FRAME_POSITION_Y,
 	} from '../game/reelBoardLayout';
 
 	import BuyFreeSpins from './ui/BuyFreeSpins.svelte';
@@ -29,15 +28,15 @@
 	const showWideHud = $derived(['desktop', 'landscape'].includes(layoutType));
 
 	// -------------------------------------------------------------------------
-	// Notebook bounds. Side HUD rails are positioned against the OUTER artwork,
-	// not against the reel field, so controls never overlap the notebook.
+	// New frame bounds. Side HUD rails are positioned against the OUTER artwork,
+	// not against the reel field, so controls never overlap the wooden frame.
 	// -------------------------------------------------------------------------
-	const notebookX = $derived(main.width * NOTEBOOK_POSITION_X + NOTEBOOK_OFFSET_X);
-	const notebookY = $derived(main.height * NOTEBOOK_POSITION_Y + NOTEBOOK_OFFSET_Y);
-	const notebookTop = $derived(notebookY - NOTEBOOK_BASE_HEIGHT / 2);
-	const notebookLeft = $derived(notebookX - NOTEBOOK_WIDTH / 2);
-	const notebookRight = $derived(notebookX + NOTEBOOK_WIDTH / 2);
-	const notebookBottom = $derived(notebookTop + NOTEBOOK_RENDER_HEIGHT);
+	const frameX = $derived(main.width * FRAME_POSITION_X + FRAME_OFFSET_X);
+	const frameY = $derived(main.height * FRAME_POSITION_Y + FRAME_OFFSET_Y);
+	const frameTop = $derived(frameY - FRAME_EDGE_HEIGHT / 2);
+	const frameLeft = $derived(frameX - FRAME_EDGE_WIDTH / 2);
+	const frameRight = $derived(frameX + FRAME_EDGE_WIDTH / 2);
+	const frameBottom = $derived(frameY + FRAME_EDGE_HEIGHT / 2);
 
 	const boardWidth = $derived(board.width);
 
@@ -50,11 +49,11 @@
 	const leftX = $derived(
 		Math.max(
 			UI_LAYOUT.safeGap.edge,
-			notebookLeft - UI_LAYOUT.safeGap.side - UI_LAYOUT.leftPanel.width,
+			frameLeft - UI_LAYOUT.safeGap.side - UI_LAYOUT.leftPanel.width,
 		),
 	);
 
-	const leftTopY = $derived(Math.max(UI_LAYOUT.safeGap.edge + 22, notebookTop + 92));
+	const leftTopY = $derived(Math.max(UI_LAYOUT.safeGap.edge + 22, frameTop + 92));
 	const modeY = $derived(leftTopY + UI_LAYOUT.leftPanel.buyHeight + UI_LAYOUT.leftPanel.gap);
 
 	// Balance now occupies the former bottom stats slot and shares the same
@@ -78,7 +77,7 @@
 				UI_LAYOUT.safeGap.edge -
 				UI_LAYOUT.rightPanel.width -
 				UI_LAYOUT.rightPanel.edgeReserve,
-			notebookRight + UI_LAYOUT.safeGap.side,
+			frameRight + UI_LAYOUT.safeGap.side,
 		),
 	);
 
@@ -104,7 +103,7 @@
 			UI_LAYOUT.rightPanel.topButtonOverlap,
 	);
 
-	const bottomClearance = $derived(winY - notebookBottom);
+	const bottomClearance = $derived(winY - frameBottom);
 </script>
 
 {#if showWideHud}
