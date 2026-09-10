@@ -17,7 +17,7 @@
 <script lang="ts">
 	import _ from 'lodash';
 	import { Tween } from 'svelte/motion';
-	import { backOut } from 'svelte/easing';
+	import { cubicIn, cubicOut } from 'svelte/easing';
 
 	import { BoardContext } from 'components-shared';
 	import { waitForResolve } from 'utils-shared/wait';
@@ -26,6 +26,7 @@
 	import BoardContainer from './BoardContainer.svelte';
 	import BoardMask from './BoardMask.svelte';
 	import { getSymbolY } from '../game/utils';
+	import { CELL_HEIGHT } from '../game/reelBoardLayout';
 	import { getContext } from '../game/context';
 
 	const context = getContext();
@@ -104,24 +105,41 @@
 					context.stateGameDerived.tumbleBoardCombined().map((tumbleReel) => {
 						return tumbleReel.map(async (tumbleSymbol, symbolIndex) => {
 							const targetY = getSymbolY(symbolIndex - 1); // Refer to initTumbleBoardBase
-							if (targetY !== tumbleSymbol.symbolY.current) {
-								const bounceDuration = 200;
+							const startY = tumbleSymbol.symbolY.current;
 
-								await tumbleSymbol.symbolY.set(targetY, {
-									duration: bounceDuration,
-									easing: backOut,
+							if (targetY !== startY) {
+								const distance = Math.abs(targetY - startY);
+								const cells = Math.max(1, distance / CELL_HEIGHT);
+
+								// Short moves stay snappy; long drops get only a little more time.
+								const fallDuration = 108 + Math.min(cells, 6) * 16;
+								const impactOvershoot = 3;
+
+								await tumbleSymbol.symbolY.set(targetY + impactOvershoot, {
+									duration: fallDuration,
+									easing: cubicIn,
 								});
+
+								let landPromise: Promise<void> = Promise.resolve();
 
 								if (symbolIndex > 0 && symbolIndex < tumbleReel.length - 1) {
 									tumbleSymbol.symbolState = 'land';
 									context.stateGameDerived.onSymbolLand({ rawSymbol: tumbleSymbol.rawSymbol });
-									await waitForResolve((resolve) => {
+
+									landPromise = waitForResolve((resolve) => {
 										tumbleSymbol.oncomplete = () => {
 											tumbleSymbol.symbolState = 'static';
 											resolve();
 										};
 									});
 								}
+
+								const settlePromise = tumbleSymbol.symbolY.set(targetY, {
+									duration: 48,
+									easing: cubicOut,
+								});
+
+								await Promise.all([landPromise, settlePromise]);
 							}
 						});
 					}),

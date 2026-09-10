@@ -233,4 +233,135 @@ export default {
 		).href,
 		preload: true,
 	},
+
+	chalkWin01: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_01.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin02: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_02.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin03: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_03.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+
+	chalkWin01Frame1: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_01_frame_1.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin01Frame2: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_01_frame_2.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin01Frame3: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_01_frame_3.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin02Frame1: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_02_frame_1.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin02Frame2: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_02_frame_2.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin02Frame3: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_02_frame_3.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin03Frame1: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_03_frame_1.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin03Frame2: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_03_frame_2.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkWin03Frame3: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkWin/chalk_win_03_frame_3.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+
+	chalkImpact01: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkImpact/chalk_impact_1.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkImpact02: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkImpact/chalk_impact_2.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkImpact03: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkImpact/chalk_impact_3.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
+	chalkImpact04: {
+		type: 'sprite',
+		src: new URL(
+			'../../assets/sprites/effects/chalkImpact/chalk_impact_4.png',
+			import.meta.url,
+		).href,
+		preload: true,
+	},
 } as const;

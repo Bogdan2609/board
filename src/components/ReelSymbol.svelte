@@ -6,10 +6,12 @@
 
 	type Props = {
 		reelIndex: number;
+		rowIndex: number;
 		reelSymbol: ReelSymbol;
 	};
 
 	const props: Props = $props();
+
 	const symbolInfo = $derived(
 		getSymbolInfo({ rawSymbol: props.reelSymbol.rawSymbol, state: props.reelSymbol.symbolState }),
 	);
