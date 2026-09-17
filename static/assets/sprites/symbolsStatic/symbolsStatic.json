@@ -1,14 +1,5 @@
 {"frames": {
 
-"explodedW.png":
-{
-	"frame": {"x":203,"y":587,"w":188,"h":159},
-	"rotated": true,
-	"trimmed": true,
-	"spriteSourceSize": {"x":9,"y":22,"w":188,"h":159},
-	"sourceSize": {"w":200,"h":200},
-	"pivot": {"x":0.5,"y":0.5}
-},
 "h1.webp":
 {
 	"frame": {"x":1,"y":1,"w":200,"h":200},
@@ -141,15 +132,6 @@
 	"rotated": true,
 	"trimmed": true,
 	"spriteSourceSize": {"x":5,"y":0,"w":189,"h":190},
-	"sourceSize": {"w":200,"h":200},
-	"pivot": {"x":0.5,"y":0.5}
-},
-"w.png":
-{
-	"frame": {"x":1,"y":988,"w":195,"h":195},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":0,"w":195,"h":195},
 	"sourceSize": {"w":200,"h":200},
 	"pivot": {"x":0.5,"y":0.5}
 }},
