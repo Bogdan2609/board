@@ -1,34 +1,7 @@
 import reportCardUiAssets from './reportCardUiAssets';
-import reportCardBackgroundPropsAssets from './reportCardBackgroundPropsAssets';
 
 export default {
 	...reportCardUiAssets,
-	...reportCardBackgroundPropsAssets,
-
-	notebookTop: {
-		type: 'sprite',
-		src: new URL(
-			'../../assets/sprites/reportCardShell/notebook_top.png',
-			import.meta.url,
-		).href,
-		preload: true,
-	},
-	notebookMiddle: {
-		type: 'sprite',
-		src: new URL(
-			'../../assets/sprites/reportCardShell/notebook_middle.png',
-			import.meta.url,
-		).href,
-		preload: true,
-	},
-	notebookBottom: {
-		type: 'sprite',
-		src: new URL(
-			'../../assets/sprites/reportCardShell/notebook_bottom.png',
-			import.meta.url,
-		).href,
-		preload: true,
-	},
 
 	reportCardBackground: {
 		type: 'sprite',

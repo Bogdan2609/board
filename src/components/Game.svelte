@@ -7,10 +7,9 @@
 	import { EnablePixiExtension } from 'components-pixi';
 	import { EnableHotkey } from 'components-shared';
 	import { MainContainer } from 'components-layout';
-	import { App, Text, REM } from 'pixi-svelte';
+	import { App } from 'pixi-svelte';
 	import { stateModal } from 'state-shared';
 
-	import { UI, UiGameName } from 'components-ui-pixi';
 	import { GameVersion, Modals } from 'components-ui-html';
 
 	import { getContext } from '../game/context';
@@ -19,7 +18,6 @@
 	import ResumeBet from './ResumeBet.svelte';
 	import Sound from './Sound.svelte';
 	import Background from './Background.svelte';
-	import BackgroundProps from './BackgroundProps.svelte';
 	import LoadingScreen from './LoadingScreen.svelte';
 	import BoardFrame from './BoardFrame.svelte';
 	import BoardFrameEdge from './BoardFrameEdge.svelte';
@@ -36,21 +34,8 @@
 	import FreeSpinCounter from './FreeSpinCounter.svelte';
 	import FreeSpinOutro from './FreeSpinOutro.svelte';
 	import Transition from './Transition.svelte';
-	import I18nTest from './I18nTest.svelte';
 
 	const context = getContext();
-	const SHOW_LEGACY_UI = false;
-
-	// Temporary switch for all movable decorative desk/background props.
-	// Set to true when we want to restore them.
-	const SHOW_BACKGROUND_PROPS = false;
-
-	const showWideBackgroundProps = $derived(
-		SHOW_BACKGROUND_PROPS &&
-			['desktop', 'landscape'].includes(
-				context.stateLayoutDerived.layoutType(),
-			),
-	);
 
 	onMount(() => (context.stateLayout.showLoadingScreen = true));
 
@@ -79,12 +64,6 @@
 			Ref: https://developer.chrome.com/blog/autoplay
 		-->
 		<Sound />
-
-		{#if showWideBackgroundProps}
-			<MainContainer>
-				<BackgroundProps />
-			</MainContainer>
-		{/if}
 
 		<!-- frame_bg + procedural 6x6 grid -->
 		<MainContainer>
@@ -121,27 +100,6 @@
 			<ReportCardUi />
 		</MainContainer>
 
-		{#if SHOW_LEGACY_UI}
-			<UI>
-				{#snippet gameName()}
-					<UiGameName name="REPORT CARD SLOTS" />
-				{/snippet}
-
-				{#snippet logo()}
-					<Text
-						anchor={{ x: 1, y: 0 }}
-						text="REPORT CARD"
-						style={{
-							fontFamily: 'proxima-nova',
-							fontSize: REM * 1.5,
-							fontWeight: '600',
-							lineHeight: REM * 2,
-							fill: 0xffffff,
-						}}
-					/>
-				{/snippet}
-			</UI>
-		{/if}
 		<Win />
 		<FreeSpinIntro />
 		{#if ['desktop', 'landscape'].includes(context.stateLayoutDerived.layoutType())}
@@ -149,8 +107,6 @@
 		{/if}
 		<FreeSpinOutro />
 		<Transition />
-
-		<!-- <I18nTest /> -->
 	{/if}
 </App>
 
