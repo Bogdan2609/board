@@ -2,11 +2,11 @@ export const REEL_COLS = 6;
 export const REEL_ROWS = 6;
 
 // Reel geometry. Width/height are intentionally independent.
-export const CELL_WIDTH = 142; // 132
-export const CELL_HEIGHT = 115; // 110
+export const CELL_WIDTH = 156; // 142
+export const CELL_HEIGHT = 126.5; // 115
 
 // Visual symbol size. Does not affect reel spacing/physics.
-export const SYMBOL_RENDER_SIZE = 115; // 86
+export const SYMBOL_RENDER_SIZE = 115; // 115
 
 // -----------------------------------------------------------------------------
 // New reel frame artwork
@@ -23,11 +23,11 @@ export const FRAME_BG_SOURCE_HEIGHT = 1086;
 export const FRAME_EDGE_SOURCE_WIDTH = 1368;
 export const FRAME_EDGE_SOURCE_HEIGHT = 1149;
 
-export const FRAME_EDGE_WIDTH = 1040;
+export const FRAME_EDGE_WIDTH = 1150; // 1040
 export const FRAME_EDGE_HEIGHT =
 	FRAME_EDGE_WIDTH * (FRAME_EDGE_SOURCE_HEIGHT / FRAME_EDGE_SOURCE_WIDTH);
 
-export const FRAME_BG_WIDTH = 1110 + 15;
+export const FRAME_BG_WIDTH = 1110 + 120; // 1110+15
 export const FRAME_BG_HEIGHT =
 	FRAME_BG_WIDTH * (FRAME_BG_SOURCE_HEIGHT / FRAME_BG_SOURCE_WIDTH);
 
@@ -69,11 +69,11 @@ export const NOTEBOOK_RENDER_HEIGHT =
 // just inside the stage instead of clipping it above the viewport, while moving
 // the complete reel package (frame_bg + board + symbols + frame_edge) down by
 // roughly 50 logical pixels from the previous 0.425 position.
-export const FRAME_POSITION_X = 0.52;
-export const FRAME_POSITION_Y = 0.481;
+export const FRAME_POSITION_X = 0.5; // 0.52
+export const FRAME_POSITION_Y = 0.5; //0.481
 
 export const FRAME_OFFSET_X = 0;
-export const FRAME_OFFSET_Y = 4;
+export const FRAME_OFFSET_Y = 4.01;
 
 // Backwards-compatible aliases for code that still refers to notebook position.
 export const NOTEBOOK_POSITION_X = FRAME_POSITION_X;

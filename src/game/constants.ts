@@ -350,16 +350,15 @@ const createStandardSymbol = <const AssetKey extends string>(
 
 
 export const SYMBOL_INFO_MAP = {
-	H1: createStandardSymbol('H1', 0.57),
-	H2: createStandardSymbol('H2', 0.57),
-	H3: createStandardSymbol('H3', 0.57),
-	H4: createStandardSymbol('H4', 0.57),
+	H1: createStandardSymbol('H1', 0.3),
+	H2: createStandardSymbol('H2', 0.3),
+	H3: createStandardSymbol('H3', 0.3),
+	H4: createStandardSymbol('H4', 0.3),
+	H5: createStandardSymbol('H5', 0.3),
 
-	H5: createStandardSymbol('H5', 0.53),
-
-	L1: createStandardSymbol('L1', 0.53),
-	L2: createStandardSymbol('L2', 0.53),
-	L3: createStandardSymbol('L3', 0.53),
+	L1: createStandardSymbol('L1', 0.3),
+	L2: createStandardSymbol('L2', 0.3),
+	L3: createStandardSymbol('L3', 0.3),
 
 	// Сохраняем текущее особое поведение:
 	// normal = 0.53, land = 0.43

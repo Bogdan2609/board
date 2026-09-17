@@ -1,0 +1,142 @@
+{
+  "../../node_modules/.pnpm/@sveltejs+kit@2.17.3_@sveltejs+vite-plugin-svelte@5.1.0_svelte@5.20.5_vite@6.2.0_@types_cea867823881517172a2960bf9594de1/node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "name": "entries/fallbacks/error.svelte",
+    "src": "../../node_modules/.pnpm/@sveltejs+kit@2.17.3_@sveltejs+vite-plugin-svelte@5.1.0_svelte@5.20.5_vite@6.2.0_@types_cea867823881517172a2960bf9594de1/node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "_index2.js"
+    ]
+  },
+  "../../node_modules/.pnpm/@sveltejs+kit@2.17.3_@sveltejs+vite-plugin-svelte@5.1.0_svelte@5.20.5_vite@6.2.0_@types_cea867823881517172a2960bf9594de1/node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "name": "index",
+    "src": "../../node_modules/.pnpm/@sveltejs+kit@2.17.3_@sveltejs+vite-plugin-svelte@5.1.0_svelte@5.20.5_vite@6.2.0_@types_cea867823881517172a2960bf9594de1/node_modules/@sveltejs/kit/src/runtime/server/index.js",
+    "isEntry": true,
+    "imports": [
+      "_events.js",
+      "_internal.js",
+      "_exports.js"
+    ]
+  },
+  "../../node_modules/.pnpm/pixi.js@8.8.1/node_modules/pixi.js/lib/environment-browser/browserAll.mjs": {
+    "file": "chunks/browserAll.js",
+    "name": "browserAll",
+    "src": "../../node_modules/.pnpm/pixi.js@8.8.1/node_modules/pixi.js/lib/environment-browser/browserAll.mjs",
+    "isDynamicEntry": true,
+    "imports": [
+      "__layout.js",
+      "_init.js"
+    ]
+  },
+  "../../node_modules/.pnpm/pixi.js@8.8.1/node_modules/pixi.js/lib/environment-webworker/webworkerAll.mjs": {
+    "file": "chunks/webworkerAll.js",
+    "name": "webworkerAll",
+    "src": "../../node_modules/.pnpm/pixi.js@8.8.1/node_modules/pixi.js/lib/environment-webworker/webworkerAll.mjs",
+    "isDynamicEntry": true,
+    "imports": [
+      "_init.js",
+      "__layout.js"
+    ]
+  },
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "name": "internal",
+    "src": ".svelte-kit/generated/server/internal.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js"
+    ]
+  },
+  "__layout.js": {
+    "file": "chunks/_layout.js",
+    "name": "_layout",
+    "imports": [
+      "_index.js",
+      "_index2.js",
+      "_events.js"
+    ],
+    "dynamicImports": [
+      "../../node_modules/.pnpm/pixi.js@8.8.1/node_modules/pixi.js/lib/environment-browser/browserAll.mjs",
+      "../../node_modules/.pnpm/pixi.js@8.8.1/node_modules/pixi.js/lib/environment-webworker/webworkerAll.mjs"
+    ]
+  },
+  "_events.js": {
+    "file": "chunks/events.js",
+    "name": "events",
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "_exports.js": {
+    "file": "chunks/exports.js",
+    "name": "exports",
+    "imports": [
+      "_index.js"
+    ]
+  },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "name": "index"
+  },
+  "_index2.js": {
+    "file": "chunks/index2.js",
+    "name": "index",
+    "imports": [
+      "_index.js",
+      "_exports.js"
+    ]
+  },
+  "_init.js": {
+    "file": "chunks/init.js",
+    "name": "init",
+    "imports": [
+      "__layout.js"
+    ]
+  },
+  "_internal.js": {
+    "file": "chunks/internal.js",
+    "name": "internal",
+    "imports": [
+      "_events.js",
+      "_index.js"
+    ],
+    "dynamicImports": [
+      "src/hooks.server.ts"
+    ]
+  },
+  "src/hooks.server.ts": {
+    "file": "chunks/hooks.server.js",
+    "name": "hooks.server",
+    "src": "src/hooks.server.ts",
+    "isDynamicEntry": true
+  },
+  "src/routes/+layout.svelte": {
+    "file": "entries/pages/_layout.svelte.js",
+    "name": "entries/pages/_layout.svelte",
+    "src": "src/routes/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index.js",
+      "__layout.js",
+      "_index2.js"
+    ]
+  },
+  "src/routes/+layout.ts": {
+    "file": "entries/pages/_layout.ts.js",
+    "name": "entries/pages/_layout.ts",
+    "src": "src/routes/+layout.ts",
+    "isEntry": true
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "name": "entries/pages/_page.svelte",
+    "src": "src/routes/+page.svelte",
+    "isEntry": true
+  },
+  "style.css": {
+    "file": "_app/immutable/assets/style.anukBgtv.css",
+    "src": "style.css"
+  }
+}
