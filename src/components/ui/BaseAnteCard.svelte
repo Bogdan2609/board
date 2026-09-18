@@ -1,69 +1,22 @@
 <script lang="ts">
-	import { Container, Sprite } from 'pixi-svelte';
 	import { stateBet, stateModal, stateUi } from 'state-shared';
-
+	import config from '../../game/config';
 	import { getContext } from '../../game/context';
 	import { stateReportCardUi } from '../../game/stateReportCardUi.svelte';
 	import { UI_LAYOUT } from '../../game/uiLayout';
-
-	type Props = {
-		x: number;
-		y: number;
-	};
-
+	import HudChoiceCard from './HudChoiceCard.svelte';
+	type Props = { x:number; y:number; };
+	type ModeEntry = [string,{cost:number;feature:boolean;buyBonus:boolean;rtp:number;max_win:number;description:string;}];
 	const props: Props = $props();
 	const context = getContext();
-
-	let hovered = $state(false);
-	let pressed = $state(false);
-
-	const disabled = $derived(
-		!context.stateXstateDerived.isIdle() ||
-			Boolean(stateModal.modal) ||
-			stateUi.menuOpen,
-	);
-
-	const activeMode = $derived(stateBet.activeBetModeKey.toUpperCase());
-	const textureKey = $derived(
-		activeMode === 'ANTE'
-			? 'reportCardUiModeAnteBg'
-			: 'reportCardUiBaseAnteBg',
-	);
-
-	const openModeModal = () => {
-		if (disabled) return;
-
-		context.eventEmitter.broadcast({ type: 'soundPressGeneral' });
-
-		// IMPORTANT:
-		// The MODE button NEVER changes BASE/ANTE directly.
-		// It only opens its own modal. Selection happens inside that modal.
-		stateReportCardUi.modeModalOpen = true;
-	};
+	const modeOptions = (Object.entries(config.betModes) as ModeEntry[]).filter(([, mode]) => !mode.buyBonus);
+	const activeModeKey = $derived(stateBet.activeBetModeKey.toLowerCase());
+	const activeOption = $derived(modeOptions.find(([key]) => key.toLowerCase() === activeModeKey));
+	const fmt = (v:number) => Number.isInteger(v) ? String(v) : v.toFixed(2).replace(/0+$/,'').replace(/\.$/,'');
+	const label = (key:string,cost:number) => { const n=key.toLowerCase(); if(n==='base') return 'BASE'; if(n.startsWith('ante')) { const suffix=n.slice(4).replace(/^[_-]+/,'').replace(/[_-]+/g,' ').trim().toUpperCase(); return `${suffix?`ANTE ${suffix}`:'ANTE'} · ${fmt(cost)}×`; } return key.replace(/[_-]+/g,' ').toUpperCase(); };
+	const activeLabel = $derived(activeOption ? label(activeOption[0], activeOption[1].cost) : stateBet.activeBetModeKey.toUpperCase());
+	const optionsLabel = modeOptions.length === 1 ? '1 OPTION' : `${modeOptions.length} OPTIONS`;
+	const disabled = $derived(!context.stateXstateDerived.isIdle() || Boolean(stateModal.modal) || stateUi.menuOpen);
+	const openModeModal = () => { if(disabled) return; context.eventEmitter.broadcast({type:'soundPressGeneral'}); stateReportCardUi.modeModalOpen = true; };
 </script>
-
-<Container
-	x={props.x}
-	y={props.y + (pressed ? 3 : hovered ? -1 : 0)}
-	rotation={pressed ? 0 : hovered ? 0.002 : 0.004}
-	eventMode="static"
-	cursor={disabled ? 'not-allowed' : 'pointer'}
-	onpointerover={() => !disabled && (hovered = true)}
-	onpointerout={() => {
-		hovered = false;
-		pressed = false;
-	}}
-	onpointerdown={() => !disabled && (pressed = true)}
-	onpointerup={() => {
-		pressed = false;
-		openModeModal();
-	}}
-	onpointerupoutside={() => (pressed = false)}
-	alpha={disabled ? 0.6 : 1}
->
-	<Sprite
-		key={textureKey}
-		width={UI_LAYOUT.leftPanel.width}
-		height={UI_LAYOUT.leftPanel.modeHeight}
-	/>
-</Container>
+<HudChoiceCard x={props.x} y={props.y} height={UI_LAYOUT.leftPanel.modeHeight} title="BET MODE" value={activeLabel} meta={optionsLabel} {disabled} active={stateReportCardUi.modeModalOpen} onpress={openModeModal}/>
