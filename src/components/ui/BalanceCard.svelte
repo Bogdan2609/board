@@ -17,34 +17,34 @@
 
 	const balanceTween = new Tween(stateBet.balanceAmount);
 	const value = $derived(numberToCurrencyString(balanceTween.current));
-	const valueFontSize = $derived(value.length > 13 ? 16 : value.length > 10 ? 18 : 21);
+	const valueFontSize = $derived(value.length > 13 ? 11 : value.length > 10 ? 13 : 15);
 
 	$effect(() => {
 		balanceTween.set(stateBet.balanceAmount);
 	});
 </script>
 
-<Container x={props.x - 6} y={props.y} rotation={-0.004}>
+<Container x={props.x} y={props.y} rotation={-0.004}>
 	<Sprite
 		key="reportCardUiBalanceBg"
-		width={UI_LAYOUT.leftStats.width * 1.4}
-		height={UI_LAYOUT.leftStats.height * 1.4}
+		width={UI_LAYOUT.leftStats.width}
+		height={UI_LAYOUT.leftStats.height}
 	/>
 
 	<Text
-		x={104}
-		y={25}
+		x={62}
+		y={15}
 		text="BALANCE"
 		style={{
 			fontFamily: 'Comic Sans MS',
-			fontSize: 11,
+			fontSize: 9,
 			fontWeight: '700',
 			fill: 0x315f89,
 		}}
 	/>
 	<Text
-		x={104}
-		y={45}
+		x={62}
+		y={31}
 		text={value}
 		style={{
 			fontFamily: 'Comic Sans MS',

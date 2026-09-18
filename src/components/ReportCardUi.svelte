@@ -12,10 +12,7 @@
 		FRAME_POSITION_Y,
 	} from '../game/reelBoardLayout';
 
-	import BuyFreeSpins from './ui/BuyFreeSpins.svelte';
-	import BaseAnteCard from './ui/BaseAnteCard.svelte';
-	import UtilityButtons from './ui/UtilityButtons.svelte';
-	import BalanceCard from './ui/BalanceCard.svelte';
+	import LeftHudRail from './ui/LeftHudRail.svelte';
 	import WinBar from './ui/WinBar.svelte';
 	import SpinPanel from './ui/SpinPanel.svelte';
 	import HudMenuOverlay from './ui/HudMenuOverlay.svelte';
@@ -40,10 +37,12 @@
 	const boardWidth = $derived(board.width);
 
 	// -------------------------------------------------------------------------
-	// Shared bottom baseline for Balance + Win.
+	// Shared bottom baseline for WIN and the right-side control rail.
 	// -------------------------------------------------------------------------
 	const hudBottomY = $derived(main.height - UI_LAYOUT.bottom.bottomOffset);
 
+	// 180 px keeps the left rail fully outside the 1150 px wooden frame on a
+	// 1600 px logical stage: 18 px outer safe area + 180 px rail + 24 px gap.
 	const leftX = $derived(
 		Math.max(
 			UI_LAYOUT.safeGap.edge,
@@ -51,19 +50,9 @@
 		),
 	);
 
-	// Important: moving the reel frame vertically must NOT drag BUY FREE SPINS
-	// and BASE/ANTE down with it. Their top rail remains stage-safe and stable.
+	// The compact rail is intentionally top-anchored. Its own component owns
+	// all vertical spacing so the four left controls behave as one unit.
 	const leftTopY = $derived(UI_LAYOUT.safeGap.edge + 22);
-	const modeY = $derived(
-		leftTopY + UI_LAYOUT.leftPanel.buyHeight + UI_LAYOUT.leftPanel.gap,
-	);
-
-	// Balance occupies the bottom stats slot and shares the same bottom edge as
-	// the WIN banner. Utility buttons follow it upward.
-	const balanceY = $derived(hudBottomY - UI_LAYOUT.leftStats.height);
-	const utilityY = $derived(
-		balanceY - UI_LAYOUT.leftButtons.statsGap - UI_LAYOUT.leftButtons.buttonSize,
-	);
 
 	// WIN remains centered under the 6x6 field.
 	const winWidth = $derived(boardWidth * UI_LAYOUT.winPanel.widthRatio);
@@ -84,7 +73,7 @@
 	);
 
 	// Right rail uses its own bottom edge so SPIN/Turbo/Auto can sit lower
-	// without moving Balance or WIN.
+	// without moving WIN.
 	const rightBottomY = $derived(
 		main.height - UI_LAYOUT.rightPanel.bottomOffset,
 	);
@@ -111,10 +100,7 @@
 
 {#if showWideHud}
 	<Container>
-		<BuyFreeSpins x={leftX} y={leftTopY} />
-		<BaseAnteCard x={leftX} y={modeY} />
-		<UtilityButtons x={leftX} y={utilityY} />
-		<BalanceCard x={leftX} y={balanceY} />
+		<LeftHudRail x={leftX} y={leftTopY} />
 
 		<WinBar x={winX} y={winY} width={winWidth} />
 		<SpinPanel

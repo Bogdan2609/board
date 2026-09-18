@@ -6,23 +6,24 @@ export const UI_LAYOUT = {
 	},
 
 	leftPanel: {
-		// Compact approved left rail from the reference sheet.
-		width: 240,
-		buyHeight: 126,
-		modeHeight: 77,
-		gap: 16,
+		// Fits the 183 px of real free space to the left of the wooden frame.
+		width: 180,
+		buyHeight: 112,
+		modeHeight: 54,
+		gap: 10,
 	},
 
 	leftButtons: {
-		buttonSize: 56,
+		// The utility row is now one full-width MENU control.
+		buttonSize: 48,
 		gap: 10,
-		statsGap: 12,
+		statsGap: 10,
 	},
 
 	leftStats: {
-		width: 235,
-		height: 68,
-		gap: 8,
+		width: 180,
+		height: 58,
+		gap: 10,
 	},
 
 	winPanel: {
