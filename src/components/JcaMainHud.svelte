@@ -3,10 +3,22 @@
     import { stateBet, stateBetDerived, stateConfig, stateUi, stateModal, stateSound } from 'state-shared';
     import { numberToCurrencyString, bookEventAmountToCurrencyString } from 'utils-shared/amount';
     import { getContext } from '../game/context';
+    import { assertJcaBookEvents } from '../game/boardContract';
+    import { playBookEvents } from '../game/utils';
+    import type { JcaQaScenario } from '../stories/data/jcaQaBooks';
     import JcaGameModeModal from './JcaGameModeModal.svelte';
     import type { GameModeOption, GameModeModalLabels } from './JcaGameModeModal.svelte';
 
+    type Props = { storybookQa?: boolean; qaScenario?: JcaQaScenario };
+    let { storybookQa = false, qaScenario = 'loss' }: Props = $props();
     const context = getContext();
+    let qaBusy = $state(false);
+    let qaAutoOpen = $state(false);
+    let qaAutoRemaining = $state(0);
+    let qaStopRequested = $state(false);
+    let qaNotice = $state('');
+    const qaBetLevels = [1, 2, 5, 10] as const;
+    let qaBetIndex = $state(0);
 
     // This HUD is a fixed HTML overlay. Pixi's canvasSizes may use an internal
     // logical coordinate space, which is not necessarily the browser/Storybook
@@ -31,7 +43,7 @@
 
     // IMPORTANT: the approved RGS math/configuration does not yet expose the new 6x6 ANTE modes.
     // This is an art/layout preview, not a way to activate additional wagers.
-    const rgsEnabled = import.meta.env.VITE_JCA_ENABLE_RGS === 'true';
+    const rgsEnabled = import.meta.env.VITE_JCA_ENABLE_RGS === 'true' && import.meta.env.VITE_JCA_6X6_MATH_VERIFIED === 'true';
     const demoOnly = !rgsEnabled;
     const labels: GameModeModalLabels = {
         heading: 'GAME MODES', detailsHeading: 'MODE DETAILS', cost: 'Cost', rtp: 'RTP',
@@ -52,11 +64,17 @@
     let menuOpen = $state(false);
     let selectedModeKey = $state('BASE');
     const selectedModeTitle = $derived(modes.find((m) => m.key === selectedModeKey)?.title ?? 'BASE');
-    const idle = $derived(context.stateXstateDerived.isIdle());
+    const idle = $derived(storybookQa ? !qaBusy : context.stateXstateDerived.isIdle());
     const replay = $derived(stateUi.config.mode === 'replay');
+    const autoRunning = $derived(storybookQa ? qaAutoRemaining > 0 : stateBetDerived.hasAutoBetCounter());
     const paidDisabled = $derived(demoOnly || replay || modeModalOpen);
-    const spinDisabled = $derived(paidDisabled || (idle && !stateBetDerived.isBetCostAvailable()));
-    const balance = $derived(numberToCurrencyString(stateBet.balanceAmount));
+    // For Storybook, only the local deterministic event fixture is interactive.
+    const betEditDisabled = $derived((!storybookQa && replay) || !idle || modeModalOpen || autoRunning);
+    const spinDisabled = $derived(storybookQa ? modeModalOpen : paidDisabled || (idle && !stateBetDerived.isBetCostAvailable()));
+    const autoDisabled = $derived(storybookQa
+        ? modeModalOpen || (qaBusy && !autoRunning)
+        : demoOnly || replay || modeModalOpen || (!autoRunning && (!idle || !stateBetDerived.isBetCostAvailable())));
+    const balance = $derived(storybookQa ? 'TEST ONLY' : numberToCurrencyString(stateBet.balanceAmount));
     const win = $derived(bookEventAmountToCurrencyString(stateBet.winBookEventAmount));
     // WIN is an earned amount, not a permanent $0.00 plaque. During the next
     // bet, suppress the old total until the SDK resets/updates the book amount.
@@ -75,10 +93,11 @@
         Number.isFinite(Number(stateBet.winBookEventAmount)) &&
         Number(stateBet.winBookEventAmount) > 0
     );
-    const bet = $derived(numberToCurrencyString(stateBetDerived.betCost()));
-    const betOptions = $derived([...(stateConfig.betAmountOptions ?? [])].sort((a, b) => a - b));
-    const prevBet = $derived(betOptions.slice().reverse().find((v) => v < stateBet.betAmount));
-    const nextBet = $derived(betOptions.find((v) => v > stateBet.betAmount));
+    const currentBet = $derived(storybookQa ? qaBetLevels[qaBetIndex] : stateBet.betAmount);
+    const bet = $derived(storybookQa ? `TEST ${currentBet}x` : numberToCurrencyString(stateBetDerived.betCost()));
+    const betOptions = $derived(storybookQa ? [...qaBetLevels] : [...(stateConfig.betAmountOptions ?? [])].sort((a, b) => a - b));
+    const prevBet = $derived(betOptions.slice().reverse().find((v) => v < currentBet));
+    const nextBet = $derived(betOptions.find((v) => v > currentBet));
 
     // Board geometry is taken from the SAME transform used by Board, BoardFrame and symbols.
     // The HUD is HTML over the canvas, so convert main-container coordinates to screen pixels.
@@ -168,7 +187,7 @@
         stateModal.modal = { name };
     }
     function openModeModal() {
-        if (!idle || replay) return;
+        if (!idle || (!storybookQa && replay) || autoRunning) return;
         clickSound();
         menuOpen = false;
         modeModalOpen = true;
@@ -180,14 +199,55 @@
         modeModalOpen = false;
     }
     function changeBet(direction: -1 | 1) {
-        if (!idle || replay || modeModalOpen) return;
+        if (betEditDisabled) return;
         const amount = direction === -1 ? prevBet : nextBet;
         if (amount === undefined) return;
         clickSound();
+        if (storybookQa) { qaBetIndex = qaBetLevels.indexOf(amount as typeof qaBetLevels[number]); return; }
         stateBetDerived.setBetAmount(amount);
+    }
+    async function playQaRound() {
+        if (!storybookQa || qaBusy) return;
+        qaBusy = true;
+        qaNotice = '';
+        try {
+            const { getJcaQaBook } = await import('../stories/data/jcaQaBooks');
+            const events = getJcaQaBook(qaScenario);
+            // Preflight exactly as in the real playBet() entry point.
+            assertJcaBookEvents(events);
+            stateBet.winBookEventAmount = 0;
+            await playBookEvents(events);
+        } catch (error) {
+            qaNotice = error instanceof Error ? error.message : String(error);
+        } finally {
+            qaBusy = false;
+        }
+    }
+    async function runQaAuto(count: number) {
+        if (!storybookQa || qaBusy || qaAutoRemaining) return;
+        qaAutoOpen = false;
+        qaStopRequested = false;
+        qaAutoRemaining = count;
+        try {
+            while (qaAutoRemaining > 0 && !qaStopRequested) {
+                await playQaRound();
+                if (qaNotice) break;
+                qaAutoRemaining -= 1;
+            }
+        } finally {
+            qaAutoRemaining = 0;
+            qaStopRequested = false;
+        }
     }
     function spin() {
         if (spinDisabled) return;
+        if (storybookQa) {
+            if (qaBusy) {
+                qaStopRequested = true;
+                context.eventEmitter.broadcast({ type: 'stopButtonClick' });
+            } else if (!autoRunning) void playQaRound();
+            return;
+        }
         context.eventEmitter.broadcast({ type: 'soundPressBet' });
         if (idle) {
             if (stateBetDerived.activeBetMode()?.type === 'buy') stateBet.activeBetModeKey = 'BASE';
@@ -203,14 +263,20 @@
         stateBetDerived.updateIsTurbo(!stateBet.isTurbo, { persistent: true });
     }
     function autoSpin() {
-        if (paidDisabled) return;
-        if (stateBetDerived.hasAutoBetCounter()) {
+        if (autoDisabled) return;
+        if (storybookQa) {
+            if (autoRunning) { qaStopRequested = true; qaAutoRemaining = 0; }
+            else if (!qaBusy) qaAutoOpen = true;
+            return;
+        }
+        if (autoRunning) {
             clickSound();
             stateBet.autoSpinsCounter = 0;
         } else if (idle && stateBetDerived.isBetCostAvailable()) openSdkModal('autoSpin');
     }
     function buyBonus() {
-        if (paidDisabled || !idle) return;
+        if (storybookQa) { qaNotice = 'BUY FREE SPINS is artwork only: this Storybook scene cannot place wagers.'; return; }
+        if (paidDisabled || !idle || autoRunning) return;
         if (stateBetDerived.activeBetMode()?.type === 'activate') {
             clickSound();
             stateBet.activeBetModeKey = 'BASE';
@@ -227,13 +293,13 @@
     <!-- LEFT: bonus purchase, game mode, three horizontal secondary controls, balance. -->
     <button class="art control buy" style={artBox(pos.leftX, pos.buyY, 176, 159)}
         aria-label="Buy free spins" title={demoOnly ? 'Demo only: wagers are disabled' : 'Buy free spins'}
-        disabled={paidDisabled || !idle} onclick={buyBonus}>
+        disabled={!storybookQa && (paidDisabled || !idle || autoRunning)} onclick={buyBonus}>
         <img src="/assets/jca/ui/buy_free_spins_static_v1.png" alt="" draggable="false" />
         <span class="buy-label" style={artTextSize(18)}>BUY<br />FREE SPINS</span>
     </button>
 
     <button class="art control mode" style={artBox(pos.leftX, pos.modeY, 188, 125)}
-        aria-label="Select game mode" disabled={!idle || replay} onclick={openModeModal}>
+        aria-label="Select game mode" disabled={!idle || (!storybookQa && replay) || autoRunning} onclick={openModeModal}>
         <img src="/assets/jca/ui/game_mode_selector_hud_v1.png" alt="" draggable="false" />
         <span class="mode-label" style={artTextSize(19)}>{selectedModeTitle}</span>
     </button>
@@ -282,7 +348,9 @@
             <img src="/assets/jca/ui/turbo_button_static_v1.png" alt="" draggable="false" />
             <span style={textSize(13)}>TURBO</span>
         </button>
-        <button class="art control top-button" aria-label="Automatic spins" disabled={paidDisabled}
+        <button class="art control top-button" class:active={autoRunning}
+            aria-label={autoRunning ? 'Stop automatic spins' : 'Automatic spins'}
+            aria-pressed={autoRunning} disabled={autoDisabled}
             onclick={autoSpin}>
             <img src="/assets/jca/ui/auto_button_static_v1.png" alt="" draggable="false" />
             <span style={textSize(13)}>AUTO</span>
@@ -290,25 +358,41 @@
     </div>
 
     <div class="bet-controls" style={footerBox(pos.rightX, pos.betY, pos.betWidth, 62)}>
-        <button class="art control adjust" aria-label="Decrease bet" disabled={replay || !idle || modeModalOpen || prevBet === undefined} onclick={() => changeBet(-1)}>
+        <button class="art control adjust" aria-label="Decrease bet" disabled={betEditDisabled || prevBet === undefined} onclick={() => changeBet(-1)}>
             <img src="/assets/jca/ui/bet_adjust_static_v1.png" alt="" draggable="false" />
             <span style={footerTextSize(27)}>−</span>
         </button>
-        <button class="art bet-readout" aria-label={`Bet: ${bet}`} disabled={replay || !idle || modeModalOpen}
+        <button class="art bet-readout" aria-label={`Bet: ${bet}`} disabled={betEditDisabled || storybookQa}
             onclick={() => openSdkModal('betAmountMenu')}>
             <img src="/assets/jca/ui/bet_display_static_v1.png" alt="" draggable="false" />
             <span class="display-copy"><span class="caption" style={footerTextSize(11)}>BET</span><strong style={footerTextSize(18)}>{bet}</strong></span>
         </button>
-        <button class="art control adjust" aria-label="Increase bet" disabled={replay || !idle || modeModalOpen || nextBet === undefined} onclick={() => changeBet(1)}>
+        <button class="art control adjust" aria-label="Increase bet" disabled={betEditDisabled || nextBet === undefined} onclick={() => changeBet(1)}>
             <img src="/assets/jca/ui/bet_adjust_static_v1.png" alt="" draggable="false" />
             <span style={footerTextSize(27)}>+</span>
         </button>
     </div>
 
-    {#if demoOnly}
+    {#if demoOnly || storybookQa}
         <span class="qa-note" style={`top:${pos.spinY - 181 * pos.s / 2 - 13 * pos.s}px;left:${pos.rightX}px;${textSize(10)}`}>
-            UI QA · no real bets
+            {storybookQa ? `STORYBOOK · ${qaScenario.toUpperCase()} · NO RGS` : 'UI QA · no real bets'}
         </span>
+    {/if}
+    {#if storybookQa && qaNotice}
+        <div class="qa-notice" role="status"><span>{qaNotice}</span><button type="button" onclick={() => (qaNotice = '')}>Close</button></div>
+    {/if}
+    {#if storybookQa && qaAutoOpen}
+        <div class="qa-dialog-backdrop">
+            <section class="qa-dialog" role="dialog" aria-modal="true" aria-label="Storybook auto-spin test">
+                <h2>STORYBOOK AUTO QA</h2>
+                <p>Run deterministic visual fixtures only. No wagers, wallet changes or RGS requests.</p>
+                <div class="qa-actions">
+                    <button type="button" onclick={() => void runQaAuto(3)}>3 DEMO ROUNDS</button>
+                    <button type="button" onclick={() => void runQaAuto(5)}>5 DEMO ROUNDS</button>
+                    <button type="button" onclick={() => (qaAutoOpen = false)}>CANCEL</button>
+                </div>
+            </section>
+        </div>
     {/if}
     {#if menuOpen}
         <div class="menu-layer" role="group" aria-label="Game menu" style={`left:${pos.leftX}px;top:${pos.smallY - 170 * pos.footerS}px;${textSize(14)}`}>
@@ -369,4 +453,11 @@
     .menu-layer { position: absolute; width: 200px; transform: translateX(-50%); display: grid; grid-template-columns: 1fr 1fr; gap: 5px; padding: 10px; background: #302219; border: 2px solid #ad8249; border-radius: 8px; pointer-events: auto; box-shadow: 0 7px 18px #0009; }
     .menu-layer button { padding: 9px 4px; color: #fae0a9; background: #4d3427; border: 1px solid #b28b55; border-radius: 4px; cursor: pointer; font: inherit; font-weight: 650; }
     .menu-layer button:hover { background: #765139; }
+    .qa-notice { position: fixed; left: 50%; top: 28px; transform: translateX(-50%); z-index: 110000; display: flex; gap: 12px; align-items: center; max-width: 90vw; padding: 12px 16px; color: #ffe7bc; background: #33231c; border: 2px solid #b38c55; border-radius: 8px; pointer-events: auto; }
+    .qa-notice button, .qa-actions button { padding: 8px 12px; color: #ffebc8; background: #65402c; border: 1px solid #d2a75f; cursor: pointer; }
+    .qa-dialog-backdrop { position: fixed; inset: 0; z-index: 109999; display: grid; place-items: center; background: #0009; pointer-events: auto; }
+    .qa-dialog { width: min(92vw, 440px); box-sizing: border-box; padding: 24px; border: 3px solid #bb9053; border-radius: 12px; background: #3d281d; color: #ffe8c2; box-shadow: 0 16px 55px #000a; }
+    .qa-dialog h2 { margin: 0 0 12px; font-size: 21px; }
+    .qa-dialog p { line-height: 1.45; }
+    .qa-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 </style>

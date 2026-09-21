@@ -4,17 +4,16 @@
     import { gameActor } from '../game/actor';
     import { getContext } from '../game/context';
 
-    type Props = { debug?: boolean };
-    const props: Props = $props();
+    type Props = { debug?: boolean; storybookQa?: boolean };
+    let { debug = false, storybookQa = false }: Props = $props();
     const context = getContext();
 
-    // SAFE BY DEFAULT: old 6x5 RGS sessions do not match the new 6x6 visual board.
-    // Re-enable only AFTER a matching server-side 6x6 math and RGS session are deployed.
-    const allowRgs = import.meta.env.VITE_JCA_ENABLE_RGS === 'true';
-    const blocked = () => console.warn(
-        '[JCA] Paid spin/resume disabled in 6x6 visual integration. ' +
-        'Use JCA/6x6 Engine in Storybook until the 6x6 RGS math is ready.',
-    );
+    // Storybook explicitly prevents real play, even with a locally misconfigured env.
+    // Real rounds require both a verified 6x6 math build AND an explicit RGS flag.
+    const allowRgs = !storybookQa &&
+        import.meta.env.VITE_JCA_ENABLE_RGS === 'true' &&
+        import.meta.env.VITE_JCA_6X6_MATH_VERIFIED === 'true';
+    const blocked = () => console.warn('[JCA] RGS action blocked: 6x6 math/RGS not verified or Storybook QA is active.');
 
     onMount(() => {
         const { unsubscribe } = gameActor.subscribe((snapshot) => {
@@ -35,7 +34,7 @@
     });
 </script>
 
-{#if props.debug}
+{#if debug}
     <Text
         x={context.stateLayoutDerived.canvasSizes().width}
         anchor={{ x: 1, y: 0 }}

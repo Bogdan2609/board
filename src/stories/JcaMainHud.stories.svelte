@@ -12,12 +12,24 @@
 
 {#snippet template(args: TemplateArgs<any>)}
     <StoryGameTemplate skipLoadingScreen={true} action={async () => await args.action?.(args.data)}>
-        <StoryLocale lang="en"><Game /></StoryLocale>
+        <StoryLocale lang="en"><Game storybookQa={true} qaScenario={args.data?.qaScenario ?? 'loss'} /></StoryLocale>
     </StoryGameTemplate>
 {/snippet}
 
 <Story
-    name="main screen — approved art / QA"
-    args={templateArgs({ skipLoadingScreen: true, data: {}, action: async () => {} })}
+    name="QA — SPIN / loss (no RGS)"
+    args={templateArgs({ skipLoadingScreen: true, data: { qaScenario: 'loss' }, action: async () => {} })}
+    {template}
+/>
+
+<Story
+    name="QA — SPIN / win display (synthetic event)"
+    args={templateArgs({ skipLoadingScreen: true, data: { qaScenario: 'win' }, action: async () => {} })}
+    {template}
+/>
+
+<Story
+    name="QA — SPIN / cascade (synthetic event)"
+    args={templateArgs({ skipLoadingScreen: true, data: { qaScenario: 'cascade' }, action: async () => {} })}
     {template}
 />

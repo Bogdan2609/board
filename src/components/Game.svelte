@@ -32,6 +32,8 @@
     import JcaHud from './JcaHud.svelte';
     import JcaMainHud from './JcaMainHud.svelte';
 
+    type Props = { storybookQa?: boolean; qaScenario?: 'loss' | 'win' | 'cascade' };
+    let { storybookQa = false, qaScenario = 'loss' }: Props = $props();
     const context = getContext();
     // Use the approved art HUD wherever left/right side controls remain usable.
     // The existing compact Pixi HUD is preserved on small/short screens.
@@ -50,16 +52,18 @@
 
 <App>
     <EnableSound />
-    <EnableHotkey />
-    <EnableSpaceHold />
-    <EnableGameActor />
+    {#if !storybookQa}
+        <EnableHotkey />
+        <EnableSpaceHold />
+    {/if}
+    {#if !storybookQa}<EnableGameActor {storybookQa} />{/if}
     <EnablePixiExtension />
     <Background />
 
     {#if context.stateLayout.showLoadingScreen}
         <LoadingScreen onloaded={() => (context.stateLayout.showLoadingScreen = false)} />
     {:else}
-        <ResumeBet />
+        {#if !storybookQa}<ResumeBet />{/if}
         <Sound />
         <MainContainer><BoardFrame /></MainContainer>
         <MainContainer>
@@ -89,7 +93,7 @@
 </App>
 
 {#if artHudFits && !context.stateLayout.showLoadingScreen}
-    <JcaMainHud />
+    <JcaMainHud {storybookQa} {qaScenario} />
 {/if}
 
 <Modals>
