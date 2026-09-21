@@ -4,7 +4,7 @@ export default {
 	gameID: '0_0_scatter',
 	rtp: 0.97,
 	numReels: 6,
-	numRows: [5, 5, 5, 5, 5, 5],
+	numRows: [6, 6, 6, 6, 6, 6],
 	betModes: {
 		base: {
 			cost: 1.0,

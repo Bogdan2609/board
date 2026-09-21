@@ -1,27 +1,14 @@
 <script lang="ts">
-	import { Rectangle } from 'pixi-svelte';
+    import { Rectangle } from 'pixi-svelte';
+    import { getContext } from '../game/context';
 
-	import { getContext } from '../game/context';
-	import { SYMBOL_SIZE } from '../game/constants';
-
-	type Props = { debug?: boolean };
-
-	const props: Props = $props();
-	const context = getContext();
+    type Props = { debug?: boolean };
+    const props: Props = $props();
+    const context = getContext();
+    const layout = $derived(context.stateGameDerived.boardLayout());
 </script>
 
 {#if props.debug}
-	<Rectangle
-		alpha={0.5}
-		backgroundColor={0xffffff}
-		width={context.stateGameDerived.boardLayout().width}
-		height={context.stateGameDerived.boardLayout().height}
-	/>
+    <Rectangle alpha={0.5} backgroundColor={0xffffff} width={layout.width} height={layout.height} />
 {/if}
-
-<Rectangle
-	isMask
-	x={-SYMBOL_SIZE}
-	width={context.stateGameDerived.boardLayout().width + SYMBOL_SIZE * 2}
-	height={context.stateGameDerived.boardLayout().height}
-/>
+<Rectangle isMask x={0} y={0} width={layout.width} height={layout.height} />

@@ -4,67 +4,73 @@ import type { RawSymbol, SymbolState } from './types';
 
 export const SYMBOL_SIZE = 100;
 
-export const REEL_PADDING = 0.53;
+export const REEL_PADDING = 0.5;
 
-// initial board (padded top and bottom)
+// Initial 6x6 board: 1 hidden top + 6 visible rows + 1 hidden bottom.
 export const INITIAL_BOARD: RawSymbol[][] = [
 	[
-		{ name: 'M', multiplier: 10 },
+		{ name: 'L3' },
 		{ name: 'H1' },
-		{ name: 'M', multiplier: 2 },
+		{ name: 'H5' },
 		{ name: 'L1' },
-		{ name: 'H1' },
-		{ name: 'H4' },
-		{ name: 'H1' },
-	],
-	[
-		{ name: 'L3' },
 		{ name: 'H2' },
-		{ name: 'M', multiplier: 4 },
-		{ name: 'L2' },
 		{ name: 'S', scatter: true },
-		{ name: 'S', scatter: true },
-		{ name: 'L2' },
-	],
-	[
-		{ name: 'L2' },
-		{ name: 'H3' },
-		{ name: 'M', multiplier: 5 },
-		{ name: 'L3' },
-		{ name: 'W' },
-		{ name: 'L2' },
-		{ name: 'L2' },
-	],
-	[
-		{ name: 'L3' },
-		{ name: 'H4' },
-		{ name: 'M', multiplier: 7 },
 		{ name: 'L4' },
-		{ name: 'W' },
-		{ name: 'H1' },
-		{ name: 'H1' },
+		{ name: 'L3' },
 	],
 	[
-		{ name: 'H3' },
-		{ name: 'H4' },
-		{ name: 'M', multiplier: 10 },
+		{ name: 'L4' },
 		{ name: 'H2' },
-		{ name: 'S', scatter: true },
 		{ name: 'L2' },
-		{ name: 'M', multiplier: 7 },
+		{ name: 'L1' },
+		{ name: 'S', scatter: true },
+		{ name: 'H5' },
+		{ name: 'L3' },
+		{ name: 'L2' },
+	],
+	[
+		{ name: 'L1' },
+		{ name: 'H3' },
+		{ name: 'L2' },
+		{ name: 'L3' },
+		{ name: 'M', multiplier: 5 },
+		{ name: 'H1' },
+		{ name: 'L4' },
+		{ name: 'H2' },
+	],
+	[
+		{ name: 'L3' },
+		{ name: 'H4' },
+		{ name: 'L1' },
+		{ name: 'H2' },
+		{ name: 'L4' },
+		{ name: 'H5' },
+		{ name: 'H3' },
+		{ name: 'L2' },
 	],
 	[
 		{ name: 'H2' },
-		{ name: 'H2' },
+		{ name: 'H5' },
+		{ name: 'L2' },
+		{ name: 'L4' },
+		{ name: 'H3' },
+		{ name: 'L1' },
 		{ name: 'S', scatter: true },
 		{ name: 'L3' },
+	],
+	[
+		{ name: 'L1' },
+		{ name: 'L4' },
 		{ name: 'H1' },
-		{ name: 'S', scatter: true },
+		{ name: 'L3' },
+		{ name: 'H5' },
 		{ name: 'L2' },
+		{ name: 'H4' },
+		{ name: 'H2' },
 	],
 ];
 
-export const BOARD_DIMENSIONS = { x: INITIAL_BOARD.length, y: INITIAL_BOARD[0].length - 2 };
+export const BOARD_DIMENSIONS = { x: 6, y: 6 } as const;
 
 export const BOARD_SIZES = {
 	width: SYMBOL_SIZE * BOARD_DIMENSIONS.x,
@@ -265,7 +271,7 @@ const backgroundHigh = {
 	},
 };
 
-export const SYMBOL_INFO_MAP = {
+const LEGACY_SYMBOL_INFO_MAP = {
 	H1: {
 		explosion,
 		win: {
@@ -513,6 +519,44 @@ export const SYMBOL_INFO_MAP = {
 	M_TAKEN_5: backgroundMid,
 	M_TAKEN_7: backgroundMid,
 	M_TAKEN_10: backgroundHigh,
+} as const;
+
+// Approved JCA art: same PNG/WebP in idle, spin, landing, win and tumble.
+// FX are intentionally absent until the JCA-only animations are implemented.
+type JcaSpriteKey =
+    | 'jcaH1' | 'jcaH2' | 'jcaH3' | 'jcaH4' | 'jcaH5'
+    | 'jcaL1' | 'jcaL2' | 'jcaL3' | 'jcaL4' | 'jcaS' | 'jcaM5';
+
+const jcaSprite = (assetKey: JcaSpriteKey, ratio: number) => ({
+    type: 'sprite' as const,
+    assetKey,
+    sizeRatios: { width: ratio, height: ratio },
+});
+const jcaSymbolStates = (assetKey: JcaSpriteKey, ratio: number) => {
+    const frame = jcaSprite(assetKey, ratio);
+    return {
+        static: frame,
+        spin: frame,
+        land: frame,
+        win: frame,
+        postWinStatic: frame,
+        explosion: frame,
+    };
+};
+
+export const SYMBOL_INFO_MAP = {
+    ...LEGACY_SYMBOL_INFO_MAP,
+    H1: jcaSymbolStates('jcaH1', 0.94),
+    H2: jcaSymbolStates('jcaH2', 0.94),
+    H3: jcaSymbolStates('jcaH3', 0.94),
+    H4: jcaSymbolStates('jcaH4', 0.88),
+    H5: jcaSymbolStates('jcaH5', 0.88),
+    L1: jcaSymbolStates('jcaL1', 0.82),
+    L2: jcaSymbolStates('jcaL2', 0.82),
+    L3: jcaSymbolStates('jcaL3', 0.82),
+    L4: jcaSymbolStates('jcaL4', 0.82),
+    S: jcaSymbolStates('jcaS', 0.92),
+    M_5: jcaSymbolStates('jcaM5', 0.90),
 } as const;
 
 export const MULTIPLIER_BACKGROUND_INFO_MAP = {

@@ -14,11 +14,13 @@ import { eventEmitter } from './eventEmitter';
 import type { Bet, BookEventOfType } from './typesBookEvent';
 import { bookEventHandlerMap } from './bookEventHandlerMap';
 import type { RawSymbol, SymbolState } from './types';
+import { assertJcaBookEvents } from './boardContract';
 
 // general utils
 export const { getEmptyBoard } = createGetEmptyPaddedBoard({ reelsDimensions: BOARD_DIMENSIONS });
 export const { playBookEvent, playBookEvents } = createPlayBookUtils({ bookEventHandlerMap });
 export const playBet = async (bet: Bet) => {
+	assertJcaBookEvents(bet.state);
 	stateBet.winBookEventAmount = 0;
 	await playBookEvents(bet.state);
 	eventEmitter.broadcast({ type: 'stopButtonEnable' });

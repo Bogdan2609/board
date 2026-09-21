@@ -1,4 +1,13 @@
 export default {
+	// Board art: independent opaque stone texture and transparent wooden overlay.
+	jcaReelBackground: {
+		type: 'sprite',
+		src: '/assets/jca/reels/reel_background_static_v1.png',
+	},
+	jcaReelFrame: {
+		type: 'sprite',
+		src: '/assets/jca/reels/reel_frame_static_v1_fitted.png',
+	},
 	// Approved static environment; served directly from SvelteKit's static/ directory.
 	uncleShopBackground: {
 		type: 'sprite',

@@ -1,82 +1,33 @@
 <script lang="ts" module>
-	export type EmitterEventBoardFrame =
-		| { type: 'boardFrameGlowShow' }
-		| { type: 'boardFrameGlowHide' };
+    // Event contract remains intact: later FX can subscribe without changing game logic.
+    export type EmitterEventBoardFrame =
+        | { type: 'boardFrameGlowShow' }
+        | { type: 'boardFrameGlowHide' };
 </script>
 
 <script lang="ts">
-	import { Sprite, SpineProvider, SpineTrack } from 'pixi-svelte';
+    import { Container, Rectangle, Sprite } from 'pixi-svelte';
+    import { getContext } from '../game/context';
+    import { BOARD_DIMENSIONS, BOARD_SIZES, SYMBOL_SIZE } from '../game/constants';
 
-	import { getContext } from '../game/context';
-
-	const context = getContext();
-	const SPINE_SCALE = { width: 0.59, height: 0.62 };
-	const SPRITE_SCALE = { width: 1.07, height: 1 };
-	const BG_RATIO = 937 / 806;
-	const POSITION_ADJUSTMENT = 1.01;
-
-	type AnimationName = 'reelhouse_glow_start' | 'reelhouse_glow_idle' | 'reelhouse_glow_exit';
-
-	let animationName = $state<AnimationName | undefined>(undefined);
-	let loop = $state(false);
-
-	context.eventEmitter.subscribeOnMount({
-		boardFrameGlowShow: () => {
-			animationName = 'reelhouse_glow_start';
-			loop = false;
-		},
-		boardFrameGlowHide: () => {
-			if (animationName) animationName = 'reelhouse_glow_exit';
-		},
-	});
+    const context = getContext();
+    const layout = $derived(context.stateGameDerived.boardLayout());
 </script>
 
-{#if animationName}
-	<SpineProvider
-		zIndex={-1}
-		key="reelhouse"
-		x={context.stateGameDerived.boardLayout().x * POSITION_ADJUSTMENT}
-		y={context.stateGameDerived.boardLayout().y * POSITION_ADJUSTMENT}
-		width={context.stateGameDerived.boardLayout().width * SPINE_SCALE.width}
-		height={context.stateGameDerived.boardLayout().height * SPINE_SCALE.height}
-	>
-		<SpineTrack
-			trackIndex={0}
-			{animationName}
-			{loop}
-			listener={{
-				complete: (entry) => {
-					if (entry.animation) {
-						if (entry.animation.name === 'reelhouse_glow_start') {
-							animationName = 'reelhouse_glow_idle';
-							loop = true;
-						}
+<!-- Behind the symbols; all gameplay layers use exactly this same boardLayout transform. -->
+<Container x={layout.x} y={layout.y} pivot={layout.pivot} scale={layout.scale}>
+    <Sprite key="jcaReelBackground" x={0} y={0}
+        width={BOARD_SIZES.width} height={BOARD_SIZES.height} />
 
-						if (entry.animation.name === 'reelhouse_glow_exit') {
-							animationName = undefined;
-							loop = false;
-						}
-					}
-				},
-			}}
-		/>
-	</SpineProvider>
-{/if}
-
-<Sprite
-	key="frame_bg.png"
-	anchor={0.5}
-	x={context.stateGameDerived.boardLayout().x * POSITION_ADJUSTMENT}
-	y={context.stateGameDerived.boardLayout().y * POSITION_ADJUSTMENT}
-	width={context.stateGameDerived.boardLayout().width * BG_RATIO * SPRITE_SCALE.width}
-	height={context.stateGameDerived.boardLayout().width * SPRITE_SCALE.height}
-/>
-
-<Sprite
-	key="frame_edge.png"
-	anchor={0.5}
-	x={context.stateGameDerived.boardLayout().x * POSITION_ADJUSTMENT}
-	y={context.stateGameDerived.boardLayout().y * POSITION_ADJUSTMENT}
-	width={context.stateGameDerived.boardLayout().width * BG_RATIO * SPRITE_SCALE.width}
-	height={context.stateGameDerived.boardLayout().width * SPRITE_SCALE.height}
-/>
+    <!-- Precisely aligned 6x6 separators, not painted into the stone texture. -->
+    {#each Array.from({ length: BOARD_DIMENSIONS.x - 1 }) as _, col}
+        <Rectangle x={(col + 1) * SYMBOL_SIZE - 0.5} y={0}
+            width={1} height={BOARD_SIZES.height}
+            backgroundColor={0x141015} alpha={0.5} />
+    {/each}
+    {#each Array.from({ length: BOARD_DIMENSIONS.y - 1 }) as _, row}
+        <Rectangle x={0} y={(row + 1) * SYMBOL_SIZE - 0.5}
+            width={BOARD_SIZES.width} height={1}
+            backgroundColor={0x141015} alpha={0.5} />
+    {/each}
+</Container>
