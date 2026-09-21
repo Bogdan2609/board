@@ -1,4 +1,54 @@
 export default {
+	// Approved static environment; served directly from SvelteKit's static/ directory.
+	uncleShopBackground: {
+		type: 'sprite',
+		src: '/assets/backgrounds/uncle_shop_static_v1.png',
+		preload: true,
+	},
+	jcaH1: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/H1.webp',
+	},
+	jcaH2: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/H2.webp',
+	},
+	jcaH3: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/H3.webp',
+	},
+	jcaH4: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/H4.webp',
+	},
+	jcaH5: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/H5.webp',
+	},
+	jcaL1: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/L1.webp',
+	},
+	jcaL2: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/L2.webp',
+	},
+	jcaL3: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/L3.webp',
+	},
+	jcaL4: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/L4.webp',
+	},
+	jcaS: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/S.webp',
+	},
+	jcaM5: {
+		type: 'sprite',
+		src: '/assets/jca/symbols/M5.webp',
+	},
 	loader: {
 		type: 'spine',
 		src: {

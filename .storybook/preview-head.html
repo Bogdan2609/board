@@ -1,0 +1,28 @@
+<!-- Storybook Canvas only: constrain the full-screen Pixi game to its preview iframe.
+     Keep Docs and the Storybook manager scroll behavior untouched. -->
+<style>
+  body.sb-main-fullscreen {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden !important;
+  }
+
+  body.sb-main-fullscreen #storybook-root {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* Inline canvases create a baseline gap that can trigger a vertical scrollbar. */
+  body.sb-main-fullscreen #storybook-root canvas {
+    display: block;
+  }
+</style>
