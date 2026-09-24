@@ -8,27 +8,29 @@
     import { randomInteger } from 'utils-shared/random';
     import Game from '../components/Game.svelte';
     import { setContext } from '../game/context';
-    import { playJcaModeQaBook, type JcaQaVariant } from './data/jcaModeQaBooks';
+    import { playBet } from '../game/utils';
+    import type { Bet } from '../game/typesBookEvent';
+    import books from './data/base_books';
+    import { playJcaModeQaBook } from './data/jcaModeQaBooks';
 
     setContext();
-    const variants: JcaQaVariant[] = ['loss', 'win', 'cascade'];
 </script>
 
 {#snippet template(args: TemplateArgs<any>)}
-    <StoryGameTemplate
-        skipLoadingScreen={args.skipLoadingScreen}
-        action={async () => await args.action?.(args.data)}
-    >
+    <StoryGameTemplate skipLoadingScreen={args.skipLoadingScreen} action={async () => await args.action?.(args.data)}>
         <StoryLocale lang="en"><Game storybookQa /></StoryLocale>
     </StoryGameTemplate>
 {/snippet}
 
-<Story name="random visual sequence" args={templateArgs({
+<!-- Random selects one of ALL 50 coherent, authored 6x6 visual books, no legacy 6x5 adapter. -->
+<Story name="random" args={templateArgs({
     skipLoadingScreen: true,
     data: {},
     action: async () => {
-        const variant = variants[randomInteger({ min: 0, max: variants.length - 1 })];
-        await playJcaModeQaBook('base', variant);
+        const index = randomInteger({ min: 0, max: books.length - 1 });
+        const book = books[index];
+        console.log('[JCA Storybook] MODE_BASE 6x6 random', { index, id: book.id, events: book.events.length });
+        await playBet({ ...book, state: book.events } as unknown as Bet);
     },
 })} {template} />
 

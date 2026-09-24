@@ -105,12 +105,12 @@ export default {
 		},
 	},
 	H5: {
-		type: 'spine',
-		src: {
-			atlas: new URL('../../assets/spines/symbols/symbols.atlas', import.meta.url).href,
-			skeleton: new URL('../../assets/spines/symbols/h5.json', import.meta.url).href,
-			scale: 2,
-		},
+  	type: 'spine',
+  	src: {
+  		atlas: '/assets/spines/symbols/h5.atlas',
+  		skeleton: '/assets/spines/symbols/h5.json',
+  		scale: 0.09,
+	},
 	},
 	L1: {
 		type: 'spine',

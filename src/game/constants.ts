@@ -325,17 +325,12 @@ const LEGACY_SYMBOL_INFO_MAP = {
 		land: h4Static,
 	},
 	H5: {
-		explosion,
-		win: {
-			type: 'spine',
-			assetKey: 'H5',
-			animationName: 'h5',
-			sizeRatios: { width: 0.5 * 0.9, height: HIGH_SYMBOL_SIZE * 0.53 },
-		},
-		postWinStatic: h5Static,
-		static: h5Static,
-		spin: h5Static,
-		land: h5Static,
+	  explosion:      {type: 'spine', assetKey: 'H5', animationName: 'explosion', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	win:            {type: 'spine', assetKey: 'H5', animationName: 'win', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	postWinStatic:  {type: 'spine', assetKey: 'H5', animationName: 'postWinStatic', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	static:         {type: 'spine', assetKey: 'H5', animationName: 'static', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	spin:           {type: 'spine', assetKey: 'H5', animationName: 'spin', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	land:           {type: 'spine', assetKey: 'H5', animationName: 'land', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
 	},
 	L1: {
   	explosion:      {type: 'spine', assetKey: 'L1', animationName: 'explosion', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},

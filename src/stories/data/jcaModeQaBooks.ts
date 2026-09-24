@@ -24,15 +24,25 @@ const winningPositions: Position[] = [
 ];
 const scatterPositions: Position[] = [pos(0, 5), pos(1, 4), pos(3, 4), pos(4, 6)];
 
+// A visual-only random draw uses approved JCA symbols; no math engine or real payout.
+const visualSymbolPool: RawSymbol['name'][] = [
+    'H1', 'H2', 'H3', 'H4', 'H5', 'L1', 'L2', 'L3', 'L4',
+];
+const randomVisualSymbol = (): RawSymbol['name'] =>
+    visualSymbolPool[Math.floor(Math.random() * visualSymbolPool.length)];
+
 const makeSymbol = (name: RawSymbol['name']): RawSymbol => {
     if (name === 'S') return { name: 'S', scatter: true };
     if (name === 'M') return { name: 'M', multiplier: 5 };
     return { name };
 };
 
-function makeBoard(options: { win: boolean; trigger: boolean }): RawSymbol[][] {
+function makeBoard(options: { win: boolean; trigger: boolean; randomize?: boolean }): RawSymbol[][] {
     // Exactly 6 reels × (1 hidden + 6 visible + 1 hidden) rows.
-    const board = INITIAL_BOARD.map((reel) => reel.map((symbol) => ({ ...symbol })));
+    // Random Storybook playback changes the layout on every run; named fixtures stay deterministic.
+    const board = options.randomize
+        ? INITIAL_BOARD.map((reel) => reel.map(() => makeSymbol(randomVisualSymbol())))
+        : INITIAL_BOARD.map((reel) => reel.map((symbol) => ({ ...symbol })));
     // Avoid accidental scatter triggers during visual QA.
     for (const reel of board) {
         for (let row = 0; row < reel.length; row++) {
@@ -130,11 +140,12 @@ function withIndices(events: BookEvent[]): BookEvent[] {
 export function getJcaModeQaBook(
     mode: JcaQaMode,
     variant: JcaQaVariant = 'cascade',
+    randomize = false,
 ): BookEvent[] {
     const isWin = variant !== 'loss';
     const hasCascade = variant === 'cascade';
     if (mode === 'base') {
-        const events: BookEvent[] = [reveal(makeBoard({ win: isWin, trigger: false }), 'basegame')];
+        const events: BookEvent[] = [reveal(makeBoard({ win: isWin, trigger: false, randomize }), 'basegame')];
         if (isWin) events.push(...winFlow(hasCascade));
         events.push(...(isWin ? finish(hasCascade ? 600 : 120) : [
             { index: 0, type: 'setTotalWin', amount: 0 } as BookEvent,
@@ -147,15 +158,15 @@ export function getJcaModeQaBook(
 
     const events: BookEvent[] = [
         // Bonus purchase demonstration: four S symbols first appear on a BASE reel.
-        reveal(makeBoard({ win: false, trigger: true }), 'basegame'),
+        reveal(makeBoard({ win: false, trigger: true, randomize }), 'basegame'),
         { index: 0, type: 'freeSpinTrigger', totalFs: 2, positions: scatterPositions },
         { index: 0, type: 'updateFreeSpin', amount: 1, total: 2 },
-        reveal(makeBoard({ win: isWin, trigger: false }), 'freeSpins'),
+        reveal(makeBoard({ win: isWin, trigger: false, randomize }), 'freeSpins'),
     ];
     if (isWin) events.push(...winFlow(hasCascade));
     events.push(
         { index: 0, type: 'updateFreeSpin', amount: 2, total: 2 },
-        reveal(makeBoard({ win: false, trigger: false }), 'freeSpins'),
+        reveal(makeBoard({ win: false, trigger: false, randomize }), 'freeSpins'),
     );
     const amount = isWin ? (hasCascade ? 600 : 120) : 0;
     events.push(
@@ -172,8 +183,9 @@ export function getJcaModeQaBook(
 export async function playJcaModeQaBook(
     mode: JcaQaMode,
     variant: JcaQaVariant = 'cascade',
+    randomize = false,
 ): Promise<void> {
-    const book = getJcaModeQaBook(mode, variant);
+    const book = getJcaModeQaBook(mode, variant, randomize);
     stateBet.winBookEventAmount = 0;
     await playBookEvents(book);
 }
