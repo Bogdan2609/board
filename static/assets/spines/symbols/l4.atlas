@@ -1,0 +1,167 @@
+l4.png
+size: 3118, 935
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+edge_glint_1__image
+  rotate: false
+  xy: 2073, 255
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+engraving_energy__image
+  rotate: true
+  xy: 972, 284
+  size: 649, 605
+  orig: 660, 620
+  offset: 0, 7
+  index: -1
+engraving_trace__image
+  rotate: true
+  xy: 1579, 337
+  size: 596, 552
+  orig: 635, 580
+  offset: 17, 19
+  index: -1
+fracture_plasma__image
+  rotate: true
+  xy: 2227, 6
+  size: 184, 192
+  orig: 256, 256
+  offset: 36, 32
+  index: -1
+orbit_arc__image
+  rotate: false
+  xy: 2133, 443
+  size: 490, 490
+  orig: 512, 512
+  offset: 13, 9
+  index: -1
+shard_00__image
+  rotate: true
+  xy: 2861, 461
+  size: 246, 193
+  orig: 246, 193
+  offset: 0, 0
+  index: -1
+shard_01__image
+  rotate: false
+  xy: 2666, 217
+  size: 203, 239
+  orig: 203, 239
+  offset: 0, 0
+  index: -1
+shard_02__image
+  rotate: true
+  xy: 2687, 4
+  size: 211, 226
+  orig: 211, 226
+  offset: 0, 0
+  index: -1
+shard_03__image
+  rotate: true
+  xy: 2843, 709
+  size: 224, 216
+  orig: 224, 216
+  offset: 0, 0
+  index: -1
+shard_04__image
+  rotate: true
+  xy: 1983, 8
+  size: 171, 242
+  orig: 171, 242
+  offset: 0, 0
+  index: -1
+shard_05__image
+  rotate: true
+  xy: 2915, 18
+  size: 203, 201
+  orig: 203, 201
+  offset: 0, 0
+  index: -1
+shard_06__image
+  rotate: true
+  xy: 1731, 2
+  size: 177, 250
+  orig: 178, 250
+  offset: 0, 0
+  index: -1
+shard_07__image
+  rotate: false
+  xy: 2155, 192
+  size: 247, 249
+  orig: 248, 249
+  offset: 0, 0
+  index: -1
+shard_08__image
+  rotate: true
+  xy: 2625, 678
+  size: 255, 216
+  orig: 255, 218
+  offset: 0, 2
+  index: -1
+shard_09__image
+  rotate: false
+  xy: 2625, 458
+  size: 234, 218
+  orig: 235, 220
+  offset: 1, 2
+  index: -1
+shard_10__image
+  rotate: false
+  xy: 1223, 5
+  size: 232, 277
+  orig: 232, 277
+  offset: 0, 0
+  index: -1
+shard_11__image
+  rotate: true
+  xy: 1457, 16
+  size: 163, 272
+  orig: 165, 272
+  offset: 2, 0
+  index: -1
+shard_12__image
+  rotate: true
+  xy: 972, 2
+  size: 280, 249
+  orig: 280, 249
+  offset: 0, 0
+  index: -1
+shard_13__image
+  rotate: false
+  xy: 2421, 20
+  size: 264, 195
+  orig: 264, 197
+  offset: 0, 0
+  index: -1
+shard_14__image
+  rotate: false
+  xy: 2404, 217
+  size: 260, 224
+  orig: 260, 224
+  offset: 0, 0
+  index: -1
+shard_15__image
+  rotate: false
+  xy: 2871, 223
+  size: 200, 236
+  orig: 202, 237
+  offset: 0, 0
+  index: -1
+speed_lines__image
+  rotate: false
+  xy: 1457, 181
+  size: 614, 101
+  orig: 630, 150
+  offset: 1, 27
+  index: -1
+talisman
+  rotate: true
+  xy: 2, 4
+  size: 929, 968
+  orig: 1254, 1254
+  offset: 163, 141
+  index: -1
+
