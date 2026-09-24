@@ -1,53 +1,45 @@
 <script lang="ts" module>
-	import { defineMeta } from '@storybook/addon-svelte-csf';
-
-	const { Story } = defineMeta({
-		title: 'MODE_BONUS/book',
-	});
+    import { defineMeta } from '@storybook/addon-svelte-csf';
+    const { Story } = defineMeta({ title: 'MODE_BONUS/book' });
 </script>
 
 <script lang="ts">
-	import {
-		StoryGameTemplate,
-		StoryLocale,
-		type TemplateArgs,
-		templateArgs,
-	} from 'components-storybook';
-	import { randomInteger } from 'utils-shared/random';
+    import { StoryGameTemplate, StoryLocale, type TemplateArgs, templateArgs } from 'components-storybook';
+    import { randomInteger } from 'utils-shared/random';
+    import Game from '../components/Game.svelte';
+    import { setContext } from '../game/context';
+    import { playJcaModeQaBook, type JcaQaVariant } from './data/jcaModeQaBooks';
 
-	import Game from '../components/Game.svelte';
-	import { setContext } from '../game/context';
-	import { playBet } from '../game/utils';
-	import books from './data/bonus_books';
-
-	
-	setContext();
+    setContext();
+    const variants: JcaQaVariant[] = ['loss', 'win', 'cascade'];
 </script>
 
 {#snippet template(args: TemplateArgs<any>)}
-	<StoryGameTemplate
-		skipLoadingScreen={args.skipLoadingScreen}
-		action={async () => {
-			await args.action?.(args.data);
-		}}
-	>
-		<StoryLocale lang="en">
-			<Game />
-		</StoryLocale>
-	</StoryGameTemplate>
+    <StoryGameTemplate
+        skipLoadingScreen={args.skipLoadingScreen}
+        action={async () => await args.action?.(args.data)}
+    >
+        <StoryLocale lang="en"><Game storybookQa /></StoryLocale>
+    </StoryGameTemplate>
 {/snippet}
 
-<Story
-	name="random"
-	args={templateArgs({
-		skipLoadingScreen: true,
-		data: {},
-		action: async () => {
-			const index = randomInteger({ min: 0, max: books.length - 1 });
-			const data = books[index];
-			console.log('Running a book at index', index);
-			await playBet({ ...data, state: data.events });
-		},
-	})}
-	{template}
-/>
+<Story name="random visual sequence" args={templateArgs({
+    skipLoadingScreen: true,
+    data: {},
+    action: async () => {
+        const variant = variants[randomInteger({ min: 0, max: variants.length - 1 })];
+        await playJcaModeQaBook('bonus', variant);
+    },
+})} {template} />
+
+<Story name="trigger / 2 free spins / no win" args={templateArgs({ skipLoadingScreen: true, data: {},
+    action: async () => await playJcaModeQaBook('bonus', 'loss'),
+})} {template} />
+
+<Story name="trigger / LOW win / free spin outro" args={templateArgs({ skipLoadingScreen: true, data: {},
+    action: async () => await playJcaModeQaBook('bonus', 'win'),
+})} {template} />
+
+<Story name="trigger / LOW win / tumble / x5" args={templateArgs({ skipLoadingScreen: true, data: {},
+    action: async () => await playJcaModeQaBook('bonus', 'cascade'),
+})} {template} />

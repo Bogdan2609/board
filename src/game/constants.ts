@@ -102,7 +102,7 @@ export const INITIAL_SYMBOL_STATE: SymbolState = 'static';
 
 const M_SIZE = 0.3;
 const HIGH_SYMBOL_SIZE = 0.9;
-const LOW_SYMBOL_SIZE = 0.9;
+const LOW_SYMBOL_SIZE = 0.82;
 const SPECIAL_SYMBOL_SIZE = 1;
 
 const SPIN_OPTIONS_SHARED = {
@@ -338,36 +338,36 @@ const LEGACY_SYMBOL_INFO_MAP = {
 		land: h5Static,
 	},
 	L1: {
-  	explosion:      {type: 'spine', assetKey: 'L1', animationName: 'explosion', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	win:            {type: 'spine', assetKey: 'L1', animationName: 'win', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	postWinStatic:  {type: 'spine', assetKey: 'L1', animationName: 'postWinStatic', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	static:         {type: 'spine', assetKey: 'L1', animationName: 'static', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	spin:           {type: 'spine', assetKey: 'L1', animationName: 'spin', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	land:           {type: 'spine', assetKey: 'L1', animationName: 'land', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
+  	explosion:      {type: 'spine', assetKey: 'L1', animationName: 'explosion', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	win:            {type: 'spine', assetKey: 'L1', animationName: 'win', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	postWinStatic:  {type: 'spine', assetKey: 'L1', animationName: 'postWinStatic', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	static:         {type: 'spine', assetKey: 'L1', animationName: 'static', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	spin:           {type: 'spine', assetKey: 'L1', animationName: 'spin', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	land:           {type: 'spine', assetKey: 'L1', animationName: 'land', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
 	},
 	L2: {
-  	explosion:      {type: 'spine', assetKey: 'L2', animationName: 'explosion', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	win:            {type: 'spine', assetKey: 'L2', animationName: 'win', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	postWinStatic:  {type: 'spine', assetKey: 'L2', animationName: 'postWinStatic', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	static:         {type: 'spine', assetKey: 'L2', animationName: 'static', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	spin:           {type: 'spine', assetKey: 'L2', animationName: 'spin', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-  	land:           {type: 'spine', assetKey: 'L2', animationName: 'land', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
+  	explosion:      {type: 'spine', assetKey: 'L2', animationName: 'explosion', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	win:            {type: 'spine', assetKey: 'L2', animationName: 'win', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	postWinStatic:  {type: 'spine', assetKey: 'L2', animationName: 'postWinStatic', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	static:         {type: 'spine', assetKey: 'L2', animationName: 'static', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	spin:           {type: 'spine', assetKey: 'L2', animationName: 'spin', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+  	land:           {type: 'spine', assetKey: 'L2', animationName: 'land', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
 	},
 	L3: {
-   	explosion:      {type: 'spine', assetKey: 'L3', animationName: 'explosion', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-   	win:            {type: 'spine', assetKey: 'L3', animationName: 'win', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-   	postWinStatic:  {type: 'spine', assetKey: 'L3', animationName: 'postWinStatic', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-   	static:         {type: 'spine', assetKey: 'L3', animationName: 'static', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-   	spin:           {type: 'spine', assetKey: 'L3', animationName: 'spin', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-   	land:           {type: 'spine', assetKey: 'L3', animationName: 'land', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
+   	explosion:      {type: 'spine', assetKey: 'L3', animationName: 'explosion', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+   	win:            {type: 'spine', assetKey: 'L3', animationName: 'win', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+   	postWinStatic:  {type: 'spine', assetKey: 'L3', animationName: 'postWinStatic', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+   	static:         {type: 'spine', assetKey: 'L3', animationName: 'static', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+   	spin:           {type: 'spine', assetKey: 'L3', animationName: 'spin', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+   	land:           {type: 'spine', assetKey: 'L3', animationName: 'land', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
 	},
 	L4: {
-		explosion:      {type: 'spine', assetKey: 'L4', animationName: 'explosion', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-		win:            {type: 'spine', assetKey: 'L4', animationName: 'win', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-		postWinStatic:  {type: 'spine', assetKey: 'L4', animationName: 'postWinStatic', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-		static:         {type: 'spine', assetKey: 'L4', animationName: 'static', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-		spin:           {type: 'spine', assetKey: 'L4', animationName: 'spin', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
-		land:           {type: 'spine', assetKey: 'L4', animationName: 'land', sizeRatios: { width: 0.5 * 0.75, height: LOW_SYMBOL_SIZE * 0.63 },},
+		explosion:      {type: 'spine', assetKey: 'L4', animationName: 'explosion', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+		win:            {type: 'spine', assetKey: 'L4', animationName: 'win', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+		postWinStatic:  {type: 'spine', assetKey: 'L4', animationName: 'postWinStatic', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+		static:         {type: 'spine', assetKey: 'L4', animationName: 'static', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+		spin:           {type: 'spine', assetKey: 'L4', animationName: 'spin', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
+		land:           {type: 'spine', assetKey: 'L4', animationName: 'land', sizeRatios: { width: LOW_SYMBOL_SIZE, height: LOW_SYMBOL_SIZE },},
 	},
 	W: {
 		explosion,
@@ -501,11 +501,11 @@ const LEGACY_SYMBOL_INFO_MAP = {
 	M_TAKEN_10: backgroundHigh,
 } as const;
 
-// Approved JCA art: same PNG/WebP in idle, spin, landing, win and tumble.
-// FX are intentionally absent until the JCA-only animations are implemented.
+// H1-H5, scatter and multiplier still use approved static JCA art.
+// L1-L4 use their own Spine skeletons and texture atlases in every state.
 type JcaSpriteKey =
     | 'jcaH1' | 'jcaH2' | 'jcaH3' | 'jcaH4' | 'jcaH5'
-    | 'jcaL1' | 'jcaL2' | 'jcaL3' | 'jcaL4' | 'jcaS' | 'jcaM5';
+    | 'jcaS' | 'jcaM5';
 
 const jcaSprite = (assetKey: JcaSpriteKey, ratio: number) => ({
     type: 'sprite' as const,
@@ -531,10 +531,6 @@ export const SYMBOL_INFO_MAP = {
     H3: jcaSymbolStates('jcaH3', 0.94),
     H4: jcaSymbolStates('jcaH4', 0.88),
     H5: jcaSymbolStates('jcaH5', 0.88),
-    L1: jcaSymbolStates('jcaL1', 0.82),
-    L2: jcaSymbolStates('jcaL2', 0.82),
-    L3: jcaSymbolStates('jcaL3', 0.82),
-    L4: jcaSymbolStates('jcaL4', 0.82),
     S: jcaSymbolStates('jcaS', 0.92),
     M_5: jcaSymbolStates('jcaM5', 0.90),
 } as const;

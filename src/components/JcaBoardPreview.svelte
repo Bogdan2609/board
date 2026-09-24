@@ -1,6 +1,6 @@
 <script lang="ts">
     import { innerHeight, innerWidth } from 'svelte/reactivity/window';
-    import { Rectangle, Sprite, Text } from 'pixi-svelte';
+    import { Rectangle, Sprite, SpineProvider, SpineTrack, Text } from 'pixi-svelte';
 
     // Visual QA board only. The existing 6x5 reel engine and RGS events are NOT
     // connected to this 6x6 preview; do not treat preview symbols as a paid spin.
@@ -80,7 +80,7 @@
     borderWidth={Math.max(1, frame * 0.3)}
 />
 
-<!-- Exactly six reels, six visible rows. No hidden 7th row in this art preview. -->
+<!-- Exactly six reels, six visible rows; LOW symbols share the game Spine assets. -->
 {#each columns as reel, reelIndex}
     {#each reel as key, rowIndex}
         {@const left = boardX + reelIndex * tile}
@@ -94,14 +94,25 @@
             borderColor={0x413539}
             borderWidth={Math.max(0.55, tile * 0.008)}
         />
-        <Sprite
-            key={`jca${key}`}
-            x={left + tile * 0.5}
-            y={top + tile * 0.5}
-            anchor={0.5}
-            width={tile * occupation[key]}
-            height={tile * occupation[key]}
-        />
+        {#if key === 'L1' || key === 'L2' || key === 'L3' || key === 'L4'}
+            <SpineProvider
+                key={key}
+                x={left + tile * 0.5}
+                y={top + tile * 0.5}
+                height={tile * occupation[key]}
+            >
+                <SpineTrack trackIndex={0} animationName="static" loop />
+            </SpineProvider>
+        {:else}
+            <Sprite
+                key={`jca${key}`}
+                x={left + tile * 0.5}
+                y={top + tile * 0.5}
+                anchor={0.5}
+                width={tile * occupation[key]}
+                height={tile * occupation[key]}
+            />
+        {/if}
     {/each}
 {/each}
 

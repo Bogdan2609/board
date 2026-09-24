@@ -138,4 +138,1038 @@ CSF Parsing error: Expected 'ObjectExpression' but found 'undefined' instead in 
 
 
 
-[1;1H[0J[2m11:55:57 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte,
+[1;1H[0J[2m11:55:57 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte, /src/components/SymbolSpine.svelte, /src/components/SymbolSprite.svelte, /src/components/ReelSymbol.svelte, /src/components/TumbleSymbol.svelte, /src/components/MultiplierSymbol.svelte, /src/components/SymbolSpineMain.svelte, /src/components/SymbolSpineBackground.svelte, /src/components/TumbleWinAmountFrame.svelte, /src/components/TumbleWinAmountText.svelte, /src/components/SymbolWrap.svelte[22m [33m(x2)[39m
+CSF Parsing error: Expected 'ObjectExpression' but found 'undefined' instead in 'Identifier'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:56:37 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte[22m
+CSF Parsing error: Expected 'ObjectExpression' but found 'undefined' instead in 'Identifier'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:57:33 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte, /src/components/SymbolSpine.svelte, /src/components/SymbolSprite.svelte, /src/components/ReelSymbol.svelte, /src/components/TumbleSymbol.svelte, /src/components/MultiplierSymbol.svelte, /src/components/SymbolSpineMain.svelte, /src/components/SymbolSpineBackground.svelte, /src/components/TumbleWinAmountFrame.svelte, /src/components/TumbleWinAmountText.svelte, /src/components/SymbolWrap.svelte[22m
+CSF Parsing error: Expected 'ObjectExpression' but found 'undefined' instead in 'Identifier'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m11:58:37 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte, /src/components/SymbolSpine.svelte, /src/components/SymbolSprite.svelte, /src/components/ReelSymbol.svelte, /src/components/TumbleSymbol.svelte, /src/components/MultiplierSymbol.svelte, /src/components/SymbolSpineMain.svelte, /src/components/SymbolSpineBackground.svelte, /src/components/TumbleWinAmountFrame.svelte, /src/components/TumbleWinAmountText.svelte, /src/components/SymbolWrap.svelte[22m [33m(x2)[39m
+CSF Parsing error: Expected 'ObjectExpression' but found 'undefined' instead in 'Identifier'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:20:11 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte, /src/components/SymbolSpine.svelte, /src/components/SymbolSprite.svelte, /src/components/ReelSymbol.svelte, /src/components/TumbleSymbol.svelte, /src/components/MultiplierSymbol.svelte, /src/components/SymbolSpineMain.svelte, /src/components/SymbolSpineBackground.svelte, /src/components/TumbleWinAmountFrame.svelte, /src/components/TumbleWinAmountText.svelte, /src/components/SymbolWrap.svelte[22m [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:20:11 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:20:11 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/Symbol.svelte[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:20:11 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/JcaBoardPreview.svelte[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:20:11 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js[22m
+CSF Parsing error: Expected 'ObjectExpression' but found 'undefined' instead in 'Identifier'.
+CSF Parsing error: Expected 'ObjectExpression' but found 'undefined' instead in 'Identifier'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:20:56 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:21:03 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte[22m [33m(x2)[39m
+[2m12:21:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+/opt/web-sdk/apps/scatter/src/game/assets.ts:144:13: ERROR: Expected ":" but found ","
+  Plugin: [35mvite:esbuild[39m
+  File: [36m/opt/web-sdk/apps/scatter/src/game/assets.ts[39m:144:13
+[33m  
+  [33mExpected ":" but found ","[33m
+  142|  			atlas: '/assets/spines/symbols/l4.atlas',
+  143|  			skeleton: '/assets/spines/symbols/l4.json',
+  144|  			scale: 0,5,
+     |               ^
+  145|  		},
+  146|  	},
+  [39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:21:03 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+/opt/web-sdk/apps/scatter/src/game/assets.ts:144:13: ERROR: Expected ":" but found ","[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36m/opt/web-sdk/apps/scatter/src/game/assets.ts[39m:144:13
+[33m  
+  [33mExpected ":" but found ","[33m
+  142|  			atlas: '/assets/spines/symbols/l4.atlas',
+  143|  			skeleton: '/assets/spines/symbols/l4.json',
+  144|  			scale: 0,5,
+     |               ^
+  145|  		},
+  146|  	},
+  [39m
+      at failureErrorWithLog (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:1463:15)
+      at /opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:734:50
+      at responseCallbacks.<computed> (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:601:9)
+      at handleIncomingPacket (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:656:12)
+      at Socket.readFromStdout (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:579:7)
+      at Socket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:21:03 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+/opt/web-sdk/apps/scatter/src/game/assets.ts:144:13: ERROR: Expected ":" but found ","[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36m/opt/web-sdk/apps/scatter/src/game/assets.ts[39m:144:13
+[33m  
+  [33mExpected ":" but found ","[33m
+  142|  			atlas: '/assets/spines/symbols/l4.atlas',
+  143|  			skeleton: '/assets/spines/symbols/l4.json',
+  144|  			scale: 0,5,
+     |               ^
+  145|  		},
+  146|  	},
+  [39m
+      at failureErrorWithLog (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:1463:15)
+      at /opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:734:50
+      at responseCallbacks.<computed> (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:601:9)
+      at handleIncomingPacket (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:656:12)
+      at Socket.readFromStdout (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:579:7)
+      at Socket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) [33m(x2)[39m
+[2m12:21:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+/opt/web-sdk/apps/scatter/src/game/assets.ts:144:13: ERROR: Expected ":" but found ","
+  Plugin: [35mvite:esbuild[39m
+  File: [36m/opt/web-sdk/apps/scatter/src/game/assets.ts[39m:144:13
+[33m  
+  [33mExpected ":" but found ","[33m
+  142|  			atlas: '/assets/spines/symbols/l4.atlas',
+  143|  			skeleton: '/assets/spines/symbols/l4.json',
+  144|  			scale: 0,5,
+     |               ^
+  145|  		},
+  146|  	},
+  [39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:21:03 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+/opt/web-sdk/apps/scatter/src/game/assets.ts:144:13: ERROR: Expected ":" but found ","[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36m/opt/web-sdk/apps/scatter/src/game/assets.ts[39m:144:13
+[33m  
+  [33mExpected ":" but found ","[33m
+  142|  			atlas: '/assets/spines/symbols/l4.atlas',
+  143|  			skeleton: '/assets/spines/symbols/l4.json',
+  144|  			scale: 0,5,
+     |               ^
+  145|  		},
+  146|  	},
+  [39m
+      at failureErrorWithLog (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:1463:15)
+      at /opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:734:50
+      at responseCallbacks.<computed> (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:601:9)
+      at handleIncomingPacket (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:656:12)
+      at Socket.readFromStdout (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:579:7)
+      at Socket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:21:03 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+/opt/web-sdk/apps/scatter/src/game/assets.ts:144:13: ERROR: Expected ":" but found ","[39m
+  Plugin: [35mvite:esbuild[39m
+  File: [36m/opt/web-sdk/apps/scatter/src/game/assets.ts[39m:144:13
+[33m  
+  [33mExpected ":" but found ","[33m
+  142|  			atlas: '/assets/spines/symbols/l4.atlas',
+  143|  			skeleton: '/assets/spines/symbols/l4.json',
+  144|  			scale: 0,5,
+     |               ^
+  145|  		},
+  146|  	},
+  [39m
+      at failureErrorWithLog (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:1463:15)
+      at /opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:734:50
+      at responseCallbacks.<computed> (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:601:9)
+      at handleIncomingPacket (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:656:12)
+      at Socket.readFromStdout (/opt/web-sdk/node_modules/.pnpm/esbuild@0.25.5/node_modules/esbuild/lib/main.js:579:7)
+      at Socket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:21:07 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:21:23 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte[22m [33m(x2)[39m
+CSF Parsing error: Expected 'ObjectExpression' but found 'undefined' instead in 'Identifier'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:22:03 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte[22m [33m(x3)[39m
+CSF Parsing error: Expected 'ObjectExpression' but found 'undefined' instead in 'Identifier'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:55:43 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte, /src/components/BoardContainer.svelte, /src/components/BoardMask.svelte, /src/components/BoardBase.svelte, /src/components/Anticipation.svelte, /src/components/TransitionAnimation.svelte, /src/components/PressToContinue.svelte, /src/components/ClusterWinAmount.svelte, /src/components/TumbleBoardBase.svelte, /src/components/TumbleWinAmountWrap.svelte, /src/components/MultiplierBoardBase.svelte, /src/components/WinCoins.svelte, /src/components/WinAnimation.svelte, /src/components/FreeSpinAnimation.svelte, /src/components/JcaMainHud.svelte[22m [33m(x4)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m12:55:43 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@id/__x00__virtual:/@storybook/builder-vite/vite-app.js, /src/components/Game.svelte, /src/components/EnableSound.svelte, /src/components/EnableGameActor.svelte, /src/components/ResumeBet.svelte, /src/components/Sound.svelte, /src/components/Background.svelte, /src/components/BoardFrame.svelte, /src/components/BoardFrameOverlay.svelte, /src/components/Board.svelte, /src/components/Anticipations.svelte, /src/components/LoadingScreen.svelte, /src/components/ClusterWinAmounts.svelte, /src/components/TumbleBoard.svelte, /src/components/TumbleWinAmount.svelte, /src/components/GlobalMultiplier.svelte, /src/components/MultiplierBoard.svelte, /src/components/MultiplierTotal.svelte, /src/components/Win.svelte, /src/components/FreeSpinIntro.svelte, /src/components/FreeSpinCounter.svelte, /src/components/FreeSpinOutro.svelte, /src/components/Transition.svelte, /src/components/JcaHud.svelte, /src/components/Symbol.svelte,

@@ -7,11 +7,9 @@ import H2 from './h2.json';
 import H3 from './h3.json';
 import H4 from './h4.json';
 import H5 from './h5.json';
-import L1 from './l1.json';
-import L2 from './l2.json';
-import L3 from './l3.json';
-import L4 from './l4.json';
 
+// L1-L4 use separate atlases (l1.atlas ... l4.atlas) via src/game/assets.ts.
+// Registering them against symbols.atlas makes their attachments invisible.
 export default createAsset({
 	img,
 	rawAtlas,
@@ -21,9 +19,5 @@ export default createAsset({
 		H3,
 		H4,
 		H5,
-		L1,
-		L2,
-		L3,
-		L4,
 	},
 });

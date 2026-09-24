@@ -36,7 +36,7 @@
         state: props.state,
     })}
     <SymbolSpine
-        loop={props.loop}
+        loop={props.loop ?? (props.state === 'static' || props.state === 'spin')}
         {symbolInfo}
         {symbolBackgroundInfo}
         x={props.x}
